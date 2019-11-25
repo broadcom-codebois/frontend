@@ -8,8 +8,12 @@ export default class Calendar extends React.Component {
 
   render() {
     return (
-      <FullCalendar defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} />
+      <FullCalendar dateClick={this.handleDateClick} defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} />
     )
+  }
+
+  handleDateClick = (arg) => {
+    alert(arg.dateStr)
   }
 
 }
