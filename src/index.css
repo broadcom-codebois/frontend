@@ -9,3 +9,9 @@ body,
   height: 100%;
   font-family: 'Roboto', sans-serif;
 }
+
+#main {
+  width: 80%;
+  padding: 10px;
+  margin: auto;
+}
