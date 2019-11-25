@@ -1,7 +1,13 @@
 import React from 'react'
 
+import Test from 'Components/Test'
+
 const Main = () => {
-  return <div>Main View</div>
+  return (
+    <div>
+      <Test />
+    </div>
+  )
 }
 
 export default Main
