@@ -1,2 +1,2 @@
 # frontend
-Frontend lmao
+Frontend rules
