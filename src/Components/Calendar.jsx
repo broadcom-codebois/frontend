@@ -1,6 +1,8 @@
 import React from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list'
 
 import './calendar-style.scss'
 
@@ -30,7 +32,7 @@ export default class Calendar extends React.Component {
     ];
 
     return (
-      <FullCalendar dateClick={this.handleDateClick} defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} events={events}/>
+      <FullCalendar dateClick={this.handleDateClick} defaultView="dayGridMonth" plugins={[ dayGridPlugin, timeGridPlugin, listPlugin ]} events={events}/>
     )
   }
 
