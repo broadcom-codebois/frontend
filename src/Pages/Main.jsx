@@ -1,12 +1,13 @@
 import React from 'react'
+import { Container } from '@material-ui/core'
 
-import Test from 'Components/Test'
+import Timeline from 'Components/Timeline'
 
 const Main = () => {
   return (
-    <div>
-      <Test />
-    </div>
+    <Container maxWidth="xs">
+      <Timeline />
+    </Container>
   )
 }
 
