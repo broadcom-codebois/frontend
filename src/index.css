@@ -38,3 +38,18 @@ h1 {
   padding: 1em;
   vertical-align: middle;
 }
+
+.MuiPaper-rounded {
+  margin-left: 50%;
+  margin-top: 20%;
+  transform: translate(-50%);
+}
+
+.MuiPaper-rounded h2{
+  padding: 1em;
+}
+
+.MuiPaper-rounded p{
+  padding-left: 1.5em;
+  padding-bottom: 1em;
+}
