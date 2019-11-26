@@ -6,19 +6,22 @@ import Calendar from '../Components/Calendar.jsx'
 const useStyles = makeStyles({
   container: {
     paddingTop: '2em',
-    backgroundColor: '#f7ffff',
+    backgroundColor: '#FFFFFF',
+    fontFamily: 'Saira Condensed',
   },
   heading: {
-    fontWeight: '1000',
-    color: '#2C3E50',
-    background: '#f7ffff',
+    fontWeight: '600',
+    color: '#154A46',
+    background: '#FFFFFF',
     marginTop: '-1em',
-    paddingLeft: '.2em',
-    paddingRight: '.2em',
+    paddingLeft: '.3em',
+    paddingRight: '.3em',
     width: 'fit-content',
+    fontFamily: 'Saira Condensed',
+    float: 'right',
   },
   innerContainer: {
-    border: '0.25em solid #2C3E50',
+    border: '0.30em solid #A7A635',
     borderRadius: '1em',
     margin: 'auto',
     padding: '0.625em 1em 0.625em 1em',
@@ -26,6 +29,7 @@ const useStyles = makeStyles({
   copyright: {
     padding: '1em',
     float: 'right',
+    color: '#58301B',
   },
 })
 
@@ -36,7 +40,7 @@ const Main = () => {
     <Container maxWidth="md" className={c.container}>
       <Box className={c.innerContainer}>
         <Typography className={c.heading} variant="h4">
-          Reservation system
+          RESERVATION SYSTEM
         </Typography>
         <Calendar />
       </Box>

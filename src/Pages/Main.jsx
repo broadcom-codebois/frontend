@@ -9,13 +9,14 @@ const useStyle = makeStyles({
     position: 'fixed',
     top: '10px',
     left: '10px',
+    fontFamily: 'Saira Condensed',
   },
 })
 
 const Main = () => {
   const c = useStyle()
 
-  const [view, setView] = useState(true)
+  const [view, setView] = useState(false)
 
   return (
     <>

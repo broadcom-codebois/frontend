@@ -48,7 +48,14 @@ const useEvents = () => [
   },
 ]
 
-const useStyles = makeStyles({})
+const useStyles = makeStyles({
+  rowText: {
+    fontFamily: 'Saira Condensed',
+    fontWeight: '1000',
+    fontSize: '1.25em',
+    color: '#58301B'
+  } 
+})
 
 const Timeline = () => {
   const events = useEvents()
@@ -58,11 +65,11 @@ const Timeline = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell align="right">Rooms</TableCell>
-          <TableCell align="right">From</TableCell>
-          <TableCell align="right">To</TableCell>
-          <TableCell align="right">Layout</TableCell>
+          <TableCell className={c.rowText}>Name</TableCell>
+          <TableCell className={c.rowText}>Rooms</TableCell>
+          <TableCell className={c.rowText}>From</TableCell>
+          <TableCell className={c.rowText}>To</TableCell>
+          <TableCell className={c.rowText}>Layout</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

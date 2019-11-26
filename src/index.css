@@ -7,7 +7,17 @@ body,
   padding: 0;
   min-width: 100%;
   min-height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Saira Condensed', sans-serif;
+  background-color: '#FEF5E7';
+}
+
+.fc-header-toolbar {
+  width: 100%;
+}
+
+/*
+p {
+  font-size: 1em;
 }
 
 #roomPicker {
@@ -40,3 +50,24 @@ body,
   padding-left: 1.5em;
   padding-bottom: 1em;
 }
+
+form {
+  padding: 1em;
+}
+
+input {
+  padding: 0.5em;
+  border: 2px solid #1C2E31;
+  border-radius: 0.25em;
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 1em;
+  width: 90%;
+}
+
+label {
+  padding-top: 2em;
+}
+
+#submitButton {
+  margin-top: 1em;
+}*/

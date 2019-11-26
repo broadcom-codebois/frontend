@@ -6,7 +6,7 @@ import TableLayouts from 'Pages/TableLayouts'
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'Raleway, Arial',
+    fontFamily: "'Saira Condensed', sans-serif",
   },
 })
 

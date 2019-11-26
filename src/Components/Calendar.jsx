@@ -3,10 +3,20 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import { Modal, Paper } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  makeStyles,
+} from '@material-ui/core'
+import { AddRounded } from '@material-ui/icons'
 
 import './calendar-style.scss'
-import { instanceOf } from 'prop-types'
 
 const events = [
   {
@@ -14,63 +24,83 @@ const events = [
     start: '2019-11-25T10:30:00',
     end: '2019-11-27T11:30:00',
     description: 'Event',
-    color: '#503e2c',
+    color: '#71B7B0',
     extendedProps: {
       owner: 'Matyáš Boháček',
       north: true,
-      south: false
-    }
+      south: false,
+    },
   },
   {
     title: 'Test Event 2',
-    start: '2019-11-28T10:30:00',
+    start: '2019-11-26T10:30:00',
     end: '2019-11-29T11:30:00',
     description: 'Event',
-    color: '#2C3E50',
+    color: '#A7A635',
     extendedProps: {
       owner: 'Jan Novák',
       north: false,
-      south: true
-    }
+      south: true,
+    },
   },
 ]
 
-var modalInfo = {
-  event:{
-    title: '',
-    extendedProps: {
-      north: true,
-      south: false,
-      owner: ''
-    }
-  }
-}
+const useStyle = makeStyles({
+  roomPicker: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  iconButton: {
+    boxSizing: 'content-box',
+    width: '24px',
+    height: '24px',
+  },
+})
 
 const Calendar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const c = useStyle()
+
+  const [isEventInfoDialogOpen, setIsEventInfoDialogOpen] = useState(false)
+  const [isFormDialogOpen, setIsFormDialogOpen] = useState(false)
+  const [selectedRooms, setSelectedRooms] = useState({
+    north: true,
+    south: true,
+  })
+  const [modalInfo, setModalInfo] = useState({
+    event: {
+      title: '',
+      extendedProps: {
+        north: true,
+        south: false,
+        owner: '',
+      },
+    },
+  })
+  const [newEventData, setNewEventData] = useState({
+    //
+  })
+
+  const visibleEvents = events.filter(event =>
+    Object.keys(selectedRooms).some(
+      key => selectedRooms[key] && event.extendedProps[key]
+    )
+  )
+
+  const onSubmit = e => {
+    e.preventDefault()
+    alert('huray')
+  }
 
   return (
     <>
-
-      <div id='roomPicker'>
-        <p>Viewed rooms:</p>
-        <div class='fc-button-group'>
-          <button type="button" class="fc-dayGridDay-button fc-button fc-button-primary">Auditorium North</button>
-          <button type="button" class="fc-dayGridDay-button fc-button fc-button-primary">Auditorium South</button>
-        </div>
-      </div>
       <FullCalendar
-        eventClick= {
-          function(info) {
-            modalInfo = info
-            console.log(info);
-            
-            setIsModalOpen(true)
-          }
-        }
+        eventClick={function(info) {
+          setModalInfo(info)
+          setIsEventInfoDialogOpen(true)
+        }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
-        events={events}
+        events={visibleEvents}
         header={{
           left: 'prev,next',
           center: 'title',
@@ -80,25 +110,127 @@ const Calendar = () => {
         weekends={false}
       />
 
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+      <Box mt={2}>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          direction="row"
+        >
+          <Grid item>
+            <Grid container direction="row" alignItems="center" spacing={2}>
+              <Grid item>
+                <Typography>Rooms:</Typography>
+              </Grid>
+              <Grid item>
+                <Box className="fc-button-group">
+                  <button
+                    type="button"
+                    className="fc-dayGridDay-button fc-button fc-button-primary"
+                    onClick={() =>
+                      setSelectedRooms(r => ({ ...r, north: !r.north }))
+                    }
+                  >
+                    North
+                  </button>
+                  <button
+                    type="button"
+                    className="fc-dayGridDay-button fc-button fc-button-primary"
+                    onClick={() =>
+                      setSelectedRooms(r => ({ ...r, south: !r.south }))
+                    }
+                  >
+                    South
+                  </button>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <button
+              type="button"
+              className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
+              onClick={() => setIsFormDialogOpen(true)}
+            >
+              <AddRounded />
+            </button>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Dialog
+        open={isEventInfoDialogOpen}
+        onClose={() => setIsEventInfoDialogOpen(false)}
       >
-        <Paper> 
-          <h2 id="simple-modal-title">{modalInfo.event.title}</h2>
-          <p id="simple-modal-description">
-            Room: {(modalInfo.event.extendedProps.north === true) ? 'Auditorium North' : ' Auditorium South'}
-          </p>
-          <p>
-            Owner: {modalInfo.event.extendedProps.owner}
-          </p>
-        </Paper>
-      </Modal>
+        <DialogTitle>{modalInfo.event.title}</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Rooms:{' '}
+            {['north', 'south']
+              .filter(key => modalInfo.event.extendedProps[key])
+              .map(
+                key =>
+                  ({
+                    north: 'Auditorium North',
+                    south: 'Auditorium South',
+                  }[key])
+              )
+              .join(', ')}
+          </Typography>
+          <Typography>Owner: {modalInfo.event.extendedProps.owner}</Typography>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={isFormDialogOpen}
+        onClose={() => setIsFormDialogOpen(false)}
+      >
+        <DialogTitle>New Event</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please note that your reservation needs to be approved first.
+          </DialogContentText>
+
+          <form onSubmit={onSubmit}>
+            <Grid container spacing={1} direction="column" alignItems="center">
+              <Grid item>
+                <TextField label="Event name" />
+              </Grid>
+              <Grid item>
+                <TextField label="Date & Time" />
+              </Grid>
+              <Grid item>
+                <TextField label="Orginiser name" />
+              </Grid>
+              <Grid item>
+                <TextField type="email" label="Orginiser email" />
+              </Grid>
+              <Grid item>
+                <TextField
+                  type="number"
+                  min={2}
+                  max={180}
+                  placeholder="up to 180"
+                  label="# of attendees"
+                />
+              </Grid>
+              <Grid item>
+                <TextField label="Note" multiline />
+              </Grid>
+            </Grid>
+            <Box textAlign="right" mt={4} mb={2} w="100%">
+              <button
+                class="fc-dayGridDay-button fc-button fc-button-primary"
+                id="submitButton"
+              >
+                Submit
+              </button>
+            </Box>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   )
-
 }
 
 export default Calendar

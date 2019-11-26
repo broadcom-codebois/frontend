@@ -1,23 +1,54 @@
 import React from 'react'
-import { Box, Container, makeStyles } from '@material-ui/core'
+import { Box, Container, makeStyles, Typography } from '@material-ui/core'
 
 import Timeline from 'Components/Timeline'
 
-const useStyle = makeStyles({
+const useStyles = makeStyles({
   container: {
-    backgroundColor: '#f7ffff',
+    paddingTop: '2em',
+    backgroundColor: '#FFFFFF',
+    fontFamily: 'Saira Condensed',
+  },
+  heading: {
+    fontWeight: '600',
+    color: '#154A46',
+    background: '#FFFFFF',
+    marginTop: '-1em',
+    paddingLeft: '.3em',
+    paddingRight: '.3em',
+    width: 'fit-content',
+    fontFamily: 'Saira Condensed',
+    float: 'right',
+  },
+  innerContainer: {
+    border: '0.30em solid #A7A635',
+    borderRadius: '1em',
+    margin: 'auto',
+    padding: '0.625em 1em 0.625em 1em',
+  },
+  copyright: {
+    padding: '1em',
+    float: 'right',
+    color: '#58301B',
   },
 })
 
 const Main = () => {
-  const c = useStyle()
+  const c = useStyles()
 
   return (
-    <Box className={c.container}>
-      <Container maxWidth="md">
+    <Container maxWidth="md" className={c.container}>
+      <Box className={c.innerContainer}>
+        <Typography className={c.heading} variant="h4">
+          TIMELINE
+        </Typography>
         <Timeline />
-      </Container>
-    </Box>
+      </Box>
+
+      <Typography variant="p" className={c.copyright}>
+        &copy; CodeWeek 2019
+      </Typography>
+    </Container>
   )
 }
 
