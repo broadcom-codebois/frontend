@@ -14,7 +14,7 @@ const Main = () => {
 
   return (
     <Box className={c.container}>
-      <Container maxWidth="xs">
+      <Container maxWidth="md">
         <Timeline />
       </Container>
     </Box>

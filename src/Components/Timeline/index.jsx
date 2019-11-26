@@ -1,9 +1,15 @@
 import React from 'react'
 import dayjs from 'dayjs'
-import { Grid, Box, makeStyles } from '@material-ui/core'
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  makeStyles,
+} from '@material-ui/core'
 
 import Event from './Event'
-import color from '@material-ui/core/colors/yellow'
 
 const useEvents = () => [
   {
@@ -42,51 +48,31 @@ const useEvents = () => [
   },
 ]
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  container: {
-    position: 'relative',
-    width: '100%',
-    height: p => `${p.height}px`,
-    padding: 'none',
-  },
-  header: {
-    fontFamily: 'Abril Fatface',
-    boxSizing: 'border-box',
-    backgroundColor: '#202040',
-    padding: '5px',
-    fontSize: '25px',
-    margin: '10px 0px 1px 0px',
-    borderRadius: '3px',
-    color: 'white',
-  },
-})
+const useStyles = makeStyles({})
 
 const Timeline = () => {
   const events = useEvents()
-  const conf = {
-    ms_height: 400 / (24 * 60 * 60 * 1000),
-    minTime: Math.min(...events.map(e => e.startTime)),
-    maxTime: Math.max(...events.map(e => e.endTime)),
-  }
-  const length = conf.maxTime - conf.minTime
-  const height = length * conf.ms_height + 100
-  const c = useStyles({ height })
+  const c = useStyles()
+
   return (
-    <Box className={c.root}>
-      <Grid className={c.header} justify="space-around" container>
-        <Grid item>North</Grid>
-        <Grid item>South</Grid>
-      </Grid>
-      <Box className={c.container}>
-        {events.map(event => (
-          <Event key={event.title} conf={conf} event={event} />
-        ))}
-      </Box>
-    </Box>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell align="right">Rooms</TableCell>
+          <TableCell align="right">From</TableCell>
+          <TableCell align="right">To</TableCell>
+          <TableCell align="right">Layout</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {events
+          .sort(e => e.startTime)
+          .map(event => (
+            <Event key={event.title} event={event} />
+          ))}
+      </TableBody>
+    </Table>
   )
 }
 
