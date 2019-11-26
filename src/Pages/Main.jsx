@@ -16,7 +16,7 @@ const useStyle = makeStyles({
 const Main = () => {
   const c = useStyle()
 
-  const [view, setView] = useState(true)
+  const [view, setView] = useState(false)
 
   return (
     <>

@@ -5,7 +5,7 @@ import Main from 'Pages/Main'
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'Raleway, Arial',
+    fontFamily: "'Saira Condensed', sans-serif",
   },
 })
 
