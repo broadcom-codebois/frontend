@@ -46,6 +46,27 @@ var modalInfo = {
   }
 }
 
+var selectedRooms = [true, true]
+var sortedEvents = sortEvents()
+
+function sortEvents() {
+   return events.filter(function(event) {
+    if (selectedRooms.every((currentValue) => currentValue === true)) {
+      return event
+    } else if (selectedRooms[0] === true) {
+      return event.extendedProps.north === true
+    } else if (selectedRooms[1] === true) {
+      return event.extendedProps.south === true
+    } else {
+      return null
+    }
+  });
+}
+
+function handleChange() {
+  this.events = sortedEvents;
+}
+
 const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -53,10 +74,16 @@ const Calendar = () => {
     <>
 
       <div id='roomPicker'>
-        <p>Viewed rooms:</p>
+        <p>Rooms:</p>
         <div class='fc-button-group'>
-          <button type="button" class="fc-dayGridDay-button fc-button fc-button-primary">Auditorium North</button>
-          <button type="button" class="fc-dayGridDay-button fc-button fc-button-primary">Auditorium South</button>
+          <button type='button' class='fc-dayGridDay-button fc-button fc-button-primary' onClick={ ()=> {
+            selectedRooms[0] = !selectedRooms[0]
+            sortedEvents = sortEvents()
+          }}>North</button>
+          <button type='button' class='fc-dayGridDay-button fc-button fc-button-primary' onClick={ ()=> {
+            selectedRooms[1] = !selectedRooms[1]
+            sortedEvents = sortEvents()
+          }}>South</button>
         </div>
       </div>
       <FullCalendar
@@ -70,7 +97,7 @@ const Calendar = () => {
         }
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
-        events={events}
+        events={sortedEvents}
         header={{
           left: 'prev,next',
           center: 'title',

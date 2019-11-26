@@ -39,7 +39,7 @@ const Main = () => {
     <Container maxWidth="md" className={c.container}>
       <Box className={c.innerContainer}>
         <Typography className={c.heading} variant="h4">
-          Reservation system
+          RESERVATION SYSTEM
         </Typography>
         <Calendar />
       </Box>
