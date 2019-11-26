@@ -2,7 +2,11 @@ import React from 'react'
 import { TableRow, TableCell, makeStyles } from '@material-ui/core'
 import dayjs from 'dayjs'
 
-const useStyles = makeStyles({})
+const useStyles = makeStyles({
+  rowText: {
+    fontFamily: 'Saira Condensed',
+  } 
+})
 
 const Event = ({ event, conf }) => {
   const c = useStyles({ event, conf })
@@ -10,19 +14,19 @@ const Event = ({ event, conf }) => {
 
   return (
     <TableRow>
-      <TableCell align="right">{event.title}</TableCell>
-      <TableCell align="right">
+      <TableCell className={c.rowText}>{event.title}</TableCell>
+      <TableCell className={c.rowText}>
         {[event.north ? 'north' : undefined, event.south ? 'south' : undefined]
           .filter(a => a !== undefined)
           .join(', ')}
       </TableCell>
-      <TableCell align="right">
+      <TableCell className={c.rowText}>
         {dayjs(event.startTime).format(displayFormat)}
       </TableCell>
-      <TableCell align="right">
+      <TableCell className={c.rowText}>
         {dayjs(event.endTime).format(displayFormat)}
       </TableCell>
-      <TableCell align="right">{event.layout}</TableCell>
+      <TableCell className={c.rowText}>{event.layout}</TableCell>
     </TableRow>
   )
 }
