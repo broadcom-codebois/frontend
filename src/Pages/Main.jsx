@@ -20,7 +20,7 @@ const Main = () => {
   return (
     <>
       <Box className={c.button}>
-        <Button primary onClick={() => setView(v => !v)}>
+        <Button primary variant="contained" onClick={() => setView(v => !v)}>
           {view ? 'Calendar' : 'Timeline'}
         </Button>
       </Box>
