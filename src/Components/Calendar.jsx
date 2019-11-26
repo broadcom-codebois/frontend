@@ -14,6 +14,7 @@ const events = [
     start: '2019-11-25T10:30:00',
     end: '2019-11-27T11:30:00',
     description: 'Event',
+    color: '#503e2c',
     extendedProps: {
       owner: 'Matyáš Boháček',
       north: true,
@@ -25,6 +26,7 @@ const events = [
     start: '2019-11-28T10:30:00',
     end: '2019-11-29T11:30:00',
     description: 'Event',
+    color: '#2C3E50',
     extendedProps: {
       owner: 'Jan Novák',
       north: false,
@@ -49,6 +51,14 @@ const Calendar = () => {
 
   return (
     <>
+
+      <div id='roomPicker'>
+        <p>Viewed rooms:</p>
+        <div class='fc-button-group'>
+          <button type="button" class="fc-dayGridDay-button fc-button fc-button-primary">Auditorium North</button>
+          <button type="button" class="fc-dayGridDay-button fc-button fc-button-primary">Auditorium South</button>
+        </div>
+      </div>
       <FullCalendar
         eventClick= {
           function(info) {
@@ -76,7 +86,7 @@ const Calendar = () => {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
-        <Paper>
+        <Paper> 
           <h2 id="simple-modal-title">{modalInfo.event.title}</h2>
           <p id="simple-modal-description">
             Room: {(modalInfo.event.extendedProps.north === true) ? 'Auditorium North' : ' Auditorium South'}
@@ -88,6 +98,7 @@ const Calendar = () => {
       </Modal>
     </>
   )
+
 }
 
 export default Calendar

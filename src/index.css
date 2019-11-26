@@ -14,6 +14,17 @@ body,
 #roomPicker {
   padding: 1em;
   vertical-align: middle;
+  padding-bottom: 2em;
+}
+
+#roomPicker p {
+  float: left;
+  margin-top: 0.5em;
+  padding-right: 1em;
+}
+
+#roomPicker div {
+  position: relative;
 }
 
 .MuiPaper-rounded {
