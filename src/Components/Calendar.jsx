@@ -3,7 +3,18 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import { Modal, Paper } from '@material-ui/core'
+import {
+  Box,
+  Grid,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  makeStyles,
+} from '@material-ui/core'
+import { AddRounded } from '@material-ui/icons'
 
 import './calendar-style.scss'
 
@@ -34,9 +45,27 @@ const events = [
   },
 ]
 
+const useStyle = makeStyles({
+  roomPicker: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  customActions: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  iconButton: {
+    boxSizing: 'content-box',
+    width: '24px',
+    height: '24px',
+  },
+})
+
 const Calendar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isFormModalOpen, setIsFormModalOpen] = useState(true)
+  const c = useStyle()
+
+  const [isEventInfoDialogOpen, setIsEventInfoDialogOpen] = useState(false)
+  const [isFormDialogOpen, setIsFormDialogOpen] = useState(false)
   const [selectedRooms, setSelectedRooms] = useState({
     north: true,
     south: true,
@@ -51,41 +80,57 @@ const Calendar = () => {
       },
     },
   })
+  const [newEventData, setNewEventData] = useState({
+    //
+  })
 
   const visibleEvents = events.filter(event =>
     Object.keys(selectedRooms).some(
       key => selectedRooms[key] && event.extendedProps[key]
     )
   )
-  console.log(visibleEvents)
+
+  const onSubmit = e => {
+    e.preventDefault()
+    alert('huray')
+  }
 
   return (
     <>
-      <div id="roomPicker">
-        <p>Rooms:</p>
-        <div class="fc-button-group">
+      <Box className={c.customActions}>
+        <Box className={c.roomPicker} mr={2} my={1}>
+          <Typography>Rooms:</Typography>
+          <Box className="fc-button-group" ml={2}>
+            <button
+              type="button"
+              className="fc-dayGridDay-button fc-button fc-button-primary"
+              onClick={() => setSelectedRooms(r => ({ ...r, north: !r.north }))}
+            >
+              North
+            </button>
+            <button
+              type="button"
+              className="fc-dayGridDay-button fc-button fc-button-primary"
+              onClick={() => setSelectedRooms(r => ({ ...r, south: !r.south }))}
+            >
+              South
+            </button>
+          </Box>
+        </Box>
+        <Box mx={4} my={1}>
           <button
             type="button"
-            class="fc-dayGridDay-button fc-button fc-button-primary"
-            onClick={() => setSelectedRooms(r => ({ ...r, north: !r.north }))}
+            className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
+            onClick={() => setIsFormDialogOpen(true)}
           >
-            North
+            <AddRounded />
           </button>
-          <button
-            type="button"
-            class="fc-dayGridDay-button fc-button fc-button-primary"
-            onClick={() => setSelectedRooms(r => ({ ...r, south: !r.south }))}
-          >
-            South
-          </button>
-        </div>
-      </div>
+        </Box>
+      </Box>
       <FullCalendar
         eventClick={function(info) {
           setModalInfo(info)
-          console.log(info)
-
-          setIsModalOpen(true)
+          setIsEventInfoDialogOpen(true)
         }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
@@ -99,77 +144,77 @@ const Calendar = () => {
         weekends={false}
       />
 
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+      <Dialog
+        open={isEventInfoDialogOpen}
+        onClose={() => setIsEventInfoDialogOpen(false)}
       >
-        <Paper>
-          <h2 id="simple-modal-title">{modalInfo.event.title}</h2>
-          <p id="simple-modal-description">
-            Room:{' '}
-            {modalInfo.event.extendedProps.north === true
-              ? 'Auditorium North'
-              : ' Auditorium South'}
-          </p>
-          <p>Owner: {modalInfo.event.extendedProps.owner}</p>
-        </Paper>
-      </Modal>
+        <DialogTitle>{modalInfo.event.title}</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Rooms:{' '}
+            {['north', 'south']
+              .filter(key => modalInfo.event.extendedProps[key])
+              .map(
+                key =>
+                  ({
+                    north: 'Auditorium North',
+                    south: 'Auditorium South',
+                  }[key])
+              )
+              .join(', ')}
+          </Typography>
+          <Typography>Owner: {modalInfo.event.extendedProps.owner}</Typography>
+        </DialogContent>
+      </Dialog>
 
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={isFormModalOpen}
-        onClose={() => setIsFormModalOpen(false)}
-        style={{ height: '1em' }}
+      <Dialog
+        open={isFormDialogOpen}
+        onClose={() => setIsFormDialogOpen(false)}
       >
-        <Paper>
-          <h2 id="simple-modal-title">New event</h2>
-          <p id="simple-modal-description">
+        <DialogTitle>New Event</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
             Please note that your reservation needs to be approved first.
-          </p>
+          </DialogContentText>
 
-          <form action="POST">
-            <label htmlFor="name">Event name:</label>
-            <br />
-            <input type="text" name="name" />
-            <br />
-            <label htmlFor="date">Date and time:</label>
-            <br />
-            <label htmlFor="owner">Organiser name:</label>
-            <br />
-            <input type="text" name="owner" />
-            <br />
-            <label htmlFor="name">Organiser email:</label>
-            <br />
-            <input type="email" name="email" />
-            <br />
-            <label htmlFor="attendees">Number of attendees:</label>
-            <br />
-            <input
-              type="number"
-              name="attendees"
-              min="2"
-              max="180"
-              placeholder="up to 180"
-            />
-            <br />
-            <label htmlFor="note">Note:</label>
-            <br />
-            <input type="text" name="note" />
-            <br />
-
-            <button
-              class="fc-dayGridDay-button fc-button fc-button-primary"
-              id="submitButton"
-            >
-              Submit
-            </button>
+          <form onSubmit={onSubmit}>
+            <Grid container spacing={1} direction="column" alignItems="center">
+              <Grid item>
+                <TextField label="Event name" />
+              </Grid>
+              <Grid item>
+                <TextField label="Date & Time" />
+              </Grid>
+              <Grid item>
+                <TextField label="Orginiser name" />
+              </Grid>
+              <Grid item>
+                <TextField type="email" label="Orginiser email" />
+              </Grid>
+              <Grid item>
+                <TextField
+                  type="number"
+                  min={2}
+                  max={180}
+                  placeholder="up to 180"
+                  label="# of attendees"
+                />
+              </Grid>
+              <Grid item>
+                <TextField label="Note" multiline />
+              </Grid>
+            </Grid>
+            <Box textAlign="right" mt={4} w="100%">
+              <button
+                class="fc-dayGridDay-button fc-button fc-button-primary"
+                id="submitButton"
+              >
+                Submit
+              </button>
+            </Box>
           </form>
-          <p></p>
-        </Paper>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
