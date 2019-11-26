@@ -6,7 +6,6 @@ import Calendar from '../Components/Calendar.jsx'
 const useStyles = makeStyles({
   container: {
     paddingTop: '2em',
-    backgroundColor: '#f7ffff',
   },
   heading: {
     fontWeight: '1000',
