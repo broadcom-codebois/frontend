@@ -6,25 +6,43 @@ import listPlugin from '@fullcalendar/list'
 import { Modal, Paper } from '@material-ui/core'
 
 import './calendar-style.scss'
+import { instanceOf } from 'prop-types'
 
 const events = [
   {
     title: 'Test Event 1',
     start: '2019-11-25T10:30:00',
     end: '2019-11-27T11:30:00',
-    north: true,
-    south: false,
     description: 'Event',
+    extendedProps: {
+      owner: 'Matyáš Boháček',
+      north: true,
+      south: false
+    }
   },
   {
     title: 'Test Event 2',
     start: '2019-11-28T10:30:00',
     end: '2019-11-29T11:30:00',
-    north: false,
-    south: true,
     description: 'Event',
+    extendedProps: {
+      owner: 'Jan Novák',
+      north: false,
+      south: true
+    }
   },
 ]
+
+var modalInfo = {
+  event:{
+    title: '',
+    extendedProps: {
+      north: true,
+      south: false,
+      owner: ''
+    }
+  }
+}
 
 const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -32,7 +50,14 @@ const Calendar = () => {
   return (
     <>
       <FullCalendar
-        eventClick={() => setIsModalOpen(true)}
+        eventClick= {
+          function(info) {
+            modalInfo = info
+            console.log(info);
+            
+            setIsModalOpen(true)
+          }
+        }
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         events={events}
@@ -44,6 +69,7 @@ const Calendar = () => {
         firstDay={1}
         weekends={false}
       />
+
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -51,9 +77,12 @@ const Calendar = () => {
         onClose={() => setIsModalOpen(false)}
       >
         <Paper>
-          <h2 id="simple-modal-title">Text in a modal</h2>
+          <h2 id="simple-modal-title">{modalInfo.event.title}</h2>
           <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Room: {(modalInfo.event.extendedProps.north === true) ? 'Auditorium North' : ' Auditorium South'}
+          </p>
+          <p>
+            Owner: {modalInfo.event.extendedProps.owner}
           </p>
         </Paper>
       </Modal>
