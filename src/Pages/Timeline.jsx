@@ -5,7 +5,7 @@ import Timeline from 'Components/Timeline'
 
 const useStyle = makeStyles({
   container: {
-    backgroundColor: '#f7ffff',
+    backgroundColor: '#F7F8F7',
   },
 })
 
