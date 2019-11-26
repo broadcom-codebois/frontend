@@ -32,7 +32,7 @@ export default class Calendar extends React.Component {
     ];
 
     return (
-      <FullCalendar dateClick={this.handleDateClick} defaultView="dayGridMonth" plugins={[ dayGridPlugin, timeGridPlugin, listPlugin ]} events={events} header={{ left: 'prev,next', center: 'title', right: 'dayGridDay,dayGridWeek,dayGridMonth' }}/>
+      <FullCalendar dateClick={this.handleDateClick} defaultView="dayGridMonth" plugins={[ dayGridPlugin, timeGridPlugin, listPlugin ]} events={events} header={{ left: 'prev,next', center: 'title', right: 'dayGridDay,dayGridWeek,dayGridMonth' }}  firstDay={1} />
     )
   }
 
