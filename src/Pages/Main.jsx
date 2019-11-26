@@ -1,8 +1,6 @@
 import React from 'react'
 import Calendar from '../Components/Calendar.jsx'
 
-import Test from 'Components/Test'
-
 const Main = () => {
   return (
     <div>
@@ -14,7 +12,6 @@ const Main = () => {
       <p id='copyright'>&copy; CodeWeek 2019</p>
   </div>
   );
-
 }
 
 export default Main
