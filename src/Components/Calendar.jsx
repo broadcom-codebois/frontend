@@ -74,16 +74,16 @@ const Calendar = () => {
     <>
 
       <div id='roomPicker'>
-        <p>Viewed rooms:</p>
+        <p>Rooms:</p>
         <div class='fc-button-group'>
           <button type='button' class='fc-dayGridDay-button fc-button fc-button-primary' onClick={ ()=> {
             selectedRooms[0] = !selectedRooms[0]
             sortedEvents = sortEvents()
-          }}>Auditorium North</button>
+          }}>North</button>
           <button type='button' class='fc-dayGridDay-button fc-button fc-button-primary' onClick={ ()=> {
             selectedRooms[1] = !selectedRooms[1]
             sortedEvents = sortEvents()
-          }}>Auditorium South</button>
+          }}>South</button>
         </div>
       </div>
       <FullCalendar
