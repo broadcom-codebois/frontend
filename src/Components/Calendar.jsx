@@ -3,9 +3,15 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import { Modal, Paper } from '@material-ui/core'
+import { Modal, Paper, makeStyles } from '@material-ui/core'
 
 import './calendar-style.scss'
+
+const useStyles = makeStyles({
+  newEventButtonDiv: {
+    float: 'right',
+  }
+})
 
 const events = [
   {
@@ -64,7 +70,8 @@ function sortEvents() {
 
 const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isFormModalOpen, setIsFormModalOpen] = useState(true)
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false)
+  const c = useStyles()
 
   return (
     <>
@@ -92,7 +99,21 @@ const Calendar = () => {
             South
           </button>
         </div>
+
+        <div class="fc-button-group" className={c.newEventButtonDiv}>
+          <button
+            type="button"
+            class="fc-dayGridDay-button fc-button fc-button-primary"
+            onClick={() => {
+              setIsFormModalOpen(true)
+            }}
+          >
+            New event
+          </button>
+        </div>
       </div>
+
+      <div></div>
       <FullCalendar
         eventClick={function(info) {
           modalInfo = info
@@ -141,8 +162,6 @@ const Calendar = () => {
       >
         <Paper> 
           <h2 id='simple-modal-title'>New event</h2>
-          <p id='simple-modal-description'>Please note that your reservation needs to be approved first.</p>
-
           <form action='POST'>
             <label htmlFor="name">Event name:</label><br/>
             <input type='text' name='name'/><br/>
@@ -151,6 +170,8 @@ const Calendar = () => {
             <input type='text' name='owner'/><br/>
             <label htmlFor="name">Organiser email:</label><br/>
             <input type='email' name='email'/><br/>
+            <label htmlFor="layout">Table layout:</label><br/>
+            <input type='text' name='layout'/><br/>
             <label htmlFor="attendees">Number of attendees:</label><br/>
             <input type='number' name='attendees' min='2' max='180' placeholder='up to 180'/><br/>
             <label htmlFor="note">Note:</label><br/>
