@@ -11,28 +11,8 @@ body,
 }
 
 h1 {
-  font-weight: 1000;
-  color: #2C3E50;
-  background: #FFF;
-  margin-top: -1em;
-  padding-left: 0.2em;
-  padding-right: 0.2em;
-  width: fit-content;
 }
 
-#main {
-  border: 0.25em solid #2C3E50;
-  border-radius: 1em;
-  margin: auto;
-  margin-top: 2em;
-  padding: 0.625em;
-  width: 80%;
-}
-
-#copyright {
-  text-align: center;
-  padding-bottom: 1em;
-}
 
 #roomPicker {
   padding: 1em;

@@ -1,33 +1,31 @@
-import React from 'react'
-import Calendar from '../Components/Calendar.jsx'
-import { Box, Container, makeStyles } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Box, Button, makeStyles } from '@material-ui/core'
 
-import Timeline from 'Components/Timeline'
+import Timeline from './Timeline'
+import Calendar from './Calendar'
 
 const useStyle = makeStyles({
-  container: {
-    backgroundColor: '#DFF6F0',
+  button: {
+    position: 'fixed',
+    top: '10px',
+    left: '10px',
   },
 })
 
 const Main = () => {
   const c = useStyle()
 
+  const [view, setView] = useState(false)
+
   return (
-    <div>
-      <div id='main'>
-        <h1>Reservation system</h1>
-        <Calendar />
-      </div>
-      
-      <p id='copyright'>&copy; CodeWeek 2019</p>
-  </div>
-  );
-    <Box className={c.container}>
-      <Container maxWidth="xs">
-        <Timeline />
-      </Container>
-    </Box>
+    <>
+      <Box className={c.button}>
+        <Button primary onClick={() => setView(v => !v)}>
+          {view ? 'Calendar' : 'Timeline'}
+        </Button>
+      </Box>
+      {view ? <Timeline /> : <Calendar />}
+    </>
   )
 }
 
