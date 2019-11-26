@@ -33,7 +33,7 @@ const events = [
   },
   {
     title: 'Test Event 2',
-    start: '2019-11-28T10:30:00',
+    start: '2019-11-26T10:30:00',
     end: '2019-11-29T11:30:00',
     description: 'Event',
     color: '#A7A635',
@@ -47,10 +47,6 @@ const events = [
 
 const useStyle = makeStyles({
   roomPicker: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  customActions: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -97,36 +93,6 @@ const Calendar = () => {
 
   return (
     <>
-      <Box className={c.customActions}>
-        <Box className={c.roomPicker} mr={2} my={1}>
-          <Typography>Rooms:</Typography>
-          <Box className="fc-button-group" ml={2}>
-            <button
-              type="button"
-              className="fc-dayGridDay-button fc-button fc-button-primary"
-              onClick={() => setSelectedRooms(r => ({ ...r, north: !r.north }))}
-            >
-              North
-            </button>
-            <button
-              type="button"
-              className="fc-dayGridDay-button fc-button fc-button-primary"
-              onClick={() => setSelectedRooms(r => ({ ...r, south: !r.south }))}
-            >
-              South
-            </button>
-          </Box>
-        </Box>
-        <Box mx={4} my={1}>
-          <button
-            type="button"
-            className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
-            onClick={() => setIsFormDialogOpen(true)}
-          >
-            <AddRounded />
-          </button>
-        </Box>
-      </Box>
       <FullCalendar
         eventClick={function(info) {
           setModalInfo(info)
@@ -143,6 +109,54 @@ const Calendar = () => {
         firstDay={1}
         weekends={false}
       />
+
+      <Box mt={2}>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          direction="row"
+        >
+          <Grid item>
+            <Grid container direction="row" alignItems="center" spacing={2}>
+              <Grid item>
+                <Typography>Rooms:</Typography>
+              </Grid>
+              <Grid item>
+                <Box className="fc-button-group">
+                  <button
+                    type="button"
+                    className="fc-dayGridDay-button fc-button fc-button-primary"
+                    onClick={() =>
+                      setSelectedRooms(r => ({ ...r, north: !r.north }))
+                    }
+                  >
+                    North
+                  </button>
+                  <button
+                    type="button"
+                    className="fc-dayGridDay-button fc-button fc-button-primary"
+                    onClick={() =>
+                      setSelectedRooms(r => ({ ...r, south: !r.south }))
+                    }
+                  >
+                    South
+                  </button>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <button
+              type="button"
+              className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
+              onClick={() => setIsFormDialogOpen(true)}
+            >
+              <AddRounded />
+            </button>
+          </Grid>
+        </Grid>
+      </Box>
 
       <Dialog
         open={isEventInfoDialogOpen}
@@ -204,7 +218,7 @@ const Calendar = () => {
                 <TextField label="Note" multiline />
               </Grid>
             </Grid>
-            <Box textAlign="right" mt={4} w="100%">
+            <Box textAlign="right" mt={4} mb={2} w="100%">
               <button
                 class="fc-dayGridDay-button fc-button fc-button-primary"
                 id="submitButton"
