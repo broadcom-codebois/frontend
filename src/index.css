@@ -33,3 +33,8 @@ h1 {
   text-align: center;
   padding-bottom: 1em;
 }
+
+#roomPicker {
+  padding: 1em;
+  vertical-align: middle;
+}
