@@ -10,16 +10,18 @@ const useStyles = makeStyles({
     right: p => (p.event.south ? '0%' : '50%'),
     height: p =>
       `${(p.event.endTime - p.event.startTime) * p.conf.ms_height}px`,
-    padding: '10px',
+    padding: '5px',
   },
   paper: {
     backgroundColor: p =>
-      p.event.north ? (p.event.south ? '#806680' : '#FF6600') : '#0066FF',
+      p.event.north ? (p.event.south ? '#451E1C' : '#F7BE16') : '#C70D3A',
     height: '100%',
     width: '100%',
     textAlign: 'center',
     padding: '10px',
     boxSizing: 'border-box',
+    fontFamily: 'Montserrat',
+    color: 'white',
   },
 })
 
@@ -34,7 +36,7 @@ const Event = ({ event, conf }) => {
           <Grid item>
             <Typography variant="h5">{event.title}</Typography>
           </Grid>
-          <Grid container justify="center" spacing={1}>
+          <Grid container justify="center" direction="column" spacing={1}>
             <Grid item>
               <Typography variant="p">
                 {dayjs(event.startTime).format(displayFormat)}

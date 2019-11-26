@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { Grid, Box, makeStyles } from '@material-ui/core'
 
 import Event from './Event'
+import color from '@material-ui/core/colors/yellow'
 
 const useEvents = () => [
   {
@@ -50,6 +51,16 @@ const useStyles = makeStyles({
     position: 'relative',
     width: '100%',
     minHeight: p => `${p.height}px`,
+  },
+  header: {
+    fontFamily: 'Abril Fatface',
+    boxSizing: 'border-box',
+    backgroundColor: '#202040',
+    padding: '5px',
+    fontSize: '25px',
+    margin: '10px 0px 1px 0px',
+    borderRadius: '3px',
+    color: 'white',
   },
 })
 

@@ -1,13 +1,23 @@
 import React from 'react'
-import { Container } from '@material-ui/core'
+import { Box, Container, makeStyles } from '@material-ui/core'
 
 import Timeline from 'Components/Timeline'
 
+const useStyle = makeStyles({
+  container: {
+    backgroundColor: '#DFF6F0',
+  },
+})
+
 const Main = () => {
+  const c = useStyle()
+
   return (
-    <Container maxWidth="xs">
-      <Timeline />
-    </Container>
+    <Box className={c.container}>
+      <Container maxWidth="xs">
+        <Timeline />
+      </Container>
+    </Box>
   )
 }
 
