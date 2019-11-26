@@ -9,6 +9,7 @@ const useStyle = makeStyles({
     position: 'fixed',
     top: '10px',
     left: '10px',
+    fontFamily: 'Saira Condensed',
   },
 })
 
