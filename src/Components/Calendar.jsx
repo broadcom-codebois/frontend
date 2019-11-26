@@ -13,44 +13,44 @@ const events = [
     start: '2019-11-25T10:30:00',
     end: '2019-11-27T11:30:00',
     description: 'Event',
-    color: '#68BABB',
+    color: '#71B7B0',
     extendedProps: {
       owner: 'Matyáš Boháček',
       north: true,
-      south: false
-    }
+      south: false,
+    },
   },
   {
     title: 'Test Event 2',
     start: '2019-11-28T10:30:00',
     end: '2019-11-29T11:30:00',
     description: 'Event',
-    color: '#E87058',
+    color: '#A7A635',
     extendedProps: {
       owner: 'Jan Novák',
       north: false,
-      south: true
-    }
+      south: true,
+    },
   },
 ]
 
 var modalInfo = {
-  event:{
+  event: {
     title: '',
     extendedProps: {
       north: true,
       south: false,
-      owner: ''
-    }
-  }
+      owner: '',
+    },
+  },
 }
 
 var selectedRooms = [true, true]
 var sortedEvents = sortEvents()
 
 function sortEvents() {
-   return events.filter(function(event) {
-    if (selectedRooms.every((currentValue) => currentValue === true)) {
+  return events.filter(function(event) {
+    if (selectedRooms.every(currentValue => currentValue === true)) {
       return event
     } else if (selectedRooms[0] === true) {
       return event.extendedProps.north === true
@@ -59,7 +59,7 @@ function sortEvents() {
     } else {
       return null
     }
-  });
+  })
 }
 
 const Calendar = () => {
@@ -68,29 +68,38 @@ const Calendar = () => {
 
   return (
     <>
-
-      <div id='roomPicker'>
+      <div id="roomPicker">
         <p>Rooms:</p>
-        <div class='fc-button-group'>
-          <button type='button' class='fc-dayGridDay-button fc-button fc-button-primary' onClick={ ()=> {
-            selectedRooms[0] = !selectedRooms[0]
-            sortedEvents = sortEvents()
-          }}>North</button>
-          <button type='button' class='fc-dayGridDay-button fc-button fc-button-primary' onClick={ ()=> {
-            selectedRooms[1] = !selectedRooms[1]
-            sortedEvents = sortEvents()
-          }}>South</button>
+        <div class="fc-button-group">
+          <button
+            type="button"
+            class="fc-dayGridDay-button fc-button fc-button-primary"
+            onClick={() => {
+              selectedRooms[0] = !selectedRooms[0]
+              sortedEvents = sortEvents()
+            }}
+          >
+            North
+          </button>
+          <button
+            type="button"
+            class="fc-dayGridDay-button fc-button fc-button-primary"
+            onClick={() => {
+              selectedRooms[1] = !selectedRooms[1]
+              sortedEvents = sortEvents()
+            }}
+          >
+            South
+          </button>
         </div>
       </div>
       <FullCalendar
-        eventClick= {
-          function(info) {
-            modalInfo = info
-            console.log(info);
-            
-            setIsModalOpen(true)
-          }
-        }
+        eventClick={function(info) {
+          modalInfo = info
+          console.log(info)
+
+          setIsModalOpen(true)
+        }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         events={sortedEvents}
@@ -110,14 +119,15 @@ const Calendar = () => {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
-        <Paper> 
+        <Paper>
           <h2 id="simple-modal-title">{modalInfo.event.title}</h2>
           <p id="simple-modal-description">
-            Room: {(modalInfo.event.extendedProps.north === true) ? 'Auditorium North' : ' Auditorium South'}
+            Room:{' '}
+            {modalInfo.event.extendedProps.north === true
+              ? 'Auditorium North'
+              : ' Auditorium South'}
           </p>
-          <p>
-            Owner: {modalInfo.event.extendedProps.owner}
-          </p>
+          <p>Owner: {modalInfo.event.extendedProps.owner}</p>
         </Paper>
       </Modal>
 
@@ -153,7 +163,6 @@ const Calendar = () => {
       </Modal>
     </>
   )
-
 }
 
 export default Calendar

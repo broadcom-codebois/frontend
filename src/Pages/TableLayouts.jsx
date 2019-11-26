@@ -5,17 +5,14 @@ import Timeline from 'Components/Timeline'
 
 const useStyle = makeStyles({
   container: {
-    backgroundColor: '#f7ffff',
+    backgroundColor: '#FFFEFD',
   },
 })
 
 const TableLayouts = () => {
   const c = useStyle()
 
-  return (
-    <>
-    </>
-  )
+  return <></>
 }
 
 export default TableLayouts

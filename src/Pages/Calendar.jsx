@@ -6,13 +6,13 @@ import Calendar from '../Components/Calendar.jsx'
 const useStyles = makeStyles({
   container: {
     paddingTop: '2em',
-    backgroundColor: '#FFFEF8',
+    backgroundColor: '#FFFFFF',
     fontFamily: 'Saira Condensed',
   },
   heading: {
     fontWeight: '600',
-    color: '#062330',
-    background: '#FFFEF8',
+    color: '#154A46',
+    background: '#FFFFFF',
     marginTop: '-1em',
     paddingLeft: '.3em',
     paddingRight: '.3em',
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     float: 'right',
   },
   innerContainer: {
-    border: '0.30em solid #1C2E31',
+    border: '0.30em solid #A7A635',
     borderRadius: '1em',
     margin: 'auto',
     padding: '0.625em 1em 0.625em 1em',
@@ -29,6 +29,7 @@ const useStyles = makeStyles({
   copyright: {
     padding: '1em',
     float: 'right',
+    color: '#58301B',
   },
 })
 
