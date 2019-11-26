@@ -14,7 +14,7 @@ const events = [
     start: '2019-11-25T10:30:00',
     end: '2019-11-27T11:30:00',
     description: 'Event',
-    color: '#503e2c',
+    color: '#68BABB',
     extendedProps: {
       owner: 'Matyáš Boháček',
       north: true,
@@ -26,7 +26,7 @@ const events = [
     start: '2019-11-28T10:30:00',
     end: '2019-11-29T11:30:00',
     description: 'Event',
-    color: '#2C3E50',
+    color: '#E87058',
     extendedProps: {
       owner: 'Jan Novák',
       north: false,
