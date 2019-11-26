@@ -9,16 +9,13 @@ const useStyle = makeStyles({
   },
 })
 
-const Main = () => {
+const TableLayouts = () => {
   const c = useStyle()
 
   return (
-    <Box className={c.container}>
-      <Container maxWidth="md">
-        <Timeline />
-      </Container>
-    </Box>
+    <>
+    </>
   )
 }
 
-export default Main
+export default TableLayouts

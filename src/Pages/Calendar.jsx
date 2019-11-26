@@ -6,11 +6,12 @@ import Calendar from '../Components/Calendar.jsx'
 const useStyles = makeStyles({
   container: {
     paddingTop: '2em',
+    backgroundColor: '#f7ffff',
   },
   heading: {
     fontWeight: '1000',
     color: '#2C3E50',
-    background: '#FFF',
+    background: '#f7ffff',
     marginTop: '-1em',
     paddingLeft: '.2em',
     paddingRight: '.2em',
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   },
   copyright: {
     padding: '1em',
-    margin: 'auto',
+    float: 'right',
   },
 })
 
