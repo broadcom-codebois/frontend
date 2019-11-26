@@ -35,7 +35,7 @@ export default class Calendar extends React.Component {
   }
 
   handleDateClick = (arg) => {
-    alert(arg.dateStr)
+    
   }
 
 }
