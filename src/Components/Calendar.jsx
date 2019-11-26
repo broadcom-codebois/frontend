@@ -6,7 +6,6 @@ import listPlugin from '@fullcalendar/list'
 import { Modal, Paper } from '@material-ui/core'
 
 import './calendar-style.scss'
-import { instanceOf } from 'prop-types'
 
 const events = [
   {
@@ -63,12 +62,9 @@ function sortEvents() {
   });
 }
 
-function handleChange() {
-  this.events = sortedEvents;
-}
-
 const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isFormModalOpen, setIsFormModalOpen] = useState(true)
 
   return (
     <>
@@ -107,6 +103,7 @@ const Calendar = () => {
         weekends={false}
       />
 
+
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -121,6 +118,37 @@ const Calendar = () => {
           <p>
             Owner: {modalInfo.event.extendedProps.owner}
           </p>
+        </Paper>
+      </Modal>
+
+
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={isFormModalOpen}
+        onClose={() => setIsFormModalOpen(false)}
+        style={{height: '1em'}}
+      >
+        <Paper> 
+          <h2 id='simple-modal-title'>New event</h2>
+          <p id='simple-modal-description'>Please note that your reservation needs to be approved first.</p>
+
+          <form action='POST'>
+            <label htmlFor="name">Event name:</label><br/>
+            <input type='text' name='name'/><br/>
+            <label htmlFor="date">Date and time:</label><br/>
+            <label htmlFor="owner">Organiser name:</label><br/>
+            <input type='text' name='owner'/><br/>
+            <label htmlFor="name">Organiser email:</label><br/>
+            <input type='email' name='email'/><br/>
+            <label htmlFor="attendees">Number of attendees:</label><br/>
+            <input type='number' name='attendees' min='2' max='180' placeholder='up to 180'/><br/>
+            <label htmlFor="note">Note:</label><br/>
+            <input type='text' name='note'/><br/>
+            
+            <button class='fc-dayGridDay-button fc-button fc-button-primary' id='submitButton'>Submit</button>
+          </form>
+          <p></p>
         </Paper>
       </Modal>
     </>
