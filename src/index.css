@@ -11,6 +11,10 @@ body,
   background-color: '#FEF5E7';
 }
 
+.fc-header-toolbar {
+  width: 100%;
+}
+
 /*
 p {
   font-size: 1em;
