@@ -15,18 +15,16 @@ export default class Calendar extends React.Component {
             title: 'Test Event 1',
             start: '2019-11-25T10:30:00',
             end: '2019-11-27T11:30:00',
-            extendedProps: {
-              department: 'Room 1'
-            },
+            north: true,
+            south: false,
             description: 'Event'
           },
           {
             title: 'Test Event 2',
             start: '2019-11-28T10:30:00',
             end: '2019-11-29T11:30:00',
-            extendedProps: {
-              department: 'Room 2'
-            },
+            north: false,
+            south: true,
             description: 'Event'
           }
     ];
