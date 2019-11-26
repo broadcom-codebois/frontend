@@ -34,37 +34,30 @@ const events = [
   },
 ]
 
-var modalInfo = {
-  event: {
-    title: '',
-    extendedProps: {
-      north: true,
-      south: false,
-      owner: '',
-    },
-  },
-}
-
-var selectedRooms = [true, true]
-var sortedEvents = sortEvents()
-
-function sortEvents() {
-  return events.filter(function(event) {
-    if (selectedRooms.every(currentValue => currentValue === true)) {
-      return event
-    } else if (selectedRooms[0] === true) {
-      return event.extendedProps.north === true
-    } else if (selectedRooms[1] === true) {
-      return event.extendedProps.south === true
-    } else {
-      return null
-    }
-  })
-}
-
 const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isFormModalOpen, setIsFormModalOpen] = useState(true)
+  const [selectedRooms, setSelectedRooms] = useState({
+    north: true,
+    south: true,
+  })
+  const [modalInfo, setModalInfo] = useState({
+    event: {
+      title: '',
+      extendedProps: {
+        north: true,
+        south: false,
+        owner: '',
+      },
+    },
+  })
+
+  const visibleEvents = events.filter(event =>
+    Object.keys(selectedRooms).some(
+      key => selectedRooms[key] && event.extendedProps[key]
+    )
+  )
+  console.log(visibleEvents)
 
   return (
     <>
@@ -74,20 +67,14 @@ const Calendar = () => {
           <button
             type="button"
             class="fc-dayGridDay-button fc-button fc-button-primary"
-            onClick={() => {
-              selectedRooms[0] = !selectedRooms[0]
-              sortedEvents = sortEvents()
-            }}
+            onClick={() => setSelectedRooms(r => ({ ...r, north: !r.north }))}
           >
             North
           </button>
           <button
             type="button"
             class="fc-dayGridDay-button fc-button fc-button-primary"
-            onClick={() => {
-              selectedRooms[1] = !selectedRooms[1]
-              sortedEvents = sortEvents()
-            }}
+            onClick={() => setSelectedRooms(r => ({ ...r, south: !r.south }))}
           >
             South
           </button>
@@ -95,14 +82,14 @@ const Calendar = () => {
       </div>
       <FullCalendar
         eventClick={function(info) {
-          modalInfo = info
+          setModalInfo(info)
           console.log(info)
 
           setIsModalOpen(true)
         }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
-        events={sortedEvents}
+        events={visibleEvents}
         header={{
           left: 'prev,next',
           center: 'title',
@@ -111,7 +98,6 @@ const Calendar = () => {
         firstDay={1}
         weekends={false}
       />
-
 
       <Modal
         aria-labelledby="simple-modal-title"
@@ -131,32 +117,55 @@ const Calendar = () => {
         </Paper>
       </Modal>
 
-
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={isFormModalOpen}
         onClose={() => setIsFormModalOpen(false)}
-        style={{height: '1em'}}
+        style={{ height: '1em' }}
       >
-        <Paper> 
-          <h2 id='simple-modal-title'>New event</h2>
-          <p id='simple-modal-description'>Please note that your reservation needs to be approved first.</p>
+        <Paper>
+          <h2 id="simple-modal-title">New event</h2>
+          <p id="simple-modal-description">
+            Please note that your reservation needs to be approved first.
+          </p>
 
-          <form action='POST'>
-            <label htmlFor="name">Event name:</label><br/>
-            <input type='text' name='name'/><br/>
-            <label htmlFor="date">Date and time:</label><br/>
-            <label htmlFor="owner">Organiser name:</label><br/>
-            <input type='text' name='owner'/><br/>
-            <label htmlFor="name">Organiser email:</label><br/>
-            <input type='email' name='email'/><br/>
-            <label htmlFor="attendees">Number of attendees:</label><br/>
-            <input type='number' name='attendees' min='2' max='180' placeholder='up to 180'/><br/>
-            <label htmlFor="note">Note:</label><br/>
-            <input type='text' name='note'/><br/>
-            
-            <button class='fc-dayGridDay-button fc-button fc-button-primary' id='submitButton'>Submit</button>
+          <form action="POST">
+            <label htmlFor="name">Event name:</label>
+            <br />
+            <input type="text" name="name" />
+            <br />
+            <label htmlFor="date">Date and time:</label>
+            <br />
+            <label htmlFor="owner">Organiser name:</label>
+            <br />
+            <input type="text" name="owner" />
+            <br />
+            <label htmlFor="name">Organiser email:</label>
+            <br />
+            <input type="email" name="email" />
+            <br />
+            <label htmlFor="attendees">Number of attendees:</label>
+            <br />
+            <input
+              type="number"
+              name="attendees"
+              min="2"
+              max="180"
+              placeholder="up to 180"
+            />
+            <br />
+            <label htmlFor="note">Note:</label>
+            <br />
+            <input type="text" name="note" />
+            <br />
+
+            <button
+              class="fc-dayGridDay-button fc-button fc-button-primary"
+              id="submitButton"
+            >
+              Submit
+            </button>
           </form>
           <p></p>
         </Paper>
