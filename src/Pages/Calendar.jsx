@@ -24,8 +24,7 @@ const useStyles = makeStyles({
   },
   copyright: {
     padding: '1em',
-    marginLeft: '50%',
-    translate: 'transformX(-50%)',
+    margin: 'auto',
   },
 })
 

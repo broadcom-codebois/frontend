@@ -50,7 +50,8 @@ const useStyles = makeStyles({
   container: {
     position: 'relative',
     width: '100%',
-    minHeight: p => `${p.height}px`,
+    height: p => `${p.height}px`,
+    padding: 'none',
   },
   header: {
     fontFamily: 'Abril Fatface',
@@ -72,7 +73,7 @@ const Timeline = () => {
     maxTime: Math.max(...events.map(e => e.endTime)),
   }
   const length = conf.maxTime - conf.minTime
-  const height = length * conf.ms_height
+  const height = length * conf.ms_height + 100
   const c = useStyles({ height })
   return (
     <Box className={c.root}>
