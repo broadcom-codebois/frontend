@@ -32,7 +32,7 @@ const Calendar = () => {
   return (
     <>
       <FullCalendar
-        dateClick={() => setIsModalOpen(true)}
+        eventClick={() => setIsModalOpen(true)}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         events={events}
