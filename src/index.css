@@ -8,7 +8,6 @@ body,
   min-width: 100%;
   min-height: 100%;
   font-family: 'Saira Condensed', sans-serif;
-  background-color: '#FEF5E7';
 }
 
 .fc-header-toolbar {
@@ -60,7 +59,7 @@ body,
   color: #58301b;
 }
 .fc-unthemed td.fc-today {
-  background: #f2f0e1 !important;
+  background: #fff9ee !important;
   border-color: '#dddddd' !important;
 }
 .fc-day-grid-event .fc-time {

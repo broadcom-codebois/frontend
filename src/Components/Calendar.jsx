@@ -67,7 +67,7 @@ const useStyle = makeStyles({
     paddingTop: '26px',
   },
   disabledRoom: {
-    backgroundColor: '#58301B',
+    backgroundColor: 'black',
   },
   formLabel: {
     paddingTop: '26px',
@@ -83,7 +83,7 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: event.north ? (event.south ? '#154A46' : '#A7A635') : '#60B9B2',
+  color: event.north ? (event.south ? '#452742' : '#4265F0') : '#E65137',
   extendedProps: {
     id: event.id,
   },
@@ -91,9 +91,9 @@ const convertToFCEvent = event => ({
 
 const BlueCheckbox = withStyles({
   root: {
-    color: '#154A46',
+    color: 'black',
     '&$checked': {
-      color: '#154A46',
+      color: '#452742',
     },
   },
   checked: {},
@@ -153,7 +153,7 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: '#58301b' }}>Rooms:</Typography>
+                <Typography style={{ color: 'black' }}>Rooms:</Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
@@ -223,7 +223,9 @@ const Calendar = () => {
         open={isFormDialogOpen}
         onClose={() => setIsFormDialogOpen(false)}
       >
-        <DialogTitle style={{ color: '#58301B' }}>New Event</DialogTitle>
+        <DialogTitle style={{ color: '#58301b', margin: '3px 0px 0px 0px' }}>
+          New Event
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please note that your reservation needs to be approved first.
@@ -280,7 +282,7 @@ const Calendar = () => {
                       />
                     }
                     label="North"
-                    color="#f5f8fa"
+                    color="#4265F0"
                   />
                   <FormControlLabel
                     control={
@@ -293,7 +295,7 @@ const Calendar = () => {
                       />
                     }
                     label="South"
-                    color="#f5f8fa"
+                    color="#E65137"
                   />
                 </FormGroup>
               </FormControl>

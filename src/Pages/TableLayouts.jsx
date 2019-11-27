@@ -37,7 +37,7 @@ const TableLayouts = () => {
 
   return (
     <>
-      <Link href="#" onClick={handleOpen} style={{ color: '#71B7B0' }}>
+      <Link href="#" onClick={handleOpen} style={{ color: '#4265F0' }}>
         About layouts
       </Link>
       <Dialog fullScreen open={open} onClose={handleClose}>
