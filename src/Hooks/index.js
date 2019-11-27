@@ -16,7 +16,6 @@ export const useEvents = () => {
   })
 
   useEffect(() => {
-    console.log('efecting')
     if (
       !apiState.fetching &&
       (((apiState.events === undefined || apiState.errors !== undefined) &&
@@ -69,16 +68,16 @@ export const useEvents = () => {
 
 export const useCreateEvent = onFinish => {
   const createEvent = event => {
-    console.log('posting')
     const data = {
       ...event,
       begin_time: dayjs(event.begin_time).format(),
       end_time: dayjs(event.end_time).format(),
     }
-    console.log(data)
+    console.log('posting', data)
     api
-      .post('events', data)
+      .post('events/', data)
       .then(console.log)
+      .catch(console.log)
       .finally(onFinish)
   }
 
