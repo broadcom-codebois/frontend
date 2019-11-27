@@ -23,10 +23,10 @@ const Event = ({ event, conf }) => {
           .join(', ')}
       </TableCell>
       <TableCell className={c.rowText}>
-        {dayjs(event.startTime).format(displayFormat)}
+        {dayjs(event.begin_time).format(displayFormat)}
       </TableCell>
       <TableCell className={c.rowText}>
-        {dayjs(event.endTime).format(displayFormat)}
+        {dayjs(event.end_time).format(displayFormat)}
       </TableCell>
       <TableCell className={c.rowText}>{Layouts[event.layout]}</TableCell>
     </TableRow>
