@@ -55,3 +55,11 @@ export const useEvents = () => {
 
   return [events, forceRefresh]
 }
+
+export const useCreateEvent = onFinish => {
+  const createEvent = event => {
+    api.post('events', event).finally(onFinish)
+  }
+
+  return createEvent
+}
