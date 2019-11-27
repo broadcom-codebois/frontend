@@ -38,7 +38,7 @@ body,
   border-bottom: 1px solid rgba(0, 0, 0, 0.54) !important;
 }
 
-.:fc-button-primary {
+.fc-button-primary {
   color: white !important;
   background-color: #58301b !important;
   border-color: #58301b !important;
