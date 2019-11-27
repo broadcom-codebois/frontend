@@ -19,6 +19,23 @@ body,
   height: auto !important;
 }
 
+.form-control {
+  font: inherit;
+  color: #000;
+  width: 100%;
+  border: 0;
+  height: 1.1875em;
+  margin: 0;
+  display: block;
+  padding: 6px 0 7px;
+  min-width: 0;
+  background: none;
+  box-sizing: content-box;
+  animation-name: MuiInputBase-keyframes-auto-fill-cancel;
+  -webkit-tap-highlight-color: transparent;
+  border: 0px solid!important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.54)!important;
+}
 .fc-button-primary {
   color: white !important;
   background-color: #58301b !important;
