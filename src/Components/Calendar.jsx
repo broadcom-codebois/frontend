@@ -17,6 +17,13 @@ import {
   TextField,
   makeStyles,
   InputLabel,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  FormHelperText,
+  withStyles,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
@@ -44,6 +51,13 @@ const useStyle = makeStyles({
   disabledRoom: {
     backgroundColor: 'brown',
   },
+  formLabel: {
+    paddingTop: '26px'
+  },
+  formControl: {
+    maxWidth: '151px',
+    width: '151px',
+  },
 })
 
 const convertToFCEvent = event => ({
@@ -56,6 +70,16 @@ const convertToFCEvent = event => ({
     id: event.id,
   },
 })
+
+const BlueCheckbox = withStyles({
+  root: {
+    color: '#154A46',
+    '&$checked': {
+      color: '#154A46',
+    },
+  },
+  checked: {},
+})(props => <Checkbox color="default" {...props} />);
 
 const Calendar = () => {
   const c = useStyle()
@@ -72,6 +96,16 @@ const Calendar = () => {
   const [newEventData, setNewEventData] = useState({
     //
   })
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
+  
+  const [state, setState] = React.useState({
+    formNorth: true,
+    formSouth: false,
+  });
+  const { formNorth, formSouth } = state;
 
   const visibleEvents = events.filter(event =>
     Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
@@ -204,6 +238,21 @@ const Calendar = () => {
                 <InputLabel htmlFor="datePicker">Time range</InputLabel>
                 <DatePicker />
               </Grid>
+              <FormControl required component="fieldset" className={c.formControl}>
+                <FormLabel component="legend" className={c.formLabel}>Rooms</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<BlueCheckbox checked={formNorth} onChange={handleChange('formNorth')} value="formNorth" />}
+                    label="North"
+                    color='#f5f8fa'
+                  />
+                  <FormControlLabel
+                    control={<BlueCheckbox checked={formSouth} onChange={handleChange('formSouth')} value="formSouth" />}
+                    label="South"
+                    color='#f5f8fa'
+                  />
+                </FormGroup>
+              </FormControl>
               <Grid item>
                 <TextField label="Organiser name" />
               </Grid>
