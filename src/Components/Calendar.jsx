@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogContentText,
   TextField,
+  MenuItem,
   makeStyles,
   InputLabel,
   Checkbox,
@@ -31,7 +32,24 @@ import { useEvents, useCreateEvent } from 'Hooks'
 
 import './calendar-style.scss'
 
-const initialEventState = {}
+import TableLayouts from 'Pages/TableLayouts'
+
+
+const initialEventState = {
+  name: '',
+  description: '',
+  author: '',
+  north: true,
+  south: true,
+  begin_time: dayjs()
+    .add(1, 'day')
+    .valueOf(),
+  end_time: dayjs()
+    .add(2, 'day')
+    .valueOf(),
+  layout: 0,
+  approved: false,
+}
 
 const useStyle = makeStyles({
   roomPicker: {
@@ -65,7 +83,7 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: '#71B7B0',
+  color: event.north ? (event.south ? '#FF0000' : '#00FF00') : '#0000FF',
   extendedProps: {
     id: event.id,
   },
@@ -93,9 +111,7 @@ const Calendar = () => {
     south: true,
   })
   const [infoId, setInfoId] = useState(undefined)
-  const [newEventData, setNewEventData] = useState({
-    //
-  })
+  const [newEventData, setNewEventData] = useState(initialEventState)
 
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
@@ -115,9 +131,9 @@ const Calendar = () => {
 
   const onSubmit = e => {
     e.preventDefault()
-    alert('huray')
+    createEvent(e)
+    setNewEventData(initialEventState)
   }
-  console.log(events)
 
   return (
     <>
@@ -207,7 +223,7 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.owner}</Typography>
+              <Typography>Owner: {visibleInfoDialog.author}</Typography>
             </DialogContent>
           </>
         )}
@@ -229,14 +245,30 @@ const Calendar = () => {
                 <TextField
                   label="Event name"
                   value={newEventData.name}
-                  onChange={(e, val) =>
-                    setNewEventData(d => ({ ...d, name: val }))
-                  }
+                  onChange={e => {
+                    if (e.target === null) return
+                    const value = e.target.value
+                    setNewEventData(d => ({ ...d, name: value }))
+                  }}
                 />
               </Grid>
               <Grid className={c.dateRangePicker}>
                 <InputLabel htmlFor="datePicker">Time range</InputLabel>
-                <DatePicker />
+                <DatePicker
+                  value={{
+                    start: dayjs(newEventData.begin_time).format(
+                      'YYYY-M-D HH:mm'
+                    ),
+                    end: dayjs(newEventData.end_time).format('YYYY-M-D HH:mm'),
+                  }}
+                  onChange={value =>
+                    setNewEventData(d => ({
+                      ...d,
+                      begin_time: dayjs(value.start).valueOf(),
+                      end_time: dayjs(value.end).valueOf(),
+                    }))
+                  }
+                />
               </Grid>
               <FormControl required component="fieldset" className={c.formControl}>
                 <FormLabel component="legend" className={c.formLabel}>Rooms</FormLabel>
@@ -254,13 +286,46 @@ const Calendar = () => {
                 </FormGroup>
               </FormControl>
               <Grid item>
-                <TextField label="Organiser name" />
+                <TextField
+                  label="Organiser name"
+                  value={newEventData.author}
+                  onChange={e => {
+                    if (e.target === null) return
+                    const value = e.target.value
+                    setNewEventData(d => ({ ...d, author: value }))
+                  }}
+                />
               </Grid>
               <Grid item>
-                <TextField type="email" label="Organiser email" />
+                <TextField
+                  select
+                  label='Table layout'
+                  value={newEventData.layout}
+                  onChange={(newVal) => setNewEventData(d => ({...d, layout: newVal}))}
+                  style={{width: 172}}
+                >
+                  <MenuItem value={1}>U-style</MenuItem>
+                  <MenuItem value={2}>School style</MenuItem>
+                  <MenuItem value={3}>Cinema style</MenuItem>
+                  <MenuItem value={4}>Islands</MenuItem>
+                  <MenuItem value={5}>Theatre style</MenuItem>
+                  <MenuItem value={6}>Circle</MenuItem>
+                </TextField>
               </Grid>
               <Grid item>
-                <TextField label="Note" multiline />
+                <TableLayouts />
+              </Grid>
+              <Grid item>
+                <TextField
+                  label="Note"
+                  multiline
+                  value={newEventData.description}
+                  onChange={e => {
+                    if (e.target === null) return
+                    const value = e.target.value
+                    setNewEventData(d => ({ ...d, description: value }))
+                  }}
+                />
               </Grid>
             </Grid>
             <Box textAlign="right" mt={4} mb={2} w="100%">

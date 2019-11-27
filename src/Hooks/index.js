@@ -30,7 +30,11 @@ export const useEvents = () => {
           setApiState(s => ({
             ...s,
             fetching: false,
-            events: response.data,
+            events: response.data.map(e => ({
+              ...e,
+              begin_time: dayjs(e.begin_time).valueOf(),
+              end_time: dayjs(e.end_time).valueOf(),
+            })),
             error: undefined,
             lastRequest: dayjs().valueOf(),
           }))
@@ -65,7 +69,17 @@ export const useEvents = () => {
 
 export const useCreateEvent = onFinish => {
   const createEvent = event => {
-    api.post('events', event).finally(onFinish)
+    console.log('posting')
+    const data = {
+      ...event,
+      begin_time: dayjs(event.begin_time).format(),
+      end_time: dayjs(event.end_time).format(),
+    }
+    console.log(data)
+    api
+      .post('events', data)
+      .then(console.log)
+      .finally(onFinish)
   }
 
   return createEvent
