@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogContentText,
   TextField,
+  MenuItem,
   makeStyles,
   InputLabel,
 } from '@material-ui/core'
@@ -23,6 +24,9 @@ import { AddRounded } from '@material-ui/icons'
 import { useEvents, useCreateEvent } from 'Hooks'
 
 import './calendar-style.scss'
+
+import TableLayouts from 'Pages/TableLayouts'
+
 
 const initialEventState = {
   name: '',
@@ -242,6 +246,25 @@ const Calendar = () => {
                     setNewEventData(d => ({ ...d, author: value }))
                   }}
                 />
+              </Grid>
+              <Grid item>
+                <TextField
+                  select
+                  label='Table layout'
+                  value={newEventData.layout}
+                  onChange={(newVal) => setNewEventData(d => ({...d, layout: newVal}))}
+                  style={{width: 172}}
+                >
+                  <MenuItem value={1}>U-style</MenuItem>
+                  <MenuItem value={2}>School style</MenuItem>
+                  <MenuItem value={3}>Cinema style</MenuItem>
+                  <MenuItem value={4}>Islands</MenuItem>
+                  <MenuItem value={5}>Theatre style</MenuItem>
+                  <MenuItem value={6}>Circle</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item>
+                <TableLayouts />
               </Grid>
               <Grid item>
                 <TextField
