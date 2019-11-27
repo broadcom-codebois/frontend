@@ -69,7 +69,7 @@ const useStyle = makeStyles({
     backgroundColor: 'brown',
   },
   formLabel: {
-    paddingTop: '26px'
+    paddingTop: '26px',
   },
   formControl: {
     maxWidth: '151px',
@@ -96,7 +96,7 @@ const BlueCheckbox = withStyles({
     },
   },
   checked: {},
-})(props => <Checkbox color="default" {...props} />);
+})(props => <Checkbox color="default" {...props} />)
 
 const Calendar = () => {
   const c = useStyle()
@@ -111,16 +111,6 @@ const Calendar = () => {
   })
   const [infoId, setInfoId] = useState(undefined)
   const [newEventData, setNewEventData] = useState(initialEventState)
-
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-  };
-  
-  const [state, setState] = React.useState({
-    formNorth: true,
-    formSouth: false,
-  });
-  const { formNorth, formSouth } = state;
 
   const visibleEvents = events.filter(event =>
     Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
@@ -270,18 +260,40 @@ const Calendar = () => {
                   }}
                 />
               </Grid>
-              <FormControl required component="fieldset" className={c.formControl}>
-                <FormLabel component="legend" className={c.formLabel}>Rooms</FormLabel>
+              <FormControl
+                required
+                component="fieldset"
+                className={c.formControl}
+              >
+                <FormLabel component="legend" className={c.formLabel}>
+                  Rooms
+                </FormLabel>
                 <FormGroup>
                   <FormControlLabel
-                    control={<BlueCheckbox checked={formNorth} onChange={handleChange('formNorth')} value="formNorth" />}
+                    control={
+                      <BlueCheckbox
+                        checked={newEventData.north}
+                        onChange={() =>
+                          setNewEventData(d => ({ ...d, north: !d.north }))
+                        }
+                        value="formNorth"
+                      />
+                    }
                     label="North"
-                    color='#f5f8fa'
+                    color="#f5f8fa"
                   />
                   <FormControlLabel
-                    control={<BlueCheckbox checked={formSouth} onChange={handleChange('formSouth')} value="formSouth" />}
+                    control={
+                      <BlueCheckbox
+                        checked={newEventData.south}
+                        onChange={() =>
+                          setNewEventData(d => ({ ...d, south: !d.south }))
+                        }
+                        value="formSouth"
+                      />
+                    }
                     label="South"
-                    color='#f5f8fa'
+                    color="#f5f8fa"
                   />
                 </FormGroup>
               </FormControl>
