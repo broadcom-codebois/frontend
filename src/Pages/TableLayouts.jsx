@@ -1,63 +1,40 @@
 import React from 'react'
 import { Grid, Container } from '@material-ui/core'
+import uStyle from 'img/u-style-sm.png'
+import schoolStyle from 'img/school-style-sm.png'
+import cinemaStyle from 'img/cinema-style-sm.png'
+import islands from 'img/islands-sm.png'
+import theatreStyle from 'img/theatre-style-sm.png'
+import circle from 'img/circle-sm.png'
+
+
+const Layout = (props) => {
+  return (
+    <>
+      <Grid item xs={4} md={3}>
+            <h3>{props.head}</h3>
+            <h4>{props.num}. layout</h4>
+            <p>{props.body1}</p>
+            <p>{props.body2}</p>
+      </Grid>
+      <Grid item xs={8} md={3}>
+        <img src={props.img} alt=''/>
+      </Grid>
+    </>
+  )
+}
+
 
 const TableLayouts = () => {
   return (
     <Container>
       <Grid container spacing={3}>
-        <Grid item xs={6} md={3}>
-          <h3>U-style</h3>
-          <h4>1. layout</h4>
-          <p>23-26 tables</p>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <img src='https://fakeimg.pl/200/' alt=''/>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <h3>School style</h3>
-          <h4>2. layout</h4>
-          <p>16 tables</p>
-          <p>32 chairs</p>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <img src='https://fakeimg.pl/200/' alt=''/>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <h3>Cinema style</h3>
-          <h4>3. layout</h4>
-          <p>40+ chairs</p>
-          <p>100 chairs max</p>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <img src='https://fakeimg.pl/200/' alt=''/>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <h3>Islands</h3>
-          <h4>4. layout</h4>
-          <p>4x3 tables</p>
-          <p>8-10 chairs per table</p>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <img src='https://fakeimg.pl/200/' alt=''/>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <h3>Theatre style in both auditoriums</h3>
-          <h4>5. layout</h4>
-          <p>Detached wall</p>
-          <p>80 chairs</p>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <img src='https://fakeimg.pl/200/' alt=''/>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <h3>Circle</h3>
-          <h4>6. layout</h4>
-          <p>32 chairs</p>
-          <p>16 tables</p>
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <img src='https://fakeimg.pl/200/' alt=''/>
-        </Grid>
+        <Layout head='U-style' num='1' body1='23-26 tables' img={uStyle} />
+        <Layout head='School style' num='2' body1='16 tables' body2='32 chairs' img={schoolStyle} />
+        <Layout head='Cinema style' num='3' body1='40+ chairs' body2='100 chairs max' img={cinemaStyle} />
+        <Layout head='Islands' num='4' body1='4x3 tables' body2='8-10 chairs per table' img={islands} />
+        <Layout head='Theatre style' num='5' body1='Detached wall' body2='80 chairs' img={theatreStyle} />
+        <Layout head='Circle' num='6' body1='32 chairs' body2='16 tables' img={circle} />
         <Grid item xs={12} md={6}>
           <p>Written capacities are for standard layouts  per one Auditorium</p>
           <p>Possible extension should be discussed with our facility team</p>
