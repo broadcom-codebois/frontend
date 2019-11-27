@@ -46,7 +46,7 @@ const initialEventState = {
   end_time: dayjs()
     .add(2, 'day')
     .valueOf(),
-  layout: 0,
+  layout: 1,
   approved: false,
 }
 
@@ -113,14 +113,14 @@ const Calendar = () => {
   const [newEventData, setNewEventData] = useState(initialEventState)
 
   const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked })
-  }
-
+    setState({ ...state, [name]: event.target.checked });
+  };
+  
   const [state, setState] = React.useState({
     formNorth: true,
     formSouth: false,
-  })
-  const { formNorth, formSouth } = state
+  });
+  const { formNorth, formSouth } = state;
 
   const visibleEvents = events.filter(event =>
     Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
@@ -130,16 +130,16 @@ const Calendar = () => {
 
   const onSubmit = e => {
     e.preventDefault()
-    createEvent(e)
+    createEvent(newEventData)
+
+    setIsFormDialogOpen(false)
     setNewEventData(initialEventState)
   }
 
   return (
     <>
       <FullCalendar
-        eventClick={info =>
-          console.log(info) || setInfoId(info.event.extendedProps.id)
-        }
+        eventClick={info => setInfoId(info.event.extendedProps.id)}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         events={visibleEvents.map(convertToFCEvent)}
@@ -260,13 +260,14 @@ const Calendar = () => {
                     ),
                     end: dayjs(newEventData.end_time).format('YYYY-M-D HH:mm'),
                   }}
-                  onChange={value =>
+                  onChange={value => {
+                    alert('set time')
                     setNewEventData(d => ({
                       ...d,
                       begin_time: dayjs(value.start).valueOf(),
                       end_time: dayjs(value.end).valueOf(),
                     }))
-                  }
+                  }}
                 />
               </Grid>
               <FormControl
@@ -279,24 +280,12 @@ const Calendar = () => {
                 </FormLabel>
                 <FormGroup>
                   <FormControlLabel
-                    control={
-                      <BlueCheckbox
-                        checked={formNorth}
-                        onChange={handleChange('formNorth')}
-                        value="formNorth"
-                      />
-                    }
+                    control={<BlueCheckbox checked={formNorth} onChange={handleChange('formNorth')} value="formNorth" />}
                     label="North"
                     color="#f5f8fa"
                   />
                   <FormControlLabel
-                    control={
-                      <BlueCheckbox
-                        checked={formSouth}
-                        onChange={handleChange('formSouth')}
-                        value="formSouth"
-                      />
-                    }
+                    control={<BlueCheckbox checked={formSouth} onChange={handleChange('formSouth')} value="formSouth" />}
                     label="South"
                     color="#f5f8fa"
                   />
@@ -313,15 +302,13 @@ const Calendar = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid item style={{ width: 172 }}>
                 <TextField
                   select
                   label="Table layout"
                   value={newEventData.layout}
-                  onChange={newVal =>
-                    setNewEventData(d => ({ ...d, layout: newVal }))
-                  }
-                  style={{ width: 172 }}
+                  onChange={(newVal) => setNewEventData(d => ({...d, layout: newVal}))}
+                  style={{width: 172}}
                 >
                   <MenuItem value={1}>U-style</MenuItem>
                   <MenuItem value={2}>School style</MenuItem>
