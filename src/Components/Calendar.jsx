@@ -66,7 +66,7 @@ const useStyle = makeStyles({
     paddingTop: '26px',
   },
   disabledRoom: {
-    backgroundColor: 'brown',
+    backgroundColor: '#58301B',
   },
   formLabel: {
     paddingTop: '26px',
@@ -82,7 +82,7 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: event.north ? (event.south ? '#FF0000' : '#00FF00') : '#0000FF',
+  color: event.north ? (event.south ? '#154A46' : '#A7A635') : '#60B9B2',
   extendedProps: {
     id: event.id,
   },
@@ -111,6 +111,16 @@ const Calendar = () => {
   })
   const [infoId, setInfoId] = useState(undefined)
   const [newEventData, setNewEventData] = useState(initialEventState)
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked })
+  }
+
+  const [state, setState] = React.useState({
+    formNorth: true,
+    formSouth: false,
+  })
+  const { formNorth, formSouth } = state
 
   const visibleEvents = events.filter(event =>
     Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
@@ -222,7 +232,7 @@ const Calendar = () => {
         open={isFormDialogOpen}
         onClose={() => setIsFormDialogOpen(false)}
       >
-        <DialogTitle>New Event</DialogTitle>
+        <DialogTitle style={{ color: '#58301B' }}>New Event</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please note that your reservation needs to be approved first.
@@ -271,10 +281,8 @@ const Calendar = () => {
                   <FormControlLabel
                     control={
                       <BlueCheckbox
-                        checked={newEventData.north}
-                        onChange={() =>
-                          setNewEventData(d => ({ ...d, north: !d.north }))
-                        }
+                        checked={formNorth}
+                        onChange={handleChange('formNorth')}
                         value="formNorth"
                       />
                     }
@@ -284,10 +292,8 @@ const Calendar = () => {
                   <FormControlLabel
                     control={
                       <BlueCheckbox
-                        checked={newEventData.south}
-                        onChange={() =>
-                          setNewEventData(d => ({ ...d, south: !d.south }))
-                        }
+                        checked={formSouth}
+                        onChange={handleChange('formSouth')}
                         value="formSouth"
                       />
                     }
@@ -312,12 +318,10 @@ const Calendar = () => {
                   select
                   label="Table layout"
                   value={newEventData.layout}
-                  onChange={e => {
-                    if (e.target === null) return
-                    const value = e.target.value
-                    setNewEventData(d => ({ ...d, layout: value }))
-                  }}
-                  style={{ width: '100%' }}
+                  onChange={newVal =>
+                    setNewEventData(d => ({ ...d, layout: newVal }))
+                  }
+                  style={{ width: 172 }}
                 >
                   <MenuItem value={1}>U-style</MenuItem>
                   <MenuItem value={2}>School style</MenuItem>
