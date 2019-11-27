@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
 
+const BACKEND = /* Should be working ? */ false
+  ? 'https://codeweek2019.kaifer.cz/api/'
+  : '/rgi/'
+
 const api = axios.create({
-  baseURL: 'https://codeweek2019.kaifer.cz/api/',
+  baseUrl: BACKEND,
   timeout: 2000,
 })
 

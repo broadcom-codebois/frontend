@@ -251,7 +251,6 @@ const Calendar = () => {
                     end: dayjs(newEventData.end_time).format('YYYY-M-D HH:mm'),
                   }}
                   onChange={value => {
-                    alert('set time')
                     setNewEventData(d => ({
                       ...d,
                       begin_time: dayjs(value.start).valueOf(),
