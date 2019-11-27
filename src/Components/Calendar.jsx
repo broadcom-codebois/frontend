@@ -152,7 +152,7 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography>Rooms:</Typography>
+                <Typography style={{ color: '#58301b' }}>Rooms:</Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
