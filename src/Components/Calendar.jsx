@@ -27,7 +27,6 @@ import './calendar-style.scss'
 
 import TableLayouts from 'Pages/TableLayouts'
 
-
 const initialEventState = {
   name: '',
   description: '',
@@ -40,7 +39,7 @@ const initialEventState = {
   end_time: dayjs()
     .add(2, 'day')
     .valueOf(),
-  layout: 0,
+  layout: 1,
   approved: false,
 }
 
@@ -97,16 +96,16 @@ const Calendar = () => {
 
   const onSubmit = e => {
     e.preventDefault()
-    createEvent(e)
+    createEvent(newEventData)
+
+    setIsFormDialogOpen(false)
     setNewEventData(initialEventState)
   }
 
   return (
     <>
       <FullCalendar
-        eventClick={info =>
-          console.log(info) || setInfoId(info.event.extendedProps.id)
-        }
+        eventClick={info => setInfoId(info.event.extendedProps.id)}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
         events={visibleEvents.map(convertToFCEvent)}
@@ -227,13 +226,14 @@ const Calendar = () => {
                     ),
                     end: dayjs(newEventData.end_time).format('YYYY-M-D HH:mm'),
                   }}
-                  onChange={value =>
+                  onChange={value => {
+                    alert('set time')
                     setNewEventData(d => ({
                       ...d,
                       begin_time: dayjs(value.start).valueOf(),
                       end_time: dayjs(value.end).valueOf(),
                     }))
-                  }
+                  }}
                 />
               </Grid>
               <Grid item>
@@ -247,13 +247,17 @@ const Calendar = () => {
                   }}
                 />
               </Grid>
-              <Grid item>
+              <Grid item style={{ width: 172 }}>
                 <TextField
                   select
-                  label='Table layout'
+                  label="Table layout"
                   value={newEventData.layout}
-                  onChange={(newVal) => setNewEventData(d => ({...d, layout: newVal}))}
-                  style={{width: 172}}
+                  onChange={e => {
+                    if (e.target === null) return
+                    const value = e.target.value
+                    setNewEventData(d => ({ ...d, layout: value }))
+                  }}
+                  style={{ width: '100%' }}
                 >
                   <MenuItem value={1}>U-style</MenuItem>
                   <MenuItem value={2}>School style</MenuItem>
