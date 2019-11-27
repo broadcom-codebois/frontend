@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 const BACKEND = /* Should be working ? */ false
   ? 'https://codeweek2019.kaifer.cz/api/'
-  : '/rgi/'
+  : 'https://booking.magnusi.tech/rgi/'
 
 const api = axios.create({
   baseUrl: BACKEND,
