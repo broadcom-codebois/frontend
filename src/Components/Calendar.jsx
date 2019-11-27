@@ -28,7 +28,21 @@ import './calendar-style.scss'
 import TableLayouts from 'Pages/TableLayouts'
 
 
-const initialEventState = {}
+const initialEventState = {
+  name: '',
+  description: '',
+  author: '',
+  north: true,
+  south: true,
+  begin_time: dayjs()
+    .add(1, 'day')
+    .valueOf(),
+  end_time: dayjs()
+    .add(2, 'day')
+    .valueOf(),
+  layout: 0,
+  approved: false,
+}
 
 const useStyle = makeStyles({
   roomPicker: {
@@ -177,7 +191,7 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.owner}</Typography>
+              <Typography>Owner: {visibleInfoDialog.author}</Typography>
             </DialogContent>
           </>
         )}
@@ -206,13 +220,30 @@ const Calendar = () => {
               </Grid>
               <Grid className={c.dateRangePicker}>
                 <InputLabel htmlFor="datePicker">Time range</InputLabel>
-                <DatePicker />
+                <DatePicker
+                  value={{
+                    start: dayjs(newEventData.begin_time).format(
+                      'YYYY-M-D HH:mm'
+                    ),
+                    end: dayjs(newEventData.end_time).format('YYYY-M-D HH:mm'),
+                  }}
+                  onChange={value =>
+                    setNewEventData(d => ({
+                      ...d,
+                      begin_time: dayjs(value.start).valueOf(),
+                      end_time: dayjs(value.end).valueOf(),
+                    }))
+                  }
+                />
               </Grid>
               <Grid item>
-                <TextField label="Organiser name" />
-              </Grid>
-              <Grid item>
-                <TextField type="email" label="Organiser email" />
+                <TextField
+                  label="Organiser name"
+                  value={newEventData.author}
+                  onChange={(e, val) =>
+                    setNewEventData(d => ({ ...d, name: val }))
+                  }
+                />
               </Grid>
               <Grid item>
                 <TextField
