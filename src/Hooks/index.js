@@ -50,7 +50,13 @@ export const useEvents = () => {
     apiState.errors,
   ])
 
-  const forceRefresh = () => setApiState(s => ({ ...s, lastRequest: 0 }))
+  const forceRefresh = () =>
+    setApiState(s => ({
+      ...s,
+      lastRequest: dayjs()
+        .subtract(1, 'day')
+        .valueOf(),
+    }))
   const events = apiState.events === undefined ? [] : apiState.events
 
   return [events, forceRefresh]
