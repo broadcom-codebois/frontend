@@ -63,7 +63,7 @@ const useStyle = makeStyles({
     height: '24px',
   },
   disabledRoom: {
-    backgroundColor: 'brown',
+    backgroundColor: '#58301B',
   },
 })
 

@@ -8,7 +8,6 @@ body,
   min-width: 100%;
   min-height: 100%;
   font-family: 'Saira Condensed', sans-serif;
-  background-color: '#FEF5E7';
 }
 
 .fc-header-toolbar {
@@ -18,4 +17,39 @@ body,
 .fc-scroller,
 .fc {
   height: auto !important;
+}
+
+.fc-button-primary {
+  color: white !important;
+  background-color: #58301b !important;
+  border-color: #58301b !important;
+}
+
+.fc-button-primary:focus {
+}
+
+.fc-button-active {
+  color: white !important;
+  background-color: #a04b1f !important;
+  border-color: #a04b1f !important;
+}
+.fc-toolbar h2 {
+  font-size: 1.75em;
+  margin: 0;
+  color: #58301b;
+}
+.fc .fc-row {
+  color: #58301b;
+}
+.fc-unthemed td.fc-today {
+  background: #f2f0e1 !important;
+  border-color: '#dddddd' !important;
+}
+.fc-day-grid-event .fc-time {
+  font-weight: bold;
+  padding: 3px;
+}
+.fc-dayGrid-view .fc-week-number,
+.fc-dayGrid-view .fc-day-number {
+  padding: 0px 4px 0px 0px !important;
 }
