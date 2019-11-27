@@ -17,7 +17,7 @@ class DatePicker extends React.Component {
     };
   }
 
-  onSelect = (value, states) => {
+  onChange = (value, states) => {
     this.setState({ value, states });
   };
 
@@ -41,7 +41,7 @@ class DatePicker extends React.Component {
         
         <DatetimeRangePicker
             value={this.state.value}
-            onSelect={this.onSelect}
+            onChange={this.onChange}
             singleDateRange={true}
         />
 
