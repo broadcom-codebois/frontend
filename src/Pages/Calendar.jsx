@@ -25,7 +25,6 @@ const useStyles = makeStyles({
     borderRadius: '1em',
     margin: 'auto',
     padding: '0.625em 1em 0.625em 1em',
-    //height: 'auto !important',
   },
   copyright: {
     padding: '1em',
