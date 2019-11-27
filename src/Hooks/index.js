@@ -12,10 +12,11 @@ export const useEvents = () => {
     events: undefined,
     fetching: false,
     error: undefined,
-    lastRequest: dayjs().valueOf(),
+    lastRequest: 0,
   })
 
   useEffect(() => {
+    console.log('efecting')
     if (
       !apiState.fetching &&
       (((apiState.events === undefined || apiState.errors !== undefined) &&

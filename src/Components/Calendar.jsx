@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import dayjs from 'dayjs'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -17,40 +18,11 @@ import {
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
+import { useEvents, useCreateEvent } from 'Hooks'
+
 import './calendar-style.scss'
 
-const useStyles = makeStyles({
-  newEventButtonDiv: {
-    float: 'right',
-  },
-})
-
-const events = [
-  {
-    title: 'Test Event 1',
-    start: '2019-11-25T10:30:00',
-    end: '2019-11-27T11:30:00',
-    description: 'Event',
-    color: '#71B7B0',
-    extendedProps: {
-      owner: 'Matyáš Boháček',
-      north: true,
-      south: false,
-    },
-  },
-  {
-    title: 'Test Event 2',
-    start: '2019-11-26T10:30:00',
-    end: '2019-11-29T11:30:00',
-    description: 'Event',
-    color: '#A7A635',
-    extendedProps: {
-      owner: 'Jan Novák',
-      north: false,
-      south: true,
-    },
-  },
-]
+const initialEventState = {}
 
 const useStyle = makeStyles({
   roomPicker: {
@@ -67,34 +39,38 @@ const useStyle = makeStyles({
   },
 })
 
+const convertToFCEvent = event => ({
+  title: event.name,
+  start: dayjs(event.start_time).format('YYYY-MM-DDTHH:mm:ss'),
+  end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
+  description: event.description,
+  color: '#71B7B0',
+  extendedProps: {
+    id: event.id,
+  },
+})
+
 const Calendar = () => {
   const c = useStyle()
 
-  const [isEventInfoDialogOpen, setIsEventInfoDialogOpen] = useState(false)
+  const [events, refreshEvents] = useEvents()
+  const createEvent = useCreateEvent(refreshEvents)
+
   const [isFormDialogOpen, setIsFormDialogOpen] = useState(false)
   const [selectedRooms, setSelectedRooms] = useState({
     north: true,
     south: true,
   })
-  const [modalInfo, setModalInfo] = useState({
-    event: {
-      title: '',
-      extendedProps: {
-        north: true,
-        south: false,
-        owner: '',
-      },
-    },
-  })
+  const [infoId, setInfoId] = useState(undefined)
   const [newEventData, setNewEventData] = useState({
     //
   })
 
   const visibleEvents = events.filter(event =>
-    Object.keys(selectedRooms).some(
-      key => selectedRooms[key] && event.extendedProps[key]
-    )
+    Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
   )
+
+  const visibleInfoDialog = events.find(event => event.id === infoId)
 
   const onSubmit = e => {
     e.preventDefault()
@@ -104,13 +80,12 @@ const Calendar = () => {
   return (
     <>
       <FullCalendar
-        eventClick={function(info) {
-          setModalInfo(info)
-          setIsEventInfoDialogOpen(true)
-        }}
+        eventClick={info =>
+          console.log(info) || setInfoId(info.event.extendedProps.id)
+        }
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
-        events={visibleEvents}
+        events={visibleEvents.map(convertToFCEvent)}
         header={{
           left: 'prev,next',
           center: 'title',
@@ -172,27 +147,28 @@ const Calendar = () => {
         </Grid>
       </Box>
 
-      <Dialog
-        open={isEventInfoDialogOpen}
-        onClose={() => setIsEventInfoDialogOpen(false)}
-      >
-        <DialogTitle>{modalInfo.event.title}</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Rooms:{' '}
-            {['north', 'south']
-              .filter(key => modalInfo.event.extendedProps[key])
-              .map(
-                key =>
-                  ({
-                    north: 'Auditorium North',
-                    south: 'Auditorium South',
-                  }[key])
-              )
-              .join(', ')}
-          </Typography>
-          <Typography>Owner: {modalInfo.event.extendedProps.owner}</Typography>
-        </DialogContent>
+      <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
+        {visibleInfoDialog !== undefined && (
+          <>
+            <DialogTitle>{visibleInfoDialog.name}</DialogTitle>
+            <DialogContent>
+              <Typography>
+                Rooms:{' '}
+                {['north', 'south']
+                  .filter(key => visibleInfoDialog[key])
+                  .map(
+                    key =>
+                      ({
+                        north: 'Auditorium North',
+                        south: 'Auditorium South',
+                      }[key])
+                  )
+                  .join(', ')}
+              </Typography>
+              <Typography>Owner: {visibleInfoDialog.owner}</Typography>
+            </DialogContent>
+          </>
+        )}
       </Dialog>
 
       <Dialog
@@ -208,10 +184,13 @@ const Calendar = () => {
           <form onSubmit={onSubmit}>
             <Grid container spacing={1} direction="column" alignItems="center">
               <Grid item>
-                <TextField label="Event name" />
-              </Grid>
-              <Grid item>
-                <TextField label="Date & Time" />
+                <TextField
+                  label="Event name"
+                  value={newEventData.name}
+                  onChange={(e, val) =>
+                    setNewEventData(d => ({ ...d, name: val }))
+                  }
+                />
               </Grid>
               <Grid item>
                 <TextField label="Orginiser name" />
