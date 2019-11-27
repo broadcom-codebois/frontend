@@ -16,7 +16,7 @@ import {
   DialogContentText,
   TextField,
   makeStyles,
-  InputLabel
+  InputLabel,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
@@ -48,7 +48,7 @@ const useStyle = makeStyles({
 
 const convertToFCEvent = event => ({
   title: event.name,
-  start: dayjs(event.start_time).format('YYYY-MM-DDTHH:mm:ss'),
+  start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
   color: '#71B7B0',
@@ -83,6 +83,7 @@ const Calendar = () => {
     e.preventDefault()
     alert('huray')
   }
+  console.log(events)
 
   return (
     <>
