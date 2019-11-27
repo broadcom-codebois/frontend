@@ -69,12 +69,16 @@ export const useEvents = () => {
 
 export const useCreateEvent = onFinish => {
   const createEvent = event => {
+    console.log('posting')
+    const data = {
+      ...event,
+      begin_time: dayjs(event.begin_time).format(),
+      end_time: dayjs(event.end_time).format(),
+    }
+    console.log(data)
     api
-      .post('events', {
-        ...event,
-        begin_time: dayjs(event.begin_time).format(),
-        end_time: dayjs(event.end_time).format(),
-      })
+      .post('events', data)
+      .then(console.log)
       .finally(onFinish)
   }
 
