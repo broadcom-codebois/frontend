@@ -2,10 +2,12 @@ import React from 'react'
 import { TableRow, TableCell, makeStyles } from '@material-ui/core'
 import dayjs from 'dayjs'
 
+import { Layouts } from 'Lib'
+
 const useStyles = makeStyles({
   rowText: {
     fontFamily: 'Saira Condensed',
-  } 
+  },
 })
 
 const Event = ({ event, conf }) => {
@@ -26,7 +28,7 @@ const Event = ({ event, conf }) => {
       <TableCell className={c.rowText}>
         {dayjs(event.endTime).format(displayFormat)}
       </TableCell>
-      <TableCell className={c.rowText}>{event.layout}</TableCell>
+      <TableCell className={c.rowText}>{Layouts[event.layout]}</TableCell>
     </TableRow>
   )
 }

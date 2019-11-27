@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import DatePicker from './DateRangePicker'
+import { Layouts } from 'Lib'
 
 import {
   Box,
@@ -319,12 +320,11 @@ const Calendar = () => {
                   }}
                   style={{ width: '100%' }}
                 >
-                  <MenuItem value={1}>U-style</MenuItem>
-                  <MenuItem value={2}>School style</MenuItem>
-                  <MenuItem value={3}>Cinema style</MenuItem>
-                  <MenuItem value={4}>Islands</MenuItem>
-                  <MenuItem value={5}>Theatre style</MenuItem>
-                  <MenuItem value={6}>Circle</MenuItem>
+                  {Object.keys(Layouts).map(key => (
+                    <MenuItem key={key} value={key}>
+                      {Layouts[key]}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
               <Grid item>

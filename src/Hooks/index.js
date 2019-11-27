@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
 
+const MyBackend = true
+
 const api = axios.create({
-  baseURL: 'https://codeweek2019.kaifer.cz/api/',
-  // baseURL: 'https://booking.magnusi.tech/rgi/',
+  baseURL: MyBackend
+    ? 'https://codeweek2019.kaifer.cz/api/'
+    : 'https://booking.magnusi.tech/rgi/',
   timeout: 2000,
 })
 
@@ -30,11 +33,22 @@ export const useEvents = () => {
           setApiState(s => ({
             ...s,
             fetching: false,
-            events: response.data.map(e => ({
-              ...e,
-              begin_time: dayjs(e.begin_time).valueOf(),
-              end_time: dayjs(e.end_time).valueOf(),
-            })),
+            events: response.data
+              .map(e => ({
+                ...e,
+                begin_time: dayjs(e.begin_time).valueOf(),
+                end_time: dayjs(e.end_time).valueOf(),
+              }))
+              .map(event =>
+                MyBackend
+                  ? event
+                  : {
+                      ...event,
+                      north: event.rooms & 1,
+                      south: event.rooms & 2,
+                      rooms: undefined,
+                    }
+              ),
             error: undefined,
             lastRequest: dayjs().valueOf(),
           }))
@@ -73,6 +87,7 @@ export const useCreateEvent = onFinish => {
       ...event,
       begin_time: dayjs(event.begin_time).format(),
       end_time: dayjs(event.end_time).format(),
+      layout: MyBackend ? event.layout : parseInt(event.layout),
     }
     console.log('posting', data)
     api
