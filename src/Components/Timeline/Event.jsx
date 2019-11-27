@@ -14,7 +14,7 @@ const Event = ({ event, conf }) => {
 
   return (
     <TableRow>
-      <TableCell className={c.rowText}>{event.title}</TableCell>
+      <TableCell className={c.rowText}>{event.name}</TableCell>
       <TableCell className={c.rowText}>
         {[event.north ? 'north' : undefined, event.south ? 'south' : undefined]
           .filter(a => a !== undefined)
