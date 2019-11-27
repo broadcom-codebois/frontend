@@ -52,9 +52,9 @@ const useStyles = makeStyles({
   rowText: {
     fontFamily: 'Saira Condensed',
     fontWeight: '1000',
-    fontSize: '1.25em',
-    color: '#58301B'
-  } 
+    fontSize: '1.35em',
+    color: '#58301B',
+  },
 })
 
 const Timeline = () => {
