@@ -15,32 +15,40 @@ export const useEvents = () => {
     lastRequest: dayjs().valueOf(),
   })
 
-  if (
-    !apiState.fetching &&
-    (apiState.events === undefined ||
-      apiState.lastRequest < dayjs().valueOf() - 1000)
-  ) {
-    setApiState(s => ({ ...s, fetching: true }))
-    api
-      .get('events')
-      .then(response => {
-        setApiState(s => ({
-          ...s,
-          fetching: false,
-          events: response.data,
-          error: undefined,
-          lastRequest: dayjs().valueOf(),
-        }))
-      })
-      .catch(error => {
-        setApiState(s => ({
-          ...s,
-          fetching: false,
-          error: error,
-          lastRequest: dayjs().valueOf(),
-        }))
-      })
-  }
+  useEffect(() => {
+    if (
+      !apiState.fetching &&
+      (((apiState.events === undefined || apiState.errors !== undefined) &&
+        apiState.lastRequest < dayjs().valueOf() - 1000) ||
+        apiState.lastRequest < dayjs().valueOf() - 10000)
+    ) {
+      setApiState(s => ({ ...s, fetching: true }))
+      api
+        .get('events')
+        .then(response => {
+          setApiState(s => ({
+            ...s,
+            fetching: false,
+            events: response.data,
+            error: undefined,
+            lastRequest: dayjs().valueOf(),
+          }))
+        })
+        .catch(error => {
+          setApiState(s => ({
+            ...s,
+            fetching: false,
+            error: error,
+            lastRequest: dayjs().valueOf(),
+          }))
+        })
+    }
+  }, [
+    apiState.fetching,
+    apiState.events,
+    apiState.lastRequest,
+    apiState.errors,
+  ])
 
   const forceRefresh = () => setApiState(s => ({ ...s, lastRequest: 0 }))
   const events = apiState.events === undefined ? [] : apiState.events
