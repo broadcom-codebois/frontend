@@ -66,7 +66,7 @@ const useStyle = makeStyles({
     paddingTop: '26px',
   },
   disabledRoom: {
-    backgroundColor: 'brown',
+    backgroundColor: '#58301B',
   },
   formLabel: {
     paddingTop: '26px',
@@ -82,7 +82,7 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: event.north ? (event.south ? '#FF0000' : '#00FF00') : '#0000FF',
+  color: event.north ? (event.south ? '#154A46' : '#A7A635') : '#60B9B2',
   extendedProps: {
     id: event.id,
   },
@@ -222,7 +222,7 @@ const Calendar = () => {
         open={isFormDialogOpen}
         onClose={() => setIsFormDialogOpen(false)}
       >
-        <DialogTitle>New Event</DialogTitle>
+        <DialogTitle style={{ color: '#58301B' }}>New Event</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please note that your reservation needs to be approved first.
