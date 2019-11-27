@@ -8,45 +8,9 @@ import {
   TableCell,
   makeStyles,
 } from '@material-ui/core'
-
+import { useEvents } from 'Hooks'
 import Event from './Event'
 
-const useEvents = () => [
-  {
-    north: true,
-    south: false,
-    startTime: dayjs()
-      .subtract(1, 'day')
-      .valueOf(),
-    endTime: dayjs()
-      .add(1, 'hour')
-      .valueOf(),
-    title: 'Event name',
-  },
-  {
-    north: false,
-    south: true,
-    startTime: dayjs()
-      .subtract(1, 'hour')
-      .valueOf(),
-    endTime: dayjs()
-      .add(1, 'day')
-      .valueOf(),
-    title: 'Event name 2',
-  },
-  {
-    north: true,
-    south: true,
-    startTime: dayjs()
-      .add(1, 'day')
-      .add(1, 'hour')
-      .valueOf(),
-    endTime: dayjs()
-      .add(2, 'day')
-      .valueOf(),
-    title: 'Event name 2',
-  },
-]
 
 const useStyles = makeStyles({
   rowText: {
@@ -58,8 +22,9 @@ const useStyles = makeStyles({
 })
 
 const Timeline = () => {
-  const events = useEvents()
   const c = useStyles()
+
+  const [events, refreshEvents] = useEvents()
 
   return (
     <Table>
@@ -67,7 +32,7 @@ const Timeline = () => {
         <TableRow>
           <TableCell className={c.rowText}>Name</TableCell>
           <TableCell className={c.rowText}>Rooms</TableCell>
-          <TableCell className={c.rowText}>From</TableCell>
+          <TableCell className={c.rowText}>Froms</TableCell>
           <TableCell className={c.rowText}>To</TableCell>
           <TableCell className={c.rowText}>Layout</TableCell>
         </TableRow>
