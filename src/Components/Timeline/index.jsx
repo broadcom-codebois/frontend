@@ -11,20 +11,19 @@ import {
 import { useEvents } from 'Hooks'
 import Event from './Event'
 
-
 const useStyles = makeStyles({
   rowText: {
     fontFamily: 'Saira Condensed',
     fontWeight: '1000',
     fontSize: '1.25em',
-    color: '#58301B'
-  } 
+    color: '#58301B',
+  },
 })
 
 const Timeline = () => {
   const c = useStyles()
 
-  const [events, refreshEvents] = useEvents()
+  const [events] = useEvents()
 
   return (
     <Table>
@@ -32,7 +31,7 @@ const Timeline = () => {
         <TableRow>
           <TableCell className={c.rowText}>Name</TableCell>
           <TableCell className={c.rowText}>Rooms</TableCell>
-          <TableCell className={c.rowText}>Froms</TableCell>
+          <TableCell className={c.rowText}>From</TableCell>
           <TableCell className={c.rowText}>To</TableCell>
           <TableCell className={c.rowText}>Layout</TableCell>
         </TableRow>
