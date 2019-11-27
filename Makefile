@@ -1,2 +1,5 @@
-all: *
-	npm run build
+all:
+	yarn install
+	yarn build
+
+.PHONY: all
