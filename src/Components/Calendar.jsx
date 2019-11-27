@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
+import DatePicker from './DateRangePicker'
 
 import {
   Box,
@@ -14,6 +15,7 @@ import {
   DialogContentText,
   TextField,
   makeStyles,
+  InputLabel
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
@@ -62,6 +64,11 @@ const useStyle = makeStyles({
     width: '24px',
     height: '24px',
   },
+  dateRangePicker: {
+    maxWidth: '151px',
+    width: '151px',
+    paddingTop: '26px',
+  }
 })
 
 const Calendar = () => {
@@ -203,23 +210,15 @@ const Calendar = () => {
               <Grid item>
                 <TextField label="Event name" />
               </Grid>
-              <Grid item>
-                <TextField label="Date & Time" />
+              <Grid className={c.dateRangePicker}>
+                <InputLabel htmlFor="datePicker">Time range</InputLabel>
+                <DatePicker />
               </Grid>
               <Grid item>
-                <TextField label="Orginiser name" />
+                <TextField label="Organiser name" />
               </Grid>
               <Grid item>
-                <TextField type="email" label="Orginiser email" />
-              </Grid>
-              <Grid item>
-                <TextField
-                  type="number"
-                  min={2}
-                  max={180}
-                  placeholder="up to 180"
-                  label="# of attendees"
-                />
+                <TextField type="email" label="Organiser email" />
               </Grid>
               <Grid item>
                 <TextField label="Note" multiline />
