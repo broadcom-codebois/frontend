@@ -42,12 +42,14 @@ body,
   color: white !important;
   background-color: #58301b !important;
   border-color: #58301b !important;
+  box-shadow: none !important;
 }
 
 .fc-button-active {
   color: white !important;
   background-color: #a04b1f !important;
   border-color: #a04b1f !important;
+  box-shadow: none !important;
 }
 .fc-toolbar h2 {
   font-size: 1.75em;
