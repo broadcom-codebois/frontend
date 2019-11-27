@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
+
 import {
   Box,
   Grid,
@@ -17,6 +18,12 @@ import {
 import { AddRounded } from '@material-ui/icons'
 
 import './calendar-style.scss'
+
+const useStyles = makeStyles({
+  newEventButtonDiv: {
+    float: 'right',
+  }
+})
 
 const events = [
   {

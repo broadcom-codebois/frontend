@@ -15,59 +15,7 @@ body,
   width: 100%;
 }
 
-/*
-p {
-  font-size: 1em;
+.fc-scroller,
+.fc {
+  height: auto !important;
 }
-
-#roomPicker {
-  padding: 1em;
-  vertical-align: middle;
-  padding-bottom: 2em;
-}
-
-#roomPicker p {
-  float: left;
-  margin-top: 0.5em;
-  padding-right: 1em;
-}
-
-#roomPicker div {
-  position: relative;
-}
-
-.MuiPaper-rounded {
-  margin-left: 50%;
-  margin-top: 20%;
-  transform: translate(-50%);
-}
-
-.MuiPaper-rounded h2 {
-  padding: 1em;
-}
-
-.MuiPaper-rounded p {
-  padding-left: 1.5em;
-  padding-bottom: 1em;
-}
-
-form {
-  padding: 1em;
-}
-
-input {
-  padding: 0.5em;
-  border: 2px solid #1C2E31;
-  border-radius: 0.25em;
-  font-family: 'Saira Condensed', sans-serif;
-  font-size: 1em;
-  width: 90%;
-}
-
-label {
-  padding-top: 2em;
-}
-
-#submitButton {
-  margin-top: 1em;
-}*/
