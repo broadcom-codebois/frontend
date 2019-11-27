@@ -22,7 +22,7 @@ import './calendar-style.scss'
 const useStyles = makeStyles({
   newEventButtonDiv: {
     float: 'right',
-  }
+  },
 })
 
 const events = [
@@ -61,6 +61,9 @@ const useStyle = makeStyles({
     boxSizing: 'content-box',
     width: '24px',
     height: '24px',
+  },
+  disabledRoom: {
+    backgroundColor: 'brown',
   },
 })
 
@@ -133,7 +136,9 @@ const Calendar = () => {
                 <Box className="fc-button-group">
                   <button
                     type="button"
-                    className="fc-dayGridDay-button fc-button fc-button-primary"
+                    className={`fc-dayGridDay-button fc-button fc-button-primary ${
+                      selectedRooms.north ? '' : c.disabledRoom
+                    }`}
                     onClick={() =>
                       setSelectedRooms(r => ({ ...r, north: !r.north }))
                     }
@@ -142,7 +147,9 @@ const Calendar = () => {
                   </button>
                   <button
                     type="button"
-                    className="fc-dayGridDay-button fc-button fc-button-primary"
+                    className={`fc-dayGridDay-button fc-button fc-button-primary ${
+                      selectedRooms.south ? '' : c.disabledRoom
+                    }`}
                     onClick={() =>
                       setSelectedRooms(r => ({ ...r, south: !r.south }))
                     }
