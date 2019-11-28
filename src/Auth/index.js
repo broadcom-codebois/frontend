@@ -24,7 +24,7 @@ const loginToFirebase = setGlobalState => {
     .signInWithPopup(provider)
     .then(result => {
       const token = result.credential.accessToken
-      const user = result.token
+      const user = result.user
       setGlobalState(s => ({
         ...s,
         auth: {
