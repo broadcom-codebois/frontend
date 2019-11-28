@@ -38,25 +38,26 @@ body,
 }
 
 .fc-button-primary {
-  color: white !important;
-  background-color: #58301b !important;
-  border-color: #58301b !important;
+  color: black !important;
+  background-color: white !important;
+  border-color: black !important;
+  border: 0.1em solid !important;
   box-shadow: none !important;
 }
 
 .fc-button-active {
   color: white !important;
-  background-color: #a04b1f !important;
-  border-color: #a04b1f !important;
+  background-color: black !important;
+  border-color: black !important;
   box-shadow: none !important;
 }
 .fc-toolbar h2 {
   font-size: 1.75em;
   margin: 0;
-  color: #58301b;
+  color: black;
 }
 .fc .fc-row {
-  color: #58301b;
+  color: black;
 }
 .fc-unthemed td.fc-today {
   background: #fff9ee !important;

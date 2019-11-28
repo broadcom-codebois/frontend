@@ -92,7 +92,7 @@ export const useEvents = () => {
 }
 
 export const useCreateEvent = onFinish => {
-  const createEvent = event => {
+  const createEvent = async event => {
     const data = {
       ...event,
       begin_time: dayjs(event.begin_time).format(),

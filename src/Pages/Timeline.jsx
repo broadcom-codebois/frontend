@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     float: 'right',
   },
   innerContainer: {
-    border: '0.30em solid #EAA853',
+    border: '0.10em solid black',
     borderRadius: '1em',
     margin: 'auto',
     padding: '0.625em 1em 0.625em 1em',
