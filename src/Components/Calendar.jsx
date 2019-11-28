@@ -83,6 +83,9 @@ const useStyle = makeStyles({
   numberField: {
     width: '145px',
   },
+  legend: {
+    border: '1px solid #ddd',
+  },
 })
 
 const convertToFCEvent = event => ({
@@ -163,7 +166,9 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: 'black' }}>Filter auditoriums:</Typography>
+                <Typography style={{ color: 'black' }}>
+                  Filter auditoriums:
+                </Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
@@ -173,7 +178,11 @@ const Calendar = () => {
                       selectedRooms.north ? c.enabledNorth : ''
                     }`}
                     onClick={() =>
-                      setSelectedRooms(r => ({ ...r, north: !r.north, south: true }))
+                      setSelectedRooms(r => ({
+                        ...r,
+                        north: !r.north,
+                        south: true,
+                      }))
                     }
                   >
                     North
@@ -184,7 +193,11 @@ const Calendar = () => {
                       selectedRooms.south ? c.enabledSouth : ''
                     }`}
                     onClick={() =>
-                      setSelectedRooms(r => ({ ...r, south: !r.south, north: true }))
+                      setSelectedRooms(r => ({
+                        ...r,
+                        south: !r.south,
+                        north: true,
+                      }))
                     }
                   >
                     South
@@ -195,8 +208,8 @@ const Calendar = () => {
           </Grid>
           <Grid item container xs={3}>
             <Grid item xs={12}>Legend:</Grid>
-            <Grid item xs={4}style={{color: '#4265F0'}}>North</Grid>
-            <Grid item xs={4} style={{color: '#E65137'}}>South</Grid>
+            <Grid item xs={4}style={{color: '#E65137'}}>North</Grid>
+            <Grid item xs={4} style={{color: '#4265F0'}}>South</Grid>
             <Grid item xs={4} style={{color: '#452742'}}>Both</Grid>
           </Grid>
           <Grid item>
