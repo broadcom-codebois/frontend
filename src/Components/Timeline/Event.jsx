@@ -29,7 +29,7 @@ const Event = ({ event, conf }) => {
         {dayjs(event.end_time).format(displayFormat)}
       </TableCell>
       <TableCell className={c.rowText}>{Layouts[event.layout]}</TableCell>
-      <TableCell className={c.rowText}>{event.owner}</TableCell>
+      <TableCell className={c.rowText}>{event.author}TODO</TableCell>
     </TableRow>
   )
 }
