@@ -190,14 +190,11 @@ const Calendar = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item>
-            North
-          </Grid>
-          <Grid item>
-            South
-          </Grid>
-          <Grid item>
-            Both
+          <Grid item container xs={3}>
+            <Grid item xs={12}>Legend:</Grid>
+            <Grid item xs={4}style={{color: '#E65137'}}>North</Grid>
+            <Grid item xs={4} style={{color: '#4265F0'}}>South</Grid>
+            <Grid item xs={4} style={{color: '#452742'}}>Both</Grid>
           </Grid>
           <Grid item>
             <button
