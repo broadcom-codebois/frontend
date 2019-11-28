@@ -332,6 +332,19 @@ const Calendar = () => {
               <Grid item>
                 <TableLayouts />
               </Grid>
+              <Grid>
+                <TextField
+                  type="number"
+                  inputProps={{ min: '10', max: '180', step: '1' }}
+                  label="Number of people"
+                  value={newEventData.people}
+                  onChange={e => {
+                    if (e.target === null) return
+                    const value = e.target.value
+                    setNewEventData(d => ({ ...d, people: value }))
+                  }}
+                />
+              </Grid>
               <Grid item>
                 <TextField
                   label="Note"
