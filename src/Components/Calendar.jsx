@@ -187,7 +187,13 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item>
-            TODO: Legenda
+            North
+          </Grid>
+          <Grid item>
+            South
+          </Grid>
+          <Grid item>
+            Both
           </Grid>
           <Grid item>
             <button
