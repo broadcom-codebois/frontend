@@ -5,7 +5,7 @@ const BlueCheckbox = withStyles({
   root: {
     color: 'black',
     '&$checked': {
-      color: '#452742',
+      color: 'black',
     },
   },
   checked: {},
