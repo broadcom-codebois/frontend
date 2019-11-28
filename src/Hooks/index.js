@@ -102,7 +102,16 @@ export const useCreateEvent = onFinish => {
       layout: MyBackend ? event.layout : parseInt(event.layout),
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
     }
-    api.post('events/', data).finally(onFinish)
+    console.log('posting', data)
+    await api
+      .post('events/', data)
+      .then(response => {
+        if (!MyBackend && response.data.result === 2) {
+          window.alert('Couldn\'t create the reservation')
+        }
+      })
+      .catch(console.log)
+    onFinish()
   }
 
   return createEvent

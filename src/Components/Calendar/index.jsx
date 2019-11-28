@@ -20,6 +20,10 @@ import {
   FormLabel,
   FormGroup,
   FormControlLabel,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
@@ -66,13 +70,23 @@ const useStyle = makeStyles({
     width: '151px',
     paddingTop: '26px',
   },
+  disabledSouth: {
+    borderColor: '#8AA00C !important',
+    color: '#8AA00C !important',
+  },
   enabledSouth: {
-    backgroundColor: '#E65137 !important',
-    borderColor: '#E65137 !important',
+    backgroundColor: '#8AA00C !important',
+    borderColor: '#8AA00C !important',
+    color: 'white !important',
+  },
+  disabledNorth: {
+    borderColor: '#4265F0 !important',
+    color: '#4265F0 !important',
   },
   enabledNorth: {
     backgroundColor: '#4265F0 !important',
     borderColor: '#4265F0 !important',
+    color: 'white !important',
   },
   formLabel: {
     paddingTop: '26px',
@@ -81,7 +95,7 @@ const useStyle = makeStyles({
     maxWidth: '151px',
     width: '151px',
   },
-  numberField: {
+  field: {
     width: '145px',
   },
 })
@@ -91,10 +105,18 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: event.north ? (event.south ? '#452742' : '#4265F0') : '#E65137',
+  color: event.approved
+    ? event.north
+      ? event.south
+        ? '#E65137'
+        : '#4983EE'
+      : '#8AA00C'
+    : 'white',
+  borderColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+  textColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
   extendedProps: {
     id: event.id,
-  },
+  }
 })
 const Calendar = () => {
   const c = useStyle()
@@ -105,7 +127,7 @@ const Calendar = () => {
   const [isFormDialogOpen, setIsFormDialogOpen] = useState(false)
   const [selectedRooms, setSelectedRooms] = useState({
     north: true,
-    south: true,
+    south: false,
   })
   const [infoId, setInfoId] = useState(undefined)
   const [newEventData, setNewEventData] = useState(initialEventState)
@@ -138,6 +160,7 @@ const Calendar = () => {
         }}
         firstDay={1}
         weekends={false}
+        contentHeight={600}
       />
 
       <Box mt={2}>
@@ -159,7 +182,7 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.north ? c.enabledNorth : ''
+                      selectedRooms.north ? c.enabledNorth : c.disabledNorth
                     }`}
                     onClick={() =>
                       setSelectedRooms(r => ({
@@ -174,7 +197,7 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.south ? c.enabledSouth : ''
+                      selectedRooms.south ? c.enabledSouth : c.disabledSouth
                     }`}
                     onClick={() =>
                       setSelectedRooms(r => ({
@@ -190,19 +213,23 @@ const Calendar = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={3}>
-            <Grid item xs={12}>
-              Legend:
-            </Grid>
-            <Grid item xs={4} style={{ color: '#E65137' }}>
-              North
-            </Grid>
-            <Grid item xs={4} style={{ color: '#4265F0' }}>
-              South
-            </Grid>
-            <Grid item xs={4} style={{ color: '#452742' }}>
-              Both
-            </Grid>
+          <Grid item>
+            <Table size="small">
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <b>Legend</b>
+                  </TableCell>
+                  <TableCell />
+                  <TableCell />
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ color: '#4983EE' }}>North</TableCell>
+                  <TableCell style={{ color: '#8AA00C' }}>South</TableCell>
+                  <TableCell style={{ color: '#E65137' }}>Both</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </Grid>
           <Grid item>
             <button
@@ -222,9 +249,11 @@ const Calendar = () => {
       >
         {visibleInfoDialog !== undefined && (
           <>
-            <DialogTitle>{visibleInfoDialog.name}</DialogTitle>
+            <DialogTitle style={{ color: 'black' }}>
+              {visibleInfoDialog.name}
+            </DialogTitle>
             <DialogContent>
-              <Typography>
+              <Typography className={c.dialog}>
                 Auditorium:{' '}
                 {['north', 'south']
                   .filter(key => visibleInfoDialog[key])
@@ -237,7 +266,9 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.author}TODO</Typography>
+              <Typography className={c.dialog}>
+                Owner: {visibleInfoDialog.author}
+              </Typography>
             </DialogContent>
           </>
         )}
@@ -247,7 +278,7 @@ const Calendar = () => {
         open={isFormDialogOpen}
         onClose={() => setIsFormDialogOpen(false)}
       >
-        <DialogTitle style={{ color: '#58301b', margin: '3px 0px 0px 0px' }}>
+        <DialogTitle style={{ color: 'black', margin: '3px 0px 0px 0px' }}>
           New Event
         </DialogTitle>
         <DialogContent>
@@ -266,6 +297,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, name: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
               <Grid className={c.dateRangePicker}>
@@ -332,9 +364,10 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, author: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
-              <Grid item style={{ width: '157px' }}>
+              <Grid>
                 <TextField
                   select
                   label="Table layout"
@@ -344,7 +377,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, layout: value }))
                   }}
-                  style={{ width: '100%' }}
+                  className={c.field}
                 >
                   {Object.keys(Layouts).map(key => (
                     <MenuItem key={key} value={key}>
@@ -368,7 +401,7 @@ const Calendar = () => {
                     setNewEventData(d => ({ ...d, people: value }))
                   }}
                   margin="normal"
-                  className={c.numberField}
+                  className={c.field}
                 />
               </Grid>
               <Grid item>
@@ -381,6 +414,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, description: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
             </Grid>
