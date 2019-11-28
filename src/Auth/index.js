@@ -14,38 +14,41 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
+const loginToFirebase = setGlobalState => {
+  const provider = new firebase.auth.GoogleAuthProvider()
+  provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+  firebase.auth().languageCode = 'en'
+
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(result => {
+      const token = result.credential.accessToken
+      const user = result.token
+      setGlobalState(s => ({
+        ...s,
+        auth: {
+          token,
+          user,
+          isAuthenticated: true,
+        },
+      }))
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code
+      const errorMessage = error.message
+      alert(errorMessage)
+      // The email of the user's account used.
+      const email = error.email
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential
+      loginToFirebase(setGlobalState)
+    })
+}
+
 export const useLogin = () => {
   const [, setGlobalState] = useGlobalState()
 
-  return () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
-    firebase.auth().languageCode = 'en'
-
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(result => {
-        const token = result.credential.accessToken
-        const user = result.token
-        setGlobalState(s => ({
-          ...s,
-          auth: {
-            token,
-            user,
-            isAuthenticated: true,
-          },
-        }))
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        alert(errorMessage)
-        // The email of the user's account used.
-        const email = error.email
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential
-      })
-  }
+  return () => loginToFirebase(setGlobalState)
 }
