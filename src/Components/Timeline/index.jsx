@@ -34,6 +34,7 @@ const Timeline = () => {
           <TableCell className={c.rowText}>From</TableCell>
           <TableCell className={c.rowText}>To</TableCell>
           <TableCell className={c.rowText}>Layout</TableCell>
+          <TableCell className={c.rowText}>Owner</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
