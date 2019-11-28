@@ -108,7 +108,11 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+  color: event.approved
+          ? event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C'
+          : 'white',
+  borderColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+  textColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
 })
 
 const BlueCheckbox = withStyles({
@@ -130,7 +134,7 @@ const Calendar = () => {
   const [isFormDialogOpen, setIsFormDialogOpen] = useState(false)
   const [selectedRooms, setSelectedRooms] = useState({
     north: true,
-    south: true,
+    south: false,
   })
   const [infoId, setInfoId] = useState(undefined)
   const [newEventData, setNewEventData] = useState(initialEventState)
@@ -225,16 +229,8 @@ const Calendar = () => {
                   </TableCell>
                   <TableCell />
                   <TableCell />
-                  <TableCell />
                 </TableRow>
                 <TableRow>
-                  <TableCell>Pending:</TableCell>
-                  <TableCell style={{ color: '#E8806E' }}>North</TableCell>
-                  <TableCell style={{ color: '#839BFD' }}>South</TableCell>
-                  <TableCell style={{ color: '#6A5175' }}>Both</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Approved:</TableCell>
                   <TableCell style={{ color: '#E65137' }}>North</TableCell>
                   <TableCell style={{ color: '#4265F0' }}>South</TableCell>
                   <TableCell style={{ color: '#452742' }}>Both</TableCell>
