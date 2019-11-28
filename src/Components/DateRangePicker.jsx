@@ -1,37 +1,37 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/core'
 import DatetimeRangePicker from 'react-datetime-range-picker'
 import originalMoment from 'moment'
 import { extendMoment } from 'moment-range'
-import { Button } from '@material-ui/core'
 const moment = extendMoment(originalMoment)
 
-class DatePicker extends React.Component {
-  constructor(props, context) {
-    super(props, context)
+const useStyle = makeStyles({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '100%',
+    '& > div': {
+      margin: '0 1em',
+      width: 'auto',
+      '& > input': {
+        width: 'auto',
+      },
+    },
+  },
+})
 
-    this.state = {
-      isOpen: false,
-    }
-  }
+const DatePicker = ({ value, onChange }) => {
+  const c = useStyle()
+  const computedValue = moment.range(moment(value.start), moment(value.end))
 
-  onToggle = () => {
-    this.setState({ isOpen: !this.state.isOpen })
-  }
-
-  render() {
-    const value = moment.range(
-      moment(this.props.value.start),
-      moment(this.props.value.end)
-    )
-
-    return (
-      <DatetimeRangePicker
-        value={value}
-        onChange={this.props.onChange}
-        singleDateRange={true}
-      />
-    )
-  }
+  return (
+    <DatetimeRangePicker
+      className={c.root}
+      value={computedValue}
+      onChange={onChange}
+      singleDateRange
+    />
+  )
 }
 
 export default DatePicker

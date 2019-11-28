@@ -106,7 +106,7 @@ const Calendar = () => {
     Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
   )
 
-  const visibleInfoDialog = events.find(event => event.id === infoId)
+  const visibleEventDetail = events.find(event => event.id === infoId)
 
   return (
     <>
@@ -201,7 +201,7 @@ const Calendar = () => {
       </Box>
 
       <EventDetailDialog
-        visibleInfoDialog={visibleInfoDialog}
+        visibleEventDetail={visibleEventDetail}
         setInfoId={setInfoId}
       />
 
