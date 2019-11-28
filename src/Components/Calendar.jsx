@@ -29,6 +29,7 @@ import {
 import { AddRounded } from '@material-ui/icons'
 
 import { useEvents, useCreateEvent } from 'Hooks'
+import { logIn } from 'Auth'
 
 import './calendar-style.scss'
 
@@ -59,6 +60,10 @@ const useStyle = makeStyles({
     boxSizing: 'content-box',
     width: '24px',
     height: '24px',
+  },
+  logInButton: {
+    boxSizing: 'content-box',
+    marginRight: '0.5em',
   },
   dateRangePicker: {
     maxWidth: '151px',
@@ -98,6 +103,10 @@ const BlueCheckbox = withStyles({
   },
   checked: {},
 })(props => <Checkbox color="default" {...props} />)
+
+const logIn = () => {
+
+}
 
 const Calendar = () => {
   const c = useStyle()
@@ -184,6 +193,14 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item>
+            <button
+              type="button"
+              className={`fc-dayGridDay-button fc-button fc-button-primary ${c.logInButton}`}
+              onClick={() => logIn()}
+            >
+              LOGIN
+            </button>
+
             <button
               type="button"
               className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
