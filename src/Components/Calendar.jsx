@@ -84,7 +84,7 @@ const useStyle = makeStyles({
     maxWidth: '151px',
     width: '151px',
   },
-  numberField: {
+  field: {
     width: '145px',
   },
 })
@@ -314,6 +314,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, name: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
               <Grid className={c.dateRangePicker}>
@@ -380,9 +381,10 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, author: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
-              <Grid item style={{ width: '157px' }}>
+              <Grid>
                 <TextField
                   select
                   label="Table layout"
@@ -392,7 +394,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, layout: value }))
                   }}
-                  style={{ width: '100%' }}
+                  className={c.field}
                 >
                   {Object.keys(Layouts).map(key => (
                     <MenuItem key={key} value={key}>
@@ -416,7 +418,7 @@ const Calendar = () => {
                     setNewEventData(d => ({ ...d, people: value }))
                   }}
                   margin="normal"
-                  className={c.numberField}
+                  className={c.field}
                 />
               </Grid>
               <Grid item>
@@ -429,6 +431,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, description: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
             </Grid>
