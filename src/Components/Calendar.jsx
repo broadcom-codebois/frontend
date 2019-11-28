@@ -29,7 +29,7 @@ import {
 import { AddRounded } from '@material-ui/icons'
 
 import { useEvents, useCreateEvent } from 'Hooks'
-import { logIn } from 'Auth'
+import { logIntoFirebase } from 'Auth'
 
 import './calendar-style.scss'
 
@@ -105,7 +105,7 @@ const BlueCheckbox = withStyles({
 })(props => <Checkbox color="default" {...props} />)
 
 const logIn = () => {
-
+  logIntoFirebase()
 }
 
 const Calendar = () => {
