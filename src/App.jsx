@@ -1,6 +1,7 @@
 import React from 'react'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core'
 
+import { GlobalStateProvider } from 'State'
 import Main from 'Pages/Main'
 
 const theme = createMuiTheme({
@@ -12,7 +13,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Main />
+      <GlobalStateProvider>
+        <Main />
+      </GlobalStateProvider>
     </ThemeProvider>
   )
 }

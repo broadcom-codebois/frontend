@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 const MyBackend = false
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: MyBackend
     ? 'https://codeweek2019.kaifer.cz/api/'
     : 'https://booking.magnusi.tech/rgi/',
