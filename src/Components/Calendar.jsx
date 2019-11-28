@@ -94,8 +94,16 @@ const convertToFCEvent = event => ({
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
   color: event.approved
-            ? (event.north ? (event.south ? '#452742' : '#4265F0') : '#E65137')
-            : (event.north ? (event.south ? 'green' : 'blue') : 'red'),  //MÍLA
+    ? event.north
+      ? event.south
+        ? '#452742'
+        : '#4265F0'
+      : '#E65137'
+    : event.north
+    ? event.south
+      ? '#6A5175'
+      : '#839BFD'
+    : '#E8806E',
   extendedProps: {
     id: event.id,
   },
@@ -207,10 +215,18 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item container xs={3}>
-            <Grid item xs={12}>Legend:</Grid>
-            <Grid item xs={4}style={{color: '#E65137'}}>North</Grid>
-            <Grid item xs={4} style={{color: '#4265F0'}}>South</Grid>
-            <Grid item xs={4} style={{color: '#452742'}}>Both</Grid>
+            <Grid item xs={12}>
+              Legend:
+            </Grid>
+            <Grid item xs={4} style={{ color: '#E65137' }}>
+              North
+            </Grid>
+            <Grid item xs={4} style={{ color: '#4265F0' }}>
+              South
+            </Grid>
+            <Grid item xs={4} style={{ color: '#452742' }}>
+              Both
+            </Grid>
           </Grid>
           <Grid item>
             <button
