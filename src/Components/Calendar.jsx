@@ -67,9 +67,13 @@ const useStyle = makeStyles({
     width: '151px',
     paddingTop: '26px',
   },
-  enabledRoom: {
-    // MÍLA
-    backgroundColor: 'black !important',
+  enabledSouth: {
+    backgroundColor: '#E65137 !important',
+    borderColor: '#E65137 !important',
+  },
+  enabledNorth: {
+    backgroundColor: '#4265F0 !important',
+    borderColor: '#4265F0 !important',
   },
   formLabel: {
     paddingTop: '26px',
@@ -77,6 +81,9 @@ const useStyle = makeStyles({
   formControl: {
     maxWidth: '151px',
     width: '151px',
+  },
+  numberField: {
+    width: '145px',
   },
 })
 
@@ -164,10 +171,10 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.north ? c.enabledRoom : ''
+                      selectedRooms.north ? c.enabledNorth : ''
                     }`}
                     onClick={() =>
-                      setSelectedRooms(r => ({ ...r, north: !r.north }))
+                      setSelectedRooms(r => ({ ...r, north: !r.north, south: true }))
                     }
                   >
                     North
@@ -175,10 +182,10 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.south ? c.enabledRoom : ''
+                      selectedRooms.south ? c.enabledSouth : ''
                     }`}
                     onClick={() =>
-                      setSelectedRooms(r => ({ ...r, south: !r.south }))
+                      setSelectedRooms(r => ({ ...r, south: !r.south, north: true }))
                     }
                   >
                     South
@@ -186,6 +193,12 @@ const Calendar = () => {
                 </Box>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item container xs={3}>
+            <Grid item xs={12}>Legend:</Grid>
+            <Grid item xs={4}style={{color: '#E65137'}}>North</Grid>
+            <Grid item xs={4} style={{color: '#4265F0'}}>South</Grid>
+            <Grid item xs={4} style={{color: '#452742'}}>Both</Grid>
           </Grid>
           <Grid item>
             <button
@@ -317,7 +330,7 @@ const Calendar = () => {
                   }}
                 />
               </Grid>
-              <Grid item style={{ width: 172 }}>
+              <Grid item style={{ width: '157px' }}>
                 <TextField
                   select
                   label="Table layout"
@@ -350,6 +363,8 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, people: value }))
                   }}
+                  margin="normal"
+                  className={c.numberField}
                 />
               </Grid>
               <Grid item>
