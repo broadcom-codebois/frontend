@@ -172,11 +172,6 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: 'black' }}>
-                  Filter auditoriums:
-                </Typography>
-              </Grid>
-              <Grid item>
                 <Box className="fc-button-group">
                   <button
                     type="button"
