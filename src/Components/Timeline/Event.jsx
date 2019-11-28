@@ -14,6 +14,8 @@ const Event = ({ event, conf }) => {
   const c = useStyles({ event, conf })
   const displayFormat = 'D/M H:M'
 
+  console.log(event)
+
   return (
     <TableRow>
       <TableCell className={c.rowText}>{event.name}</TableCell>
@@ -29,7 +31,7 @@ const Event = ({ event, conf }) => {
         {dayjs(event.end_time).format(displayFormat)}
       </TableCell>
       <TableCell className={c.rowText}>{Layouts[event.layout]}</TableCell>
-      <TableCell className={c.rowText}>{event.author}TODO</TableCell>
+      <TableCell className={c.rowText}>{event.author}</TableCell>
     </TableRow>
   )
 }
