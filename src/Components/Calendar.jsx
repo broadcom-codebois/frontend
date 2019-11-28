@@ -184,6 +184,9 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item>
+            ahoj
+          </Grid>
+          <Grid item>
             <button
               type="button"
               className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
