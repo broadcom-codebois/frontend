@@ -24,6 +24,10 @@ import {
   FormLabel,
   FormGroup,
   FormControlLabel,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
   withStyles,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
@@ -82,9 +86,6 @@ const useStyle = makeStyles({
   },
   numberField: {
     width: '145px',
-  },
-  legend: {
-    border: '1px solid #ddd',
   },
 })
 
@@ -214,19 +215,45 @@ const Calendar = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={3}>
-            <Grid item xs={12}>
-              Legend:
-            </Grid>
-            <Grid item xs={4} style={{ color: '#E65137' }}>
-              North
-            </Grid>
-            <Grid item xs={4} style={{ color: '#4265F0' }}>
-              South
-            </Grid>
-            <Grid item xs={4} style={{ color: '#452742' }}>
-              Both
-            </Grid>
+          <Grid item>
+            <Table size='small'>
+              <TableBody>
+                <TableRow>
+                  <TableCell><b>Legend</b></TableCell>
+                  <TableCell />
+                  <TableCell />
+                  <TableCell />
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    Pending:
+                  </TableCell>
+                  <TableCell style={{color: '#E8806E'}}>
+                    North
+                  </TableCell>
+                  <TableCell style={{color: '#839BFD'}}>
+                    South
+                  </TableCell>
+                  <TableCell style={{color: '#6A5175'}}>
+                    Both
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    Approved:
+                  </TableCell>
+                  <TableCell style={{ color: '#E65137' }}>
+                    North
+                  </TableCell>
+                  <TableCell style={{ color: '#4265F0' }}>
+                    South
+                  </TableCell>
+                  <TableCell style={{ color: '#452742' }}>
+                    Both
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </Grid>
           <Grid item>
             <button
