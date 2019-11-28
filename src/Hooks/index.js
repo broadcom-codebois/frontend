@@ -65,7 +65,11 @@ export const useEvents = () => {
                       south: event.rooms & 2,
                       rooms: undefined,
                     }
-              ),
+              )
+              .map(event => {
+                const [author_name, author_email] = event.author.split(':')
+                return { ...event, author_name, author_email }
+              }),
             error: undefined,
             lastRequest: dayjs().valueOf(),
           }))
@@ -95,6 +99,8 @@ export const useEvents = () => {
 
 export const useCreateEvent = onFinish => {
   const name = useUserName()
+  const email = useUserEmail()
+
   const createEvent = async event => {
     const data = {
       ...event,
@@ -102,7 +108,7 @@ export const useCreateEvent = onFinish => {
       end_time: dayjs(event.end_time).format(),
       layout: MyBackend ? event.layout : parseInt(event.layout),
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
-      author: name,
+      author: `${name}:${email}`,
     }
 
     await api

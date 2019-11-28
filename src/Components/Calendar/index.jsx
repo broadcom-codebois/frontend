@@ -8,18 +8,7 @@ import {
   Box,
   Grid,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  TextField,
-  MenuItem,
   makeStyles,
-  InputLabel,
-  FormControl,
-  FormLabel,
-  FormGroup,
-  FormControlLabel,
   Table,
   TableBody,
   TableRow,
@@ -27,28 +16,11 @@ import {
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
-import { useEvents, useCreateEvent } from 'Hooks'
-import { Layouts } from 'Lib'
-import TableLayouts from 'Pages/TableLayouts'
-import DatePicker from '../DateRangePicker'
-import BlueCheckbox from './BlueCheckbox'
+import { useEvents } from 'Hooks'
+import EventDetailDialog from './EventDetailDialog'
+import CreateEventDialog from './CreateEventDialog'
 
 import '../calendar-style.scss'
-
-const initialEventState = {
-  name: '',
-  description: '',
-  north: true,
-  south: true,
-  begin_time: dayjs()
-    .add(1, 'day')
-    .valueOf(),
-  end_time: dayjs()
-    .add(2, 'day')
-    .valueOf(),
-  layout: 1,
-  approved: false,
-}
 
 const useStyle = makeStyles({
   roomPicker: {
@@ -100,7 +72,7 @@ const useStyle = makeStyles({
 })
 
 const convertToFCEvent = event => ({
-  title: `${event.name} - by ${event.author}`,
+  title: `${event.name} - by ${event.author_name}`,
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
@@ -117,11 +89,11 @@ const convertToFCEvent = event => ({
     id: event.id,
   },
 })
+
 const Calendar = () => {
   const c = useStyle()
 
   const [events, refreshEvents] = useEvents()
-  const createEvent = useCreateEvent(refreshEvents)
 
   const [isFormDialogOpen, setIsFormDialogOpen] = useState(false)
   const [selectedRooms, setSelectedRooms] = useState({
@@ -129,21 +101,12 @@ const Calendar = () => {
     south: false,
   })
   const [infoId, setInfoId] = useState(undefined)
-  const [newEventData, setNewEventData] = useState(initialEventState)
 
   const visibleEvents = events.filter(event =>
     Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
   )
 
   const visibleInfoDialog = events.find(event => event.id === infoId)
-
-  const onSubmit = e => {
-    e.preventDefault()
-    createEvent(newEventData)
-
-    setIsFormDialogOpen(false)
-    setNewEventData(initialEventState)
-  }
 
   return (
     <>
@@ -242,182 +205,16 @@ const Calendar = () => {
         </Grid>
       </Box>
 
-      <Dialog
-        open={visibleInfoDialog !== undefined}
-        onClose={() => setInfoId(undefined)}
-      >
-        {visibleInfoDialog !== undefined && (
-          <>
-            <DialogTitle style={{ color: 'black' }}>
-              {visibleInfoDialog.name}
-            </DialogTitle>
-            <DialogContent>
-              <Typography className={c.dialog}>
-                Auditorium:{' '}
-                {['north', 'south']
-                  .filter(key => visibleInfoDialog[key])
-                  .map(
-                    key =>
-                      ({
-                        north: 'Auditorium North',
-                        south: 'Auditorium South',
-                      }[key])
-                  )
-                  .join(', ')}
-              </Typography>
-              <Typography className={c.dialog}>
-                Owner: {visibleInfoDialog.author}
-              </Typography>
-            </DialogContent>
-          </>
-        )}
-      </Dialog>
+      <EventDetailDialog
+        visibleInfoDialog={visibleInfoDialog}
+        setInfoId={setInfoId}
+      />
 
-      <Dialog
-        open={isFormDialogOpen}
+      <CreateEventDialog
+        isOpen={isFormDialogOpen}
         onClose={() => setIsFormDialogOpen(false)}
-      >
-        <DialogTitle style={{ color: 'black', margin: '3px 0px 0px 0px' }}>
-          New Event
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please note that your reservation needs to be approved first.
-          </DialogContentText>
-
-          <form onSubmit={onSubmit}>
-            <Grid container spacing={1} direction="column" alignItems="center">
-              <Grid item>
-                <TextField
-                  label="Event name"
-                  value={newEventData.name}
-                  onChange={e => {
-                    if (e.target === null) return
-                    const value = e.target.value
-                    setNewEventData(d => ({ ...d, name: value }))
-                  }}
-                  className={c.field}
-                />
-              </Grid>
-              <Grid item className={c.dateRangePicker}>
-                <InputLabel htmlFor="datePicker">Time range</InputLabel>
-                <DatePicker
-                  value={{
-                    start: dayjs(newEventData.begin_time).format(
-                      'YYYY-M-D HH:mm'
-                    ),
-                    end: dayjs(newEventData.end_time).format('YYYY-M-D HH:mm'),
-                  }}
-                  onChange={value => {
-                    setNewEventData(d => ({
-                      ...d,
-                      begin_time: dayjs(value.start).valueOf(),
-                      end_time: dayjs(value.end).valueOf(),
-                    }))
-                  }}
-                />
-              </Grid>
-              <Grid item>
-                <FormControl
-                  required
-                  component="fieldset"
-                  className={c.formControl}
-                >
-                  <FormLabel component="legend" className={c.formLabel}>
-                    Auditorium
-                  </FormLabel>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <BlueCheckbox
-                          checked={newEventData.north}
-                          onChange={() =>
-                            setNewEventData(d => ({ ...d, north: !d.north }))
-                          }
-                          value="formNorth"
-                        />
-                      }
-                      label="North"
-                      color="#4265F0"
-                    />
-                    <FormControlLabel
-                      control={
-                        <BlueCheckbox
-                          checked={newEventData.south}
-                          onChange={() =>
-                            setNewEventData(d => ({ ...d, south: !d.south }))
-                          }
-                          value="formSouth"
-                        />
-                      }
-                      label="South"
-                      color="#E65137"
-                    />
-                  </FormGroup>
-                </FormControl>
-              </Grid>
-              <Grid>
-                <TextField
-                  select
-                  label="Table layout"
-                  value={newEventData.layout}
-                  onChange={e => {
-                    if (e.target === null) return
-                    const value = e.target.value
-                    setNewEventData(d => ({ ...d, layout: value }))
-                  }}
-                  className={c.field}
-                >
-                  {Object.keys(Layouts).map(key => (
-                    <MenuItem key={key} value={key}>
-                      {Layouts[key]}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid item>
-                <TableLayouts />
-              </Grid>
-              <Grid item>
-                <TextField
-                  type="number"
-                  inputProps={{ min: '10', max: '180', step: '1' }}
-                  label="Number of people"
-                  value={newEventData.people}
-                  onChange={e => {
-                    if (e.target === null) return
-                    const value = e.target.value
-                    setNewEventData(d => ({ ...d, people: value }))
-                  }}
-                  margin="normal"
-                  className={c.field}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  label="Note"
-                  multiline
-                  value={newEventData.description}
-                  onChange={e => {
-                    if (e.target === null) return
-                    const value = e.target.value
-                    setNewEventData(d => ({ ...d, description: value }))
-                  }}
-                  className={c.field}
-                />
-              </Grid>
-            </Grid>
-            <Box textAlign="right" mt={4} mb={2} w="100%">
-              <button
-                class="fc-dayGridDay-button fc-button fc-button-primary"
-                id="submitButton"
-              >
-                Submit
-              </button>
-            </Box>
-          </form>
-        </DialogContent>
-      </Dialog>
+        refreshEvents={refreshEvents}
+      />
     </>
   )
 }
