@@ -87,13 +87,10 @@ const useStyle = makeStyles({
   field: {
     width: '145px',
   },
-<<<<<<< Updated upstream
-=======
   legend: {
     border: '1px solid #ddd',
   },
   dialog: {},
->>>>>>> Stashed changes
 })
 
 const convertToFCEvent = event => ({
@@ -210,41 +207,27 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Table size='small'>
+            <Table size="small">
               <TableBody>
                 <TableRow>
-                  <TableCell><b>Legend</b></TableCell>
+                  <TableCell>
+                    <b>Legend</b>
+                  </TableCell>
                   <TableCell />
                   <TableCell />
                   <TableCell />
                 </TableRow>
                 <TableRow>
-                  <TableCell>
-                    Pending:
-                  </TableCell>
-                  <TableCell style={{color: '#E8806E'}}>
-                    North
-                  </TableCell>
-                  <TableCell style={{color: '#839BFD'}}>
-                    South
-                  </TableCell>
-                  <TableCell style={{color: '#6A5175'}}>
-                    Both
-                  </TableCell>
+                  <TableCell>Pending:</TableCell>
+                  <TableCell style={{ color: '#E8806E' }}>North</TableCell>
+                  <TableCell style={{ color: '#839BFD' }}>South</TableCell>
+                  <TableCell style={{ color: '#6A5175' }}>Both</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>
-                    Approved:
-                  </TableCell>
-                  <TableCell style={{ color: '#E65137' }}>
-                    North
-                  </TableCell>
-                  <TableCell style={{ color: '#4265F0' }}>
-                    South
-                  </TableCell>
-                  <TableCell style={{ color: '#452742' }}>
-                    Both
-                  </TableCell>
+                  <TableCell>Approved:</TableCell>
+                  <TableCell style={{ color: '#E65137' }}>North</TableCell>
+                  <TableCell style={{ color: '#4265F0' }}>South</TableCell>
+                  <TableCell style={{ color: '#452742' }}>Both</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
