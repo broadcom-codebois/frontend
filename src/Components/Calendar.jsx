@@ -24,7 +24,6 @@ import {
   FormLabel,
   FormGroup,
   FormControlLabel,
-  FormHelperText,
   withStyles,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
@@ -66,8 +65,9 @@ const useStyle = makeStyles({
     width: '151px',
     paddingTop: '26px',
   },
-  disabledRoom: {
-    backgroundColor: 'black',
+  enabledRoom: {
+    // MÍLA
+    backgroundColor: 'black !important',
   },
   formLabel: {
     paddingTop: '26px',
@@ -153,14 +153,14 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: 'black' }}>Auditorium:</Typography>
+                <Typography style={{ color: 'black' }}>Filter auditoriums:</Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.north ? '' : c.disabledRoom
+                      selectedRooms.north ? c.enabledRoom : ''
                     }`}
                     onClick={() =>
                       setSelectedRooms(r => ({ ...r, north: !r.north }))
@@ -171,7 +171,7 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.south ? '' : c.disabledRoom
+                      selectedRooms.south ? c.enabledRoom : ''
                     }`}
                     onClick={() =>
                       setSelectedRooms(r => ({ ...r, south: !r.south }))
@@ -213,7 +213,7 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.author}</Typography>
+              <Typography>Owner: {visibleInfoDialog.author}TODO</Typography>
             </DialogContent>
           </>
         )}
