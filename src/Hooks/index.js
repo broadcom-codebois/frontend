@@ -45,7 +45,7 @@ export const useEvents = () => {
     ) {
       setApiState(s => ({ ...s, fetching: true }))
       api
-        .get('events')
+        .get('events/')
         .then(response => {
           setApiState(s => ({
             ...s,
@@ -94,6 +94,7 @@ export const useEvents = () => {
 }
 
 export const useCreateEvent = onFinish => {
+  const name = useUserName()
   const createEvent = async event => {
     const data = {
       ...event,
@@ -101,13 +102,14 @@ export const useCreateEvent = onFinish => {
       end_time: dayjs(event.end_time).format(),
       layout: MyBackend ? event.layout : parseInt(event.layout),
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
+      author: name,
     }
-    console.log('posting', data)
+
     await api
       .post('events/', data)
       .then(response => {
         if (!MyBackend && response.data.result === 2) {
-          window.alert('Couldn\'t create the reservation')
+          alert("Couldn't create the reservation")
         }
       })
       .catch(console.log)
@@ -193,7 +195,7 @@ export const useUserRole = () => {
     ) {
       setApiState(s => ({ ...s, fetching: true }))
       api
-        .get('roles')
+        .get('roles/')
         .then(response => {
           setApiState(s => ({
             ...s,

@@ -38,7 +38,6 @@ import '../calendar-style.scss'
 const initialEventState = {
   name: '',
   description: '',
-  author: '',
   north: true,
   south: true,
   begin_time: dayjs()
@@ -300,7 +299,7 @@ const Calendar = () => {
                   className={c.field}
                 />
               </Grid>
-              <Grid className={c.dateRangePicker}>
+              <Grid item className={c.dateRangePicker}>
                 <InputLabel htmlFor="datePicker">Time range</InputLabel>
                 <DatePicker
                   value={{
@@ -318,54 +317,44 @@ const Calendar = () => {
                   }}
                 />
               </Grid>
-              <FormControl
-                required
-                component="fieldset"
-                className={c.formControl}
-              >
-                <FormLabel component="legend" className={c.formLabel}>
-                  Auditorium
-                </FormLabel>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <BlueCheckbox
-                        checked={newEventData.north}
-                        onChange={() =>
-                          setNewEventData(d => ({ ...d, north: !d.north }))
-                        }
-                        value="formNorth"
-                      />
-                    }
-                    label="North"
-                    color="#4265F0"
-                  />
-                  <FormControlLabel
-                    control={
-                      <BlueCheckbox
-                        checked={newEventData.south}
-                        onChange={() =>
-                          setNewEventData(d => ({ ...d, south: !d.south }))
-                        }
-                        value="formSouth"
-                      />
-                    }
-                    label="South"
-                    color="#E65137"
-                  />
-                </FormGroup>
-              </FormControl>
               <Grid item>
-                <TextField
-                  label="Organiser name"
-                  value={newEventData.author}
-                  onChange={e => {
-                    if (e.target === null) return
-                    const value = e.target.value
-                    setNewEventData(d => ({ ...d, author: value }))
-                  }}
-                  className={c.field}
-                />
+                <FormControl
+                  required
+                  component="fieldset"
+                  className={c.formControl}
+                >
+                  <FormLabel component="legend" className={c.formLabel}>
+                    Auditorium
+                  </FormLabel>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <BlueCheckbox
+                          checked={newEventData.north}
+                          onChange={() =>
+                            setNewEventData(d => ({ ...d, north: !d.north }))
+                          }
+                          value="formNorth"
+                        />
+                      }
+                      label="North"
+                      color="#4265F0"
+                    />
+                    <FormControlLabel
+                      control={
+                        <BlueCheckbox
+                          checked={newEventData.south}
+                          onChange={() =>
+                            setNewEventData(d => ({ ...d, south: !d.south }))
+                          }
+                          value="formSouth"
+                        />
+                      }
+                      label="South"
+                      color="#E65137"
+                    />
+                  </FormGroup>
+                </FormControl>
               </Grid>
               <Grid>
                 <TextField
@@ -389,7 +378,7 @@ const Calendar = () => {
               <Grid item>
                 <TableLayouts />
               </Grid>
-              <Grid>
+              <Grid item>
                 <TextField
                   type="number"
                   inputProps={{ min: '10', max: '180', step: '1' }}
