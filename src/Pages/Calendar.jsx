@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Container, Typography, makeStyles } from '@material-ui/core'
 
-import Calendar from 'Components/Calendar/index.jsx'
+import Calendar from 'Components/Calendar'
 import { withLogin } from 'Components/withLogin'
 
 const useStyles = makeStyles({

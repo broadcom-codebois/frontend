@@ -22,12 +22,14 @@ export const GlobalStateProvider = ({ children }) => {
 
   Cookies.setItem('state', JSON.stringify(state))
 
-  api.defaults.headers.common['Authorization'] = `Bearer ${btoa(
-    JSON.stringify({
-      email: state.auth.user.email,
-      name: state.auth.user.displayName,
-    })
-  )}`
+  if (state.auth.isAuthenticated) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${btoa(
+      JSON.stringify({
+        email: state.auth.user.email,
+        name: state.auth.user.displayName,
+      })
+    )}`
+  }
   return (
     <StateContext.Provider value={[state, setState]}>
       {children}
