@@ -4,9 +4,6 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import DatePicker from './DateRangePicker'
-import { Layouts } from 'Lib'
-
 import {
   Box,
   Grid,
@@ -29,11 +26,11 @@ import {
 import { AddRounded } from '@material-ui/icons'
 
 import { useEvents, useCreateEvent } from 'Hooks'
-import { logIntoFirebase } from 'Auth'
+import { Layouts } from 'Lib'
+import TableLayouts from 'Pages/TableLayouts'
+import DatePicker from './DateRangePicker'
 
 import './calendar-style.scss'
-
-import TableLayouts from 'Pages/TableLayouts'
 
 const initialEventState = {
   name: '',
@@ -104,10 +101,6 @@ const BlueCheckbox = withStyles({
   checked: {},
 })(props => <Checkbox color="default" {...props} />)
 
-const logIn = () => {
-  logIntoFirebase()
-}
-
 const Calendar = () => {
   const c = useStyle()
 
@@ -162,7 +155,9 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: 'black' }}>Filter auditoriums:</Typography>
+                <Typography style={{ color: 'black' }}>
+                  Filter auditoriums:
+                </Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
@@ -195,14 +190,6 @@ const Calendar = () => {
           <Grid item>
             <button
               type="button"
-              className={`fc-dayGridDay-button fc-button fc-button-primary ${c.logInButton}`}
-              onClick={() => logIn()}
-            >
-              LOGIN
-            </button>
-
-            <button
-              type="button"
               className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
               onClick={() => setIsFormDialogOpen(true)}
             >
@@ -212,7 +199,10 @@ const Calendar = () => {
         </Grid>
       </Box>
 
-      <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
+      <Dialog
+        open={visibleInfoDialog !== undefined}
+        onClose={() => setInfoId(undefined)}
+      >
         {visibleInfoDialog !== undefined && (
           <>
             <DialogTitle>{visibleInfoDialog.name}</DialogTitle>

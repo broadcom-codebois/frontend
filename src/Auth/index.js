@@ -1,42 +1,51 @@
 import firebase from 'firebase'
-import { useState } from 'react'
 
-var token = null
-var user = null
+import { useGlobalState } from 'State'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCuxgRJv_tfYENTjAqW6MWpeTYaLlJEXIo",
-    authDomain: "testauditoriumbooking.firebaseapp.com",
-    databaseURL: "https://testauditoriumbooking.firebaseio.com",
-    projectId: "testauditoriumbooking",
-    storageBucket: "testauditoriumbooking.appspot.com",
-    messagingSenderId: "287027677291",
-    appId: "1:287027677291:web:bc7bc1a8415e470ac4492e"
-};
+  apiKey: 'AIzaSyCuxgRJv_tfYENTjAqW6MWpeTYaLlJEXIo',
+  authDomain: 'testauditoriumbooking.firebaseapp.com',
+  databaseURL: 'https://testauditoriumbooking.firebaseio.com',
+  projectId: 'testauditoriumbooking',
+  storageBucket: 'testauditoriumbooking.appspot.com',
+  messagingSenderId: '287027677291',
+  appId: '1:287027677291:web:bc7bc1a8415e470ac4492e',
+}
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
-export const logIntoFirebase = () => {
-    var provider = new firebase.auth.GoogleAuthProvider()
+export const useLogin = () => {
+  const [, setGlobalState] = useGlobalState()
+
+  return () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
-    firebase.auth().languageCode = 'cs'
+    firebase.auth().languageCode = 'en'
 
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        token = result.credential.accessToken;
-        // The signed-in user info.
-        user = result.user;
-
-      }).catch(function(error) {
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(result => {
+        const token = result.credential.accessToken
+        const user = result.token
+        setGlobalState(s => ({
+          ...s,
+          auth: {
+            token,
+            user,
+            isAuthenticated: true,
+          },
+        }))
+      })
+      .catch(function(error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        const errorCode = error.code
+        const errorMessage = error.message
+        alert(errorMessage)
         // The email of the user's account used.
-        var email = error.email;
+        const email = error.email
         // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-    });
-
-    //setLoginTitle(userData.displayName)
+        const credential = error.credential
+      })
+  }
 }
