@@ -153,7 +153,7 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: 'black' }}>Rooms:</Typography>
+                <Typography style={{ color: 'black' }}>Auditorium:</Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
@@ -201,7 +201,7 @@ const Calendar = () => {
             <DialogTitle>{visibleInfoDialog.name}</DialogTitle>
             <DialogContent>
               <Typography>
-                Rooms:{' '}
+                Auditorium:{' '}
                 {['north', 'south']
                   .filter(key => visibleInfoDialog[key])
                   .map(
@@ -268,7 +268,7 @@ const Calendar = () => {
                 className={c.formControl}
               >
                 <FormLabel component="legend" className={c.formLabel}>
-                  Rooms
+                  Auditorium
                 </FormLabel>
                 <FormGroup>
                   <FormControlLabel

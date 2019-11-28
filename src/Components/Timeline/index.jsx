@@ -30,7 +30,7 @@ const Timeline = () => {
       <TableHead>
         <TableRow>
           <TableCell className={c.rowText}>Name</TableCell>
-          <TableCell className={c.rowText}>Rooms</TableCell>
+          <TableCell className={c.rowText}>Auditorium</TableCell>
           <TableCell className={c.rowText}>From</TableCell>
           <TableCell className={c.rowText}>To</TableCell>
           <TableCell className={c.rowText}>Layout</TableCell>
