@@ -201,8 +201,11 @@ const Calendar = () => {
       <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
         {visibleInfoDialog !== undefined && (
           <>
-            <DialogTitle>{visibleInfoDialog.name}</DialogTitle>
+            <DialogTitle style={{ color: '#58301b' }}>
+              {visibleInfoDialog.name}
+            </DialogTitle>
             <DialogContent>
+              <Typography>Owner: {visibleInfoDialog.author}</Typography>
               <Typography>
                 Auditorium:{' '}
                 {['north', 'south']
@@ -216,7 +219,9 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.author}</Typography>
+              <Typography>
+                Number of people: {visibleInfoDialog.people}
+              </Typography>
             </DialogContent>
           </>
         )}
