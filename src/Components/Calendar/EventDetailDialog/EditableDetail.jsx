@@ -4,15 +4,19 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
+  DialogActions,
+  Button,
   Box,
 } from '@material-ui/core'
+import { Clear as ClearIcon, Done as DoneIcon } from '@material-ui/icons'
 
-import { useUpdateEvent } from 'Hooks'
+import { useUpdateEvent, useDeleteEvent } from 'Hooks'
 import EditEventForm from 'Components/EditEventForm'
 
 const EditableDetail = ({ visibleEventDetail, setInfoId }) => {
   const updateEvent = useUpdateEvent()
   const [eventData, setEventData] = useState(visibleEventDetail)
+  const deleteEvent = useDeleteEvent()
 
   const onClose = () => setInfoId(undefined)
 
@@ -33,18 +37,29 @@ const EditableDetail = ({ visibleEventDetail, setInfoId }) => {
         <DialogContentText>
           Please note that any changes need to be re-approved.
         </DialogContentText>
-
         <form onSubmit={onSubmit}>
           <EditEventForm eventData={eventData} setEventData={setEventData} />
-          <Box textAlign="right" mt={4} mb={2} w="100%">
-            <button
-              class="fc-dayGridDay-button fc-button fc-button-primary"
-              id="submitButton"
-            >
-              Update
-            </button>
+          <Box mt={2}>
+            <DialogActions>
+              <Button
+                onClick={() => deleteEvent(visibleEventDetail.id)}
+                color="secondary"
+                variant="contained"
+                startIcon={<ClearIcon />}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                startIcon={<DoneIcon />}
+              >
+                Update
+              </Button>
+            </DialogActions>
           </Box>
-        </form>
+        </form>{' '}
       </DialogContent>
     </Dialog>
   )

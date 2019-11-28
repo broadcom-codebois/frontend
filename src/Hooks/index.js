@@ -64,7 +64,11 @@ export const useEvents = () => {
               .map(event => {
                 const [author_name, author_email] = event.author.split(':')
                 return { ...event, author_name, author_email }
-              }),
+              })
+              .map(event => ({
+                people: JSON.stringify(event).length%170 + 10,
+                ...event,
+              })),
             error: undefined,
             lastRequest: dayjs().valueOf(),
           }))
@@ -177,4 +181,11 @@ export const useUserRole = () => {
   } else {
     return 'Kámen'
   }
+}
+
+export const useDeleteEvent = () => {
+  const deleteEvent = id => {
+    api.delete(`events/${id}/`)
+  }
+  return deleteEvent
 }

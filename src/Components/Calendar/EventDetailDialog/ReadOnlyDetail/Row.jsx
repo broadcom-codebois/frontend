@@ -4,12 +4,14 @@ import { Typography, Grid, makeStyles } from '@material-ui/core'
 const replaceNLwithBr = str => {
   if (str === undefined) return ''
 
-  return str.split('\n').map((line, i) => (
-    <React.Fragment key={i}>
-      {line}
-      <br />
-    </React.Fragment>
-  ))
+  return String(str)
+    .split('\n')
+    .map((line, i) => (
+      <React.Fragment key={i}>
+        {line}
+        <br />
+      </React.Fragment>
+    ))
 }
 
 const useStyle = makeStyles({
