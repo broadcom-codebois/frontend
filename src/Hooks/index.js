@@ -216,7 +216,8 @@ export const useUserRole = () => {
             lastRequest: dayjs().valueOf(),
           }))
         })
-    })
+    }
+  })
 
   return
 }
