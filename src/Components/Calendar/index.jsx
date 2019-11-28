@@ -29,7 +29,7 @@ import TableLayouts from 'Pages/TableLayouts'
 import DatePicker from '../DateRangePicker'
 import BlueCheckbox from './BlueCheckbox'
 
-import './calendar-style.scss'
+import '../calendar-style.scss'
 
 const initialEventState = {
   name: '',

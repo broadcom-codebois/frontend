@@ -148,6 +148,15 @@ export const useUserName = () => {
 }
 
 export const useUserRole = () => {
+  /* mockup data */
+  const email = useUserEmail()
+  if (['admin@google.com'].includes(email)) {
+    return 'Soulis'
+  } else {
+    return 'Kámen'
+  }
+  /* end of mockup data */
+
   const rerender = useRerender()
   const [apiState, setApiState] = useState({
     role: undefined,
@@ -165,7 +174,8 @@ export const useUserRole = () => {
     }
   }, [rerender])
 
-  /* eslint-disable-line */ useEffect(() => {
+  /* eslint-disable-line */
+  useEffect(() => {
     if (
       !apiState.fetching &&
       (((apiState.role === undefined || apiState.errors !== undefined) &&
@@ -207,7 +217,8 @@ export const useUserRole = () => {
             lastRequest: dayjs().valueOf(),
           }))
         })
-    })
+    }
+  })
 
-  return
+  return apiState.role
 }
