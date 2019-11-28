@@ -101,7 +101,7 @@ const useStyle = makeStyles({
 })
 
 const convertToFCEvent = event => ({
-  title: event.name,
+  title: `${event.name} - by ${event.author}`,
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
@@ -116,7 +116,7 @@ const convertToFCEvent = event => ({
   textColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
   extendedProps: {
     id: event.id,
-  }
+  },
 })
 const Calendar = () => {
   const c = useStyle()
