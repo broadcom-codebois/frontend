@@ -65,9 +65,13 @@ const useStyle = makeStyles({
     width: '151px',
     paddingTop: '26px',
   },
-  enabledRoom: {
-    // MÍLA
-    backgroundColor: 'black !important',
+  enabledSouth: {
+    backgroundColor: '#E65137 !important',
+    borderColor: '#E65137 !important',
+  },
+  enabledNorth: {
+    backgroundColor: '#4265F0 !important',
+    borderColor: '#4265F0 !important',
   },
   formLabel: {
     paddingTop: '26px',
@@ -165,7 +169,7 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.north ? c.enabledRoom : ''
+                      selectedRooms.north ? c.enabledNorth : ''
                     }`}
                     onClick={() =>
                       setSelectedRooms(r => ({ ...r, north: !r.north }))
@@ -176,7 +180,7 @@ const Calendar = () => {
                   <button
                     type="button"
                     className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                      selectedRooms.south ? c.enabledRoom : ''
+                      selectedRooms.south ? c.enabledSouth : ''
                     }`}
                     onClick={() =>
                       setSelectedRooms(r => ({ ...r, south: !r.south }))
