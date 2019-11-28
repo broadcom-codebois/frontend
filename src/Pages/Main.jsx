@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Button, makeStyles } from '@material-ui/core'
+import { Button, Grid, makeStyles } from '@material-ui/core'
+import { useLogout } from 'Auth'
 
 import Timeline from './Timeline'
 import Calendar from './Calendar'
@@ -15,16 +16,24 @@ const useStyle = makeStyles({
 
 const Main = () => {
   const c = useStyle()
+  const logout = useLogout()
 
   const [view, setView] = useState(false)
 
   return (
     <>
-      <Box className={c.button}>
-        <Button variant="contained" onClick={() => setView(v => !v)}>
-          {view ? 'Calendar' : 'Timeline'}
-        </Button>
-      </Box>
+      <Grid container direction="column" spacing={2} className={c.button}>
+        <Grid item>
+          <Button variant="outlined" onClick={() => setView(v => !v)}>
+            {view ? 'Calendar' : 'Timeline'}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" onClick={logout}>
+            Logout
+          </Button>
+        </Grid>
+      </Grid>
       {view ? <Timeline /> : <Calendar />}
     </>
   )

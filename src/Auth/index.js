@@ -52,3 +52,17 @@ export const useLogin = () => {
 
   return () => loginToFirebase(setGlobalState)
 }
+
+export const useLogout = () => {
+  const [, setGlobalState] = useGlobalState()
+
+  return () => {
+    setGlobalState(s => ({
+      ...s,
+      auth: {
+        ...s.auth,
+        isAuthenticated: false,
+      },
+    }))
+  }
+}
