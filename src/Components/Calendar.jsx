@@ -76,7 +76,7 @@ const useStyle = makeStyles({
   enabledSouth: {
     backgroundColor: '#8AA00C !important',
     borderColor: '#8AA00C !important',
-    color: 'white !important'
+    color: 'white !important',
   },
   disabledNorth: {
     borderColor: '#4265F0 !important',
@@ -85,7 +85,7 @@ const useStyle = makeStyles({
   enabledNorth: {
     backgroundColor: '#4265F0 !important',
     borderColor: '#4265F0 !important',
-    color: 'white !important'
+    color: 'white !important',
   },
   formLabel: {
     paddingTop: '26px',
@@ -97,10 +97,6 @@ const useStyle = makeStyles({
   field: {
     width: '145px',
   },
-  legend: {
-    border: '1px solid #ddd',
-  },
-  dialog: {},
 })
 
 const convertToFCEvent = event => ({
@@ -109,8 +105,12 @@ const convertToFCEvent = event => ({
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
   color: event.approved
-          ? event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C'
-          : 'white',
+    ? event.north
+      ? event.south
+        ? '#E65137'
+        : '#4983EE'
+      : '#8AA00C'
+    : 'white',
   borderColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
   textColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
 })
@@ -231,9 +231,9 @@ const Calendar = () => {
                   <TableCell />
                 </TableRow>
                 <TableRow>
-                  <TableCell style={{ color: '#E65137' }}>North</TableCell>
-                  <TableCell style={{ color: '#4265F0' }}>South</TableCell>
-                  <TableCell style={{ color: '#452742' }}>Both</TableCell>
+                  <TableCell style={{ color: '#4983EE' }}>North</TableCell>
+                  <TableCell style={{ color: '#8AA00C' }}>South</TableCell>
+                  <TableCell style={{ color: '#E65137' }}>Both</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
