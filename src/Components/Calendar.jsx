@@ -150,6 +150,7 @@ const Calendar = () => {
         }}
         firstDay={1}
         weekends={false}
+        contentHeight={600}
       />
 
       <Box mt={2}>
