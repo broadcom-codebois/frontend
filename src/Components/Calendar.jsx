@@ -76,6 +76,9 @@ const useStyle = makeStyles({
     maxWidth: '151px',
     width: '151px',
   },
+  numberField: {
+    width: '145px',
+  },
 })
 
 const convertToFCEvent = event => ({
@@ -313,7 +316,7 @@ const Calendar = () => {
                   }}
                 />
               </Grid>
-              <Grid item style={{ width: 172 }}>
+              <Grid item style={{ width: '157px' }}>
                 <TextField
                   select
                   label="Table layout"
@@ -346,6 +349,8 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, people: value }))
                   }}
+                  margin="normal"
+                  className={c.numberField}
                 />
               </Grid>
               <Grid item>
