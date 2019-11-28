@@ -70,8 +70,8 @@ const useStyle = makeStyles({
     paddingTop: '26px',
   },
   enabledSouth: {
-    backgroundColor: '#E65137 !important',
-    borderColor: '#E65137 !important',
+    backgroundColor: '#8AA00C !important',
+    borderColor: '#8AA00C !important',
   },
   enabledNorth: {
     backgroundColor: '#4265F0 !important',
@@ -87,6 +87,13 @@ const useStyle = makeStyles({
   field: {
     width: '145px',
   },
+<<<<<<< Updated upstream
+=======
+  legend: {
+    border: '1px solid #ddd',
+  },
+  dialog: {},
+>>>>>>> Stashed changes
 })
 
 const convertToFCEvent = event => ({
@@ -94,20 +101,7 @@ const convertToFCEvent = event => ({
   start: dayjs(event.begin_time).format('YYYY-MM-DDTHH:mm:ss'),
   end: dayjs(event.end_time).format('YYYY-MM-DDTHH:mm:ss'),
   description: event.description,
-  color: event.approved
-    ? event.north
-      ? event.south
-        ? '#452742'
-        : '#4265F0'
-      : '#E65137'
-    : event.north
-    ? event.south
-      ? '#6A5175'
-      : '#839BFD'
-    : '#E8806E',
-  extendedProps: {
-    id: event.id,
-  },
+  color: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
 })
 
 const BlueCheckbox = withStyles({
@@ -176,7 +170,7 @@ const Calendar = () => {
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
                 <Typography style={{ color: 'black' }}>
-                  Filter auditoriums:
+                  Filter of auditoriums:
                 </Typography>
               </Grid>
               <Grid item>
@@ -270,9 +264,11 @@ const Calendar = () => {
       <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
         {visibleInfoDialog !== undefined && (
           <>
-            <DialogTitle>{visibleInfoDialog.name}</DialogTitle>
+            <DialogTitle style={{ color: '#58301b' }}>
+              {visibleInfoDialog.name}
+            </DialogTitle>
             <DialogContent>
-              <Typography>
+              <Typography className={c.dialog}>
                 Auditorium:{' '}
                 {['north', 'south']
                   .filter(key => visibleInfoDialog[key])
@@ -285,7 +281,9 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.author}</Typography>
+              <Typography className={c.dialog}>
+                Owner: {visibleInfoDialog.author}
+              </Typography>
             </DialogContent>
           </>
         )}
