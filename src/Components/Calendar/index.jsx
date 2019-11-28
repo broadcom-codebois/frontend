@@ -4,9 +4,6 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import DatePicker from './DateRangePicker'
-import { Layouts } from 'Lib'
-
 import {
   Box,
   Grid,
@@ -19,7 +16,6 @@ import {
   MenuItem,
   makeStyles,
   InputLabel,
-  Checkbox,
   FormControl,
   FormLabel,
   FormGroup,
@@ -28,15 +24,16 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  withStyles,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
 import { useEvents, useCreateEvent } from 'Hooks'
-
-import './calendar-style.scss'
-
+import { Layouts } from 'Lib'
 import TableLayouts from 'Pages/TableLayouts'
+import DatePicker from '../DateRangePicker'
+import BlueCheckbox from './BlueCheckbox'
+
+import '../calendar-style.scss'
 
 const initialEventState = {
   name: '',
@@ -63,6 +60,10 @@ const useStyle = makeStyles({
     boxSizing: 'content-box',
     width: '24px',
     height: '24px',
+  },
+  logInButton: {
+    boxSizing: 'content-box',
+    marginRight: '0.5em',
   },
   dateRangePicker: {
     maxWidth: '151px',
@@ -117,17 +118,6 @@ const convertToFCEvent = event => ({
     id: event.id,
   }
 })
-
-const BlueCheckbox = withStyles({
-  root: {
-    color: 'black',
-    '&$checked': {
-      color: '#452742',
-    },
-  },
-  checked: {},
-})(props => <Checkbox color="default" {...props} />)
-
 const Calendar = () => {
   const c = useStyle()
 
@@ -184,7 +174,7 @@ const Calendar = () => {
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
                 <Typography style={{ color: 'black' }}>
-                  Filter of auditoriums:
+                  Filter auditoriums:
                 </Typography>
               </Grid>
               <Grid item>
@@ -253,7 +243,10 @@ const Calendar = () => {
         </Grid>
       </Box>
 
-      <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
+      <Dialog
+        open={visibleInfoDialog !== undefined}
+        onClose={() => setInfoId(undefined)}
+      >
         {visibleInfoDialog !== undefined && (
           <>
             <DialogTitle style={{ color: 'black' }}>
