@@ -4,10 +4,10 @@ import dayjs from 'dayjs'
 
 import { useGlobalState } from 'State'
 
-const MyBackend = true
+const shouldBackendWork = true
 
 export const api = axios.create({
-  baseURL: MyBackend
+  baseURL: shouldBackendWork
     ? 'https://codeweek2019.kaifer.cz/api/'
     : 'https://booking.magnusi.tech/rgi/',
   timeout: 2000,
@@ -52,7 +52,7 @@ export const useEvents = () => {
                 end_time: dayjs(e.end_time).valueOf(),
               }))
               .map(event =>
-                MyBackend
+                shouldBackendWork
                   ? event
                   : {
                       ...event,
@@ -101,7 +101,7 @@ export const useCreateEvent = onFinish => {
       ...event,
       begin_time: dayjs(event.begin_time).format(),
       end_time: dayjs(event.end_time).format(),
-      layout: MyBackend ? event.layout : parseInt(event.layout),
+      layout: shouldBackendWork ? event.layout : parseInt(event.layout),
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
       author: `${name}:${email}`,
     }
@@ -109,7 +109,7 @@ export const useCreateEvent = onFinish => {
     await api
       .post('events/', data)
       .then(response => {
-        if (!MyBackend && response.data.result === 2) {
+        if (!shouldBackendWork && response.data.result === 2) {
           alert("Couldn't create the reservation")
         }
       })
@@ -134,7 +134,7 @@ export const useUpdateEvent = onFinish => {
     }
 
     if (event.layout !== undefined) {
-      data.layout = MyBackend ? event.layout : parseInt(event.layout)
+      data.layout = shouldBackendWork ? event.layout : parseInt(event.layout)
     }
 
     if (event.north !== undefined && event.south !== undefined) {
