@@ -18,5 +18,5 @@ export const withLogin = Component => ({ ...props }) => {
     return <Component {...props} />
   }
 
-  return <Box style={{ fontSize: '100px' }}>RUST</Box>
+  return <Box style={{ fontSize: '300px' }}>RUST</Box>
 }

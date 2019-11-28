@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
 
-const MyBackend = false
+const MyBackend = true
 
 export const api = axios.create({
   baseURL: MyBackend
@@ -11,7 +11,13 @@ export const api = axios.create({
   timeout: 2000,
 })
 
+const useRerender = () => {
+  const [, setB] = useState(true)
+  return () => setB(b => !b)
+}
+
 export const useEvents = () => {
+  const rerender = useRerender()
   const [apiState, setApiState] = useState({
     events: undefined,
     fetching: false,
@@ -20,6 +26,15 @@ export const useEvents = () => {
   })
 
   useEffect(() => {
+    const pid = setInterval(() => {
+      rerender()
+    }, 1000)
+    return () => {
+      clearInterval(pid)
+    }
+  }, [rerender])
+
+  /* eslint-disable-line */ useEffect(() => {
     if (
       !apiState.fetching &&
       (((apiState.events === undefined || apiState.errors !== undefined) &&
@@ -62,12 +77,7 @@ export const useEvents = () => {
           }))
         })
     }
-  }, [
-    apiState.fetching,
-    apiState.events,
-    apiState.lastRequest,
-    apiState.errors,
-  ])
+  })
 
   const forceRefresh = () =>
     setApiState(s => ({
@@ -90,13 +100,35 @@ export const useCreateEvent = onFinish => {
       layout: MyBackend ? event.layout : parseInt(event.layout),
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
     }
-    console.log('posting', data)
-    api
-      .post('events/', data)
-      .then(console.log)
-      .catch(console.log)
-      .finally(onFinish)
+    api.post('events/', data).finally(onFinish)
   }
 
   return createEvent
+}
+
+export const useUpdateEvent = onFinish => {
+  const updateEvent = id => event => {
+    const data = {
+      ...event,
+    }
+    if (event.begin_time !== undefined) {
+      data.begin_time = dayjs(event.begin_time).format()
+    }
+
+    if (event.end_time !== undefined) {
+      data.end_time = dayjs(event.end_time).format()
+    }
+
+    if (event.layout !== undefined) {
+      data.layout = MyBackend ? event.layout : parseInt(event.layout)
+    }
+
+    if (event.north !== undefined && event.south !== undefined) {
+      data.rooms = (event.north ? 1 : 0) + (event.south ? 2 : 0)
+    }
+
+    api.post(`events/${id}`, data).finally(onFinish)
+  }
+
+  return updateEvent
 }

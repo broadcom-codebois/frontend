@@ -16,19 +16,18 @@ import {
   MenuItem,
   makeStyles,
   InputLabel,
-  Checkbox,
   FormControl,
   FormLabel,
   FormGroup,
   FormControlLabel,
-  withStyles,
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
 import { useEvents, useCreateEvent } from 'Hooks'
 import { Layouts } from 'Lib'
 import TableLayouts from 'Pages/TableLayouts'
-import DatePicker from './DateRangePicker'
+import DatePicker from '../DateRangePicker'
+import BlueCheckbox from './BlueCheckbox'
 
 import './calendar-style.scss'
 
@@ -97,17 +96,6 @@ const convertToFCEvent = event => ({
     id: event.id,
   },
 })
-
-const BlueCheckbox = withStyles({
-  root: {
-    color: 'black',
-    '&$checked': {
-      color: '#452742',
-    },
-  },
-  checked: {},
-})(props => <Checkbox color="default" {...props} />)
-
 const Calendar = () => {
   const c = useStyle()
 
@@ -174,7 +162,11 @@ const Calendar = () => {
                       selectedRooms.north ? c.enabledNorth : ''
                     }`}
                     onClick={() =>
-                      setSelectedRooms(r => ({ ...r, north: !r.north, south: true }))
+                      setSelectedRooms(r => ({
+                        ...r,
+                        north: !r.north,
+                        south: true,
+                      }))
                     }
                   >
                     North
@@ -185,7 +177,11 @@ const Calendar = () => {
                       selectedRooms.south ? c.enabledSouth : ''
                     }`}
                     onClick={() =>
-                      setSelectedRooms(r => ({ ...r, south: !r.south, north: true }))
+                      setSelectedRooms(r => ({
+                        ...r,
+                        south: !r.south,
+                        north: true,
+                      }))
                     }
                   >
                     South
@@ -195,10 +191,18 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item container xs={3}>
-            <Grid item xs={12}>Legend:</Grid>
-            <Grid item xs={4}style={{color: '#E65137'}}>North</Grid>
-            <Grid item xs={4} style={{color: '#4265F0'}}>South</Grid>
-            <Grid item xs={4} style={{color: '#452742'}}>Both</Grid>
+            <Grid item xs={12}>
+              Legend:
+            </Grid>
+            <Grid item xs={4} style={{ color: '#E65137' }}>
+              North
+            </Grid>
+            <Grid item xs={4} style={{ color: '#4265F0' }}>
+              South
+            </Grid>
+            <Grid item xs={4} style={{ color: '#452742' }}>
+              Both
+            </Grid>
           </Grid>
           <Grid item>
             <button
