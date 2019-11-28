@@ -76,7 +76,7 @@ const useStyle = makeStyles({
     maxWidth: '151px',
     width: '151px',
   },
-  numberField: {
+  field: {
     width: '145px',
   },
 })
@@ -156,7 +156,9 @@ const Calendar = () => {
           <Grid item>
             <Grid container direction="row" alignItems="center" spacing={2}>
               <Grid item>
-                <Typography style={{ color: 'black' }}>Filter auditoriums:</Typography>
+                <Typography style={{ color: 'black' }}>
+                  Filter auditoriums:
+                </Typography>
               </Grid>
               <Grid item>
                 <Box className="fc-button-group">
@@ -210,8 +212,11 @@ const Calendar = () => {
       <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
         {visibleInfoDialog !== undefined && (
           <>
-            <DialogTitle>{visibleInfoDialog.name}</DialogTitle>
+            <DialogTitle style={{ color: '#58301b' }}>
+              {visibleInfoDialog.name}
+            </DialogTitle>
             <DialogContent>
+              <Typography>Owner: {visibleInfoDialog.author}TODO</Typography>
               <Typography>
                 Auditorium:{' '}
                 {['north', 'south']
@@ -225,7 +230,9 @@ const Calendar = () => {
                   )
                   .join(', ')}
               </Typography>
-              <Typography>Owner: {visibleInfoDialog.author}TODO</Typography>
+              <Typography>
+                Number of people: {visibleInfoDialog.people}
+              </Typography>
             </DialogContent>
           </>
         )}
@@ -254,6 +261,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, name: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
               <Grid className={c.dateRangePicker}>
@@ -320,9 +328,10 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, author: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
-              <Grid item style={{ width: '157px' }}>
+              <Grid>
                 <TextField
                   select
                   label="Table layout"
@@ -332,7 +341,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, layout: value }))
                   }}
-                  style={{ width: '100%' }}
+                  className={c.field}
                 >
                   {Object.keys(Layouts).map(key => (
                     <MenuItem key={key} value={key}>
@@ -356,7 +365,7 @@ const Calendar = () => {
                     setNewEventData(d => ({ ...d, people: value }))
                   }}
                   margin="normal"
-                  className={c.numberField}
+                  className={c.field}
                 />
               </Grid>
               <Grid item>
@@ -369,6 +378,7 @@ const Calendar = () => {
                     const value = e.target.value
                     setNewEventData(d => ({ ...d, description: value }))
                   }}
+                  className={c.field}
                 />
               </Grid>
             </Grid>
