@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import dayjs from 'dayjs'
 
-const MyBackend = false
+const MyBackend = true
 
 const api = axios.create({
   baseURL: MyBackend
@@ -82,7 +82,7 @@ export const useEvents = () => {
 }
 
 export const useCreateEvent = onFinish => {
-  const createEvent = event => {
+  const createEvent = async event => {
     const data = {
       ...event,
       begin_time: dayjs(event.begin_time).format(),
@@ -91,11 +91,15 @@ export const useCreateEvent = onFinish => {
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
     }
     console.log('posting', data)
-    api
+    await api
       .post('events/', data)
-      .then(console.log)
+      .then(response => {
+        if (!MyBackend && response.data.result === 2) {
+          window.alert('Couldn\'t create the reservation')
+        }
+      })
       .catch(console.log)
-      .finally(onFinish)
+    onFinish()
   }
 
   return createEvent
