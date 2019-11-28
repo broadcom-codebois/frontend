@@ -113,6 +113,9 @@ const convertToFCEvent = event => ({
     : 'white',
   borderColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
   textColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+  extendedProps: {
+    id: event.id,
+  }
 })
 
 const BlueCheckbox = withStyles({
