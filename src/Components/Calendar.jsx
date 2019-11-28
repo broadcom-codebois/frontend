@@ -257,7 +257,7 @@ const Calendar = () => {
       <Dialog open={visibleInfoDialog} onClose={() => setInfoId(undefined)}>
         {visibleInfoDialog !== undefined && (
           <>
-            <DialogTitle style={{ color: '#58301b' }}>
+            <DialogTitle style={{ color: 'black' }}>
               {visibleInfoDialog.name}
             </DialogTitle>
             <DialogContent>
@@ -286,7 +286,7 @@ const Calendar = () => {
         open={isFormDialogOpen}
         onClose={() => setIsFormDialogOpen(false)}
       >
-        <DialogTitle style={{ color: '#58301b', margin: '3px 0px 0px 0px' }}>
+        <DialogTitle style={{ color: 'black', margin: '3px 0px 0px 0px' }}>
           New Event
         </DialogTitle>
         <DialogContent>
