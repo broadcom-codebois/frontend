@@ -8,6 +8,15 @@ const useStyles = makeStyles({
   rowText: {
     fontFamily: 'Saira Condensed',
   },
+  south: {
+    color: '#8AA00C !important',
+  },
+  north: {
+    color: '#4265F0 !important',
+  },
+  both: {
+    color: '#E65137 !important',
+  },
 })
 
 const Event = ({ event, conf }) => {
@@ -19,8 +28,10 @@ const Event = ({ event, conf }) => {
   return (
     <TableRow>
       <TableCell className={c.rowText}>{event.name}</TableCell>
-      <TableCell className={c.rowText}>
-        {[event.north ? 'north' : undefined, event.south ? 'south' : undefined]
+      <TableCell className={
+        (event.north && event.south) ? c.both : (event.north ? c.north : c.south)
+      }>
+        {[event.north ? 'North' : undefined, event.south ? 'South' : undefined]
           .filter(a => a !== undefined)
           .join(', ')}
       </TableCell>
