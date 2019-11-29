@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
-import { useEvents } from 'Hooks'
+import { useEvents, useUserRole } from 'Hooks'
 import EventDetailDialog from './EventDetailDialog'
 import CreateEventDialog from './CreateEventDialog'
 
@@ -85,10 +85,18 @@ const convertToFCEvent = event => ({
     : 'white',
   borderColor: event.approved
     ? 'white'
-    : event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+    : event.north
+    ? event.south
+      ? '#E65137'
+      : '#4983EE'
+    : '#8AA00C',
   textColor: event.approved
     ? 'white'
-    : event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+    : event.north
+    ? event.south
+      ? '#E65137'
+      : '#4983EE'
+    : '#8AA00C',
   extendedProps: {
     id: event.id,
   },
@@ -96,6 +104,7 @@ const convertToFCEvent = event => ({
 
 const Calendar = () => {
   const c = useStyle()
+  const role = useUserRole()
 
   const [events, refreshEvents] = useEvents()
 
@@ -106,9 +115,11 @@ const Calendar = () => {
   })
   const [infoId, setInfoId] = useState(undefined)
 
-  const visibleEvents = events.filter(event =>
-    Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
-  )
+  const visibleEvents = events
+    .filter(event =>
+      Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
+    )
+    .filter(event => role === 'Soulis' || event.approved)
 
   const visibleEventDetail = events.find(event => event.id === infoId)
 

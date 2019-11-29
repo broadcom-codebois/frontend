@@ -62,7 +62,11 @@ export const useEvents = () => {
                     }
               )
               .map(event => {
-                return { ...event, author_email: event.author }
+                return {
+                  ...event,
+                  author_email: event.author,
+                  author_name: event.author,
+                }
               })
               .map(event => ({
                 people: (JSON.stringify(event).length % 170) + 10,
@@ -121,7 +125,9 @@ export const useCreateEvent = onFinish => {
           alert('Whoops. Something is broken. Please try again.')
         }
       })
-      .catch(console.log)
+      .catch(error => {
+        alert('Whoops. Something is broken. PLease try again.')
+      })
     onFinish()
   }
 
