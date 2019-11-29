@@ -40,12 +40,7 @@ export const useEvents = () => {
     if (!apiState.fetching && apiState.lastRequest < dayjs().valueOf() - 500) {
       setApiState(s => ({ ...s, fetching: true }))
       api
-        .get('events/', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: {},
-        })
+        .get('events/')
         .then(response => {
           setApiState(s => ({
             ...s,
@@ -115,6 +110,10 @@ export const useCreateEvent = onFinish => {
       author: `${name}:${email}`,
     }
 
+    if (event.people !== undefined) {
+      data.people = shouldBackendWork ? event.people : parseInt(event.people)
+    }
+
     await api
       .post('events/', data)
       .then(response => {
@@ -150,6 +149,10 @@ export const useUpdateEvent = () => {
       data.rooms = (event.north ? 1 : 0) + (event.south ? 2 : 0)
     }
 
+    if (event.people !== undefined) {
+      data.people = shouldBackendWork ? event.people : parseInt(event.people)
+    }
+
     api.patch(`events/${id}/`, data)
   }
 
@@ -177,6 +180,79 @@ export const useUserName = () => {
   const [globalState] = useGlobalState()
 
   return globalState.auth.user.displayName
+}
+
+export const useUserInfo = () => {
+  const rerender = useRerender()
+  const [apiState, setApiState] = useState({
+    info: undefined,
+    fetching: false,
+    error: undefined,
+    lastRequest: 0,
+  })
+
+  useEffect(() => {
+    const pid = setInterval(() => {
+      rerender()
+    }, 1000)
+    return () => {
+      clearInterval(pid)
+    }
+  }, [rerender])
+
+  /* eslint-disable-line */ useEffect(() => {
+    if (!apiState.fetching && apiState.lastRequest < dayjs().valueOf() - 500) {
+      setApiState(s => ({ ...s, fetching: true }))
+      api
+        .get('me/', {
+          body: {},
+        })
+        .then(response => {
+          setApiState(s => ({
+            ...s,
+            fetching: false,
+            events: response.data
+              .map(e => ({
+                ...e,
+                begin_time: dayjs(e.begin_time).valueOf(),
+                end_time: dayjs(e.end_time).valueOf(),
+              }))
+              .map(event =>
+                shouldBackendWork
+                  ? event
+                  : {
+                      ...event,
+                      north: event.rooms & 1,
+                      south: event.rooms & 2,
+                      rooms: undefined,
+                    }
+              )
+              .map(event => {
+                const [author_name, author_email] = event.author.split(':')
+                return { ...event, author_name, author_email }
+              })
+              .map(event => ({
+                people: (JSON.stringify(event).length % 170) + 10,
+                ...event,
+              })),
+            error: undefined,
+            lastRequest: dayjs().valueOf(),
+          }))
+        })
+        .catch(error => {
+          setApiState(s => ({
+            ...s,
+            fetching: false,
+            error: error,
+            lastRequest: dayjs().valueOf(),
+          }))
+        })
+    }
+
+  const [apiState, setApiState] = useState({
+    data: undefined,
+
+  })
 }
 
 export const useUserRole = () => {
