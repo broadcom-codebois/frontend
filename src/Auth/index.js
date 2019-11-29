@@ -43,7 +43,8 @@ const loginToFirebase = setGlobalState => {
       const email = error.email
       // The firebase.auth.AuthCredential type that was used.
       const credential = error.credential
-      loginToFirebase(setGlobalState)
+      // DO not recursively call itself
+      // loginToFirebase(setGlobalState)
     })
 }
 

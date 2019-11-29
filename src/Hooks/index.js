@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 import { useGlobalState } from 'State'
 
-const shouldBackendWork = false
+const shouldBackendWork = true
 
 export const api = axios.create({
   baseURL: shouldBackendWork

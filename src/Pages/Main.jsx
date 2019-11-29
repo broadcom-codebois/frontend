@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Grid, makeStyles } from '@material-ui/core'
 import { useLogout } from 'Auth'
+import { withLogin } from 'Components/withLogin'
 
 import Timeline from './Timeline'
 import Calendar from './Calendar'
@@ -39,4 +40,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default withLogin(Main)
