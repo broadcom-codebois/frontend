@@ -45,9 +45,7 @@ const CalendarPage = () => {
         <Calendar />
       </Box>
 
-      <Typography variant="p" className={c.copyright}>
-        &copy; CodeWeek 2019
-      </Typography>
+      <Typography className={c.copyright}>&copy; CodeWeek 2019</Typography>
     </Container>
   )
 }
