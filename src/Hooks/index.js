@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 import { useGlobalState } from 'State'
 
-const shouldBackendWork = true
+const shouldBackendWork = false
 
 export const api = axios.create({
   baseURL: shouldBackendWork
@@ -157,13 +157,14 @@ export const useUpdateEvent = () => {
 }
 
 export const useDisapprove = () => {
-  const updateEvent = useUpdateEvent()
-  return id => updateEvent(id)({ approved: false })
+  const deleteEvent = useDeleteEvent()
+  return id => deleteEvent(id)
 }
 
 export const useApprove = () => {
-  const updateEvent = useUpdateEvent()
-  return id => updateEvent(id)({ approved: true })
+  return id => {
+    api.post(`events/${id}/approve/`)
+  }
 }
 
 export const useUserEmail = () => {
