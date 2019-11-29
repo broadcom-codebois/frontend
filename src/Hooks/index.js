@@ -208,13 +208,14 @@ export const useUserInfo = () => {
           body: {},
         })
         .then(response => {
+          if (response.data === undefined) throw Error
           setApiState(s => ({
             ...s,
             fetching: false,
-            info: response.data.map(info => ({
-              ...info,
-              role: { noob: 'Kámen', approver: 'Soulis' }[info.role],
-            })),
+            info: {
+              ...response.data,
+              role: { noob: 'Kámen', approver: 'Soulis' }[response.data.role],
+            },
             error: undefined,
             lastRequest: dayjs().valueOf(),
           }))
