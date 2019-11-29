@@ -175,24 +175,6 @@ const Calendar = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Table size="small">
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <b>Legend</b>
-                  </TableCell>
-                  <TableCell />
-                  <TableCell />
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ color: '#4983EE' }}>North</TableCell>
-                  <TableCell style={{ color: '#8AA00C' }}>South</TableCell>
-                  <TableCell style={{ color: '#E65137' }}>Both</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Grid>
-          <Grid item>
             <button
               type="button"
               className={`fc-dayGridDay-button fc-button fc-button-primary ${c.iconButton}`}
