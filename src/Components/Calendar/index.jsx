@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core'
 import { AddRounded } from '@material-ui/icons'
 
-import { useEvents, useUserRole } from 'Hooks'
+import { useEvents, useUserRole, useUserEmail } from 'Hooks'
 import EventDetailDialog from './EventDetailDialog'
 import CreateEventDialog from './CreateEventDialog'
 
@@ -105,6 +105,7 @@ const convertToFCEvent = event => ({
 const Calendar = () => {
   const c = useStyle()
   const role = useUserRole()
+  const email = useUserEmail()
 
   const [events, refreshEvents] = useEvents()
 
@@ -119,7 +120,10 @@ const Calendar = () => {
     .filter(event =>
       Object.keys(selectedRooms).some(key => selectedRooms[key] && event[key])
     )
-    .filter(event => role === 'Soulis' || event.approved)
+    .filter(
+      event =>
+        role === 'Soulis' || event.approved || event.author_email === email
+    )
 
   const visibleEventDetail = events.find(event => event.id === infoId)
 
