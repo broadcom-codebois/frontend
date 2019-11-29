@@ -9,7 +9,7 @@ const shouldBackendWork = false
 export const api = axios.create({
   baseURL: shouldBackendWork
     ? 'https://codeweek2019.kaifer.cz/api/'
-    : 'https://booking.magnusi.tech/rgi/',
+    : 'https://booking.magnusi.tech/',
   timeout: 2000,
 })
 
@@ -40,7 +40,7 @@ export const useEvents = () => {
     if (!apiState.fetching && apiState.lastRequest < dayjs().valueOf() - 500) {
       setApiState(s => ({ ...s, fetching: true }))
       api
-        .get('events/')
+        .get('rgi/events/')
         .then(response => {
           setApiState(s => ({
             ...s,
@@ -115,7 +115,7 @@ export const useCreateEvent = onFinish => {
     }
 
     await api
-      .post('events/', data)
+      .post('rgi/events/', data)
       .then(response => {
         if (!shouldBackendWork && response.data.result === 2) {
           alert("Couldn't create the reservation")
@@ -153,7 +153,7 @@ export const useUpdateEvent = () => {
       data.people = shouldBackendWork ? event.people : parseInt(event.people)
     }
 
-    api.patch(`events/${id}/`, data)
+    api.patch(`rgi/events/${id}/`, data)
   }
 
   return updateEvent
@@ -166,7 +166,7 @@ export const useDisapprove = () => {
 
 export const useApprove = () => {
   return id => {
-    api.post(`events/${id}/approve/`)
+    api.post(`rgi/events/${id}/approve/`)
   }
 }
 
@@ -244,7 +244,7 @@ export const useUserRole = () => {
 
 export const useDeleteEvent = () => {
   const deleteEvent = id => {
-    api.delete(`events/${id}/`)
+    api.delete(`rgi/events/${id}/`)
   }
   return deleteEvent
 }
