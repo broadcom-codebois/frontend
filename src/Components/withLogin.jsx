@@ -4,6 +4,8 @@ import { Box } from '@material-ui/core'
 import { useGlobalState } from 'State'
 import { useLogin } from 'Auth'
 
+import logo from 'img/logo.png'
+
 export const withLogin = Component => ({ ...props }) => {
   const [globalState] = useGlobalState()
 
@@ -18,5 +20,5 @@ export const withLogin = Component => ({ ...props }) => {
     return <Component {...props} />
   }
 
-  return <Box style={{ fontSize: '300px' }}>RUST</Box>
+  return <Box><img src={logo} alt=''></img></Box>
 }
