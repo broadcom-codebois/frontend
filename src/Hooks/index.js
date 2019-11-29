@@ -211,30 +211,10 @@ export const useUserInfo = () => {
           setApiState(s => ({
             ...s,
             fetching: false,
-            events: response.data
-              .map(e => ({
-                ...e,
-                begin_time: dayjs(e.begin_time).valueOf(),
-                end_time: dayjs(e.end_time).valueOf(),
-              }))
-              .map(event =>
-                shouldBackendWork
-                  ? event
-                  : {
-                      ...event,
-                      north: event.rooms & 1,
-                      south: event.rooms & 2,
-                      rooms: undefined,
-                    }
-              )
-              .map(event => {
-                const [author_name, author_email] = event.author.split(':')
-                return { ...event, author_name, author_email }
-              })
-              .map(event => ({
-                people: (JSON.stringify(event).length % 170) + 10,
-                ...event,
-              })),
+            info: response.data.map(info => ({
+              ...info,
+              role: { noob: 'Kámen', approver: 'Soulis' }[info.role],
+            })),
             error: undefined,
             lastRequest: dayjs().valueOf(),
           }))
@@ -248,21 +228,18 @@ export const useUserInfo = () => {
           }))
         })
     }
-
-  const [apiState, setApiState] = useState({
-    data: undefined,
-
   })
+
+  return apiState.info !== undefined
+    ? apiState.info
+    : {
+        role: 'Kámen',
+      }
 }
 
 export const useUserRole = () => {
-  const email = useUserEmail()
-  return 'Soulis'
-  if (['admin@google.com'].includes(email)) {
-    return 'Soulis'
-  } else {
-    return 'Kámen'
-  }
+  const userInfo = useUserInfo()
+  return userInfo.role
 }
 
 export const useDeleteEvent = () => {
