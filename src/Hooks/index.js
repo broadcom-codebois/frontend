@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 import { useGlobalState } from 'State'
 
-const shouldBackendWork = true
+const shouldBackendWork = false
 
 export const api = axios.create({
   baseURL: shouldBackendWork
@@ -42,9 +42,9 @@ export const useEvents = () => {
       api
         .get('events/', {
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: {}
+          body: {},
         })
         .then(response => {
           setApiState(s => ({
@@ -71,7 +71,7 @@ export const useEvents = () => {
                 return { ...event, author_name, author_email }
               })
               .map(event => ({
-                people: JSON.stringify(event).length%170 + 10,
+                people: (JSON.stringify(event).length % 170) + 10,
                 ...event,
               })),
             error: undefined,
@@ -129,7 +129,7 @@ export const useCreateEvent = onFinish => {
   return createEvent
 }
 
-export const useUpdateEvent = onFinish => {
+export const useUpdateEvent = () => {
   const updateEvent = id => event => {
     const data = {
       ...event,
@@ -150,20 +150,21 @@ export const useUpdateEvent = onFinish => {
       data.rooms = (event.north ? 1 : 0) + (event.south ? 2 : 0)
     }
 
-    api.patch(`events/${id}/`, data).finally(onFinish)
+    api.patch(`events/${id}/`, data)
   }
 
   return updateEvent
 }
 
 export const useDisapprove = () => {
-  const updateEvent = useUpdateEvent()
-  return id => updateEvent(id)({ approved: false })
+  const deleteEvent = useDeleteEvent()
+  return id => deleteEvent(id)
 }
 
 export const useApprove = () => {
-  const updateEvent = useUpdateEvent()
-  return id => updateEvent(id)({ approved: true })
+  return id => {
+    api.post(`events/${id}/approve/`)
+  }
 }
 
 export const useUserEmail = () => {

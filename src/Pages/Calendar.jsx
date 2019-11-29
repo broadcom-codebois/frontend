@@ -1,5 +1,15 @@
 import React from 'react'
-import { Box, Container, Typography, makeStyles } from '@material-ui/core'
+import {
+  Box,
+  Container,
+  Typography,
+  makeStyles,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Grid,
+} from '@material-ui/core'
 
 import Calendar from 'Components/Calendar'
 
@@ -44,6 +54,26 @@ const CalendarPage = () => {
         </Typography>
         <Calendar />
       </Box>
+
+
+      <Grid item>
+        <Table size="small">
+          <TableBody>
+            <TableRow>
+              <TableCell />
+              <TableCell />
+              <TableCell />
+              <TableCell />
+            </TableRow>
+            <TableRow>
+              <TableCell><b>Legend:</b></TableCell>
+              <TableCell style={{ color: '#4983EE' }}>North</TableCell>
+              <TableCell style={{ color: '#8AA00C' }}>South</TableCell>
+              <TableCell style={{ color: '#E65137' }}>Both</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Grid>
 
       <Typography variant="p" className={c.copyright}>
         &copy; CodeWeek 2019

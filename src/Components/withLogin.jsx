@@ -4,6 +4,8 @@ import { Dialog, Box, Button } from '@material-ui/core'
 import { useGlobalState } from 'State'
 import { useLogin } from 'Auth'
 
+import logo from 'img/logo.png'
+
 export const withLogin = Component => ({ ...props }) => {
   const [globalState] = useGlobalState()
 
@@ -14,6 +16,8 @@ export const withLogin = Component => ({ ...props }) => {
   }
 
   return (
+    <>
+    <Box><img src={logo} alt=''></img></Box>
     <Dialog open>
       <Box p={2}>
         <Button variant="outlined" color="primary" size="large" onClick={login}>
@@ -21,5 +25,6 @@ export const withLogin = Component => ({ ...props }) => {
         </Button>
       </Box>
     </Dialog>
+    </>
   )
 }
