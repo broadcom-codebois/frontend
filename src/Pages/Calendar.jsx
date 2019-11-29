@@ -2,7 +2,6 @@ import React from 'react'
 import { Box, Container, Typography, makeStyles } from '@material-ui/core'
 
 import Calendar from 'Components/Calendar'
-import { withLogin } from 'Components/withLogin'
 
 const useStyles = makeStyles({
   container: {
@@ -53,4 +52,4 @@ const CalendarPage = () => {
   )
 }
 
-export default withLogin(CalendarPage)
+export default CalendarPage

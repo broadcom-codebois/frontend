@@ -2,7 +2,6 @@ import React from 'react'
 import { Box, Container, makeStyles, Typography } from '@material-ui/core'
 
 import Timeline from 'Components/Timeline'
-import { withLogin } from 'Components/withLogin'
 
 const useStyles = makeStyles({
   container: {
@@ -53,4 +52,4 @@ const TimelinePage = () => {
   )
 }
 
-export default withLogin(TimelinePage)
+export default TimelinePage

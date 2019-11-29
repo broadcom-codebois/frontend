@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Box } from '@material-ui/core'
+import React from 'react'
+import { Dialog, Box, Button } from '@material-ui/core'
 
 import { useGlobalState } from 'State'
 import { useLogin } from 'Auth'
@@ -8,15 +8,18 @@ export const withLogin = Component => ({ ...props }) => {
   const [globalState] = useGlobalState()
 
   const login = useLogin()
-  useEffect(() => {
-    if (!globalState.auth.isAuthenticated) {
-      login()
-    }
-  }, [globalState.auth.isAuthenticated]) // eslint-disable-line
 
   if (globalState.auth.isAuthenticated) {
     return <Component {...props} />
   }
 
-  return <Box style={{ fontSize: '300px' }}>RUST</Box>
+  return (
+    <Dialog open>
+      <Box p={2}>
+        <Button variant="outlined" color="primary" size="large" onClick={login}>
+          Login to RUST
+        </Button>
+      </Box>
+    </Dialog>
+  )
 }
