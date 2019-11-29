@@ -39,6 +39,9 @@ const useStyles = makeStyles({
     borderColor: '#4265F0 !important',
     color: 'white !important',
   },
+  legendRow: {
+    borderTop: '1px solid rgba(224, 224, 224, 1)',
+  },
 })
 
 const Timeline = () => {
@@ -58,43 +61,67 @@ const Timeline = () => {
   return (
 
     <>
-    <Grid item>
-        <Grid container direction="row" alignItems="center" spacing={2}>
-          <Grid item>
-              <Box className="fc-button-group">
-                <button
-                  type="button"
-                  className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                    selectedRooms.north ? c.enabledNorth : c.disabledNorth
-                  }`}
-                  onClick={() =>
-                    setSelectedRooms(r => ({
-                      ...r,
-                      north: !r.north,
-                      south: true,
-                    }))
-                  }
-                >
-                 North
-                </button>
-                <button
-                  type="button"
-                  className={`fc-dayGridDay-button fc-button fc-button-primary ${
-                    selectedRooms.south ? c.enabledSouth : c.disabledSouth
-                  }`}
-                  onClick={() =>
-                    setSelectedRooms(r => ({
-                      ...r,
-                      south: !r.south,
-                      north: true,
-                    }))
-                  }
-                >
-                South
-              </button>
-            </Box>
-          </Grid>
-        </Grid>
+    <Grid>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Grid item>
+                  <Grid container direction="row" alignItems="center" spacing={2}>
+                    <Grid item>
+                        <Box className="fc-button-group">
+                          <button
+                            type="button"
+                            className={`fc-dayGridDay-button fc-button fc-button-primary ${
+                              selectedRooms.north ? c.enabledNorth : c.disabledNorth
+                            }`}
+                            onClick={() =>
+                              setSelectedRooms(r => ({
+                                ...r,
+                                north: !r.north,
+                                south: true,
+                              }))
+                            }
+                          >
+                          North
+                          </button>
+                          <button
+                            type="button"
+                            className={`fc-dayGridDay-button fc-button fc-button-primary ${
+                              selectedRooms.south ? c.enabledSouth : c.disabledSouth
+                            }`}
+                            onClick={() =>
+                              setSelectedRooms(r => ({
+                                ...r,
+                                south: !r.south,
+                                north: true,
+                              }))
+                            }
+                          >
+                          South
+                        </button>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </TableCell>
+              <TableCell>
+                <Grid item>
+                  <Table size="small">
+                    <TableBody>
+                      <TableRow className={c.legendRow}>
+                        <TableCell><b>Legend:</b></TableCell>
+                        <TableCell style={{ color: '#4983EE' }}>North</TableCell>
+                        <TableCell style={{ color: '#8AA00C' }}>South</TableCell>
+                        <TableCell style={{ color: '#E65137' }}>Both</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Grid>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </Grid>
 
     <Table>
