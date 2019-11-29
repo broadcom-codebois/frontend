@@ -83,8 +83,12 @@ const convertToFCEvent = event => ({
         : '#4983EE'
       : '#8AA00C'
     : 'white',
-  borderColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
-  textColor: event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+  borderColor: event.approved
+    ? 'white'
+    : event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
+  textColor: event.approved
+    ? 'white'
+    : event.north ? (event.south ? '#E65137' : '#4983EE') : '#8AA00C',
   extendedProps: {
     id: event.id,
   },

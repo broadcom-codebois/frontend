@@ -40,7 +40,12 @@ export const useEvents = () => {
     if (!apiState.fetching && apiState.lastRequest < dayjs().valueOf() - 500) {
       setApiState(s => ({ ...s, fetching: true }))
       api
-        .get('events/')
+        .get('events/', {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: {}
+        })
         .then(response => {
           setApiState(s => ({
             ...s,
