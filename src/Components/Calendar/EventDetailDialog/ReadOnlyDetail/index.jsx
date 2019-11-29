@@ -28,6 +28,7 @@ const EventDetailDialog = ({ visibleEventDetail, setInfoId }) => {
       open={visibleEventDetail !== undefined}
       onClose={() => setInfoId(undefined)}
       maxWidth="xs"
+      scroll="body"
       fullWidth
     >
       {visibleEventDetail !== undefined && (

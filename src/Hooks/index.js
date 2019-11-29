@@ -62,8 +62,7 @@ export const useEvents = () => {
                     }
               )
               .map(event => {
-                const [author_name, author_email] = event.author.split(':')
-                return { ...event, author_name, author_email }
+                return { ...event, author_email: event.author }
               })
               .map(event => ({
                 people: (JSON.stringify(event).length % 170) + 10,
@@ -97,7 +96,6 @@ export const useEvents = () => {
 }
 
 export const useCreateEvent = onFinish => {
-  const name = useUserName()
   const email = useUserEmail()
 
   const createEvent = async event => {
@@ -107,7 +105,7 @@ export const useCreateEvent = onFinish => {
       end_time: dayjs(event.end_time).format(),
       layout: shouldBackendWork ? event.layout : parseInt(event.layout),
       rooms: (event.north ? 1 : 0) + (event.south ? 2 : 0),
-      author: `${name}:${email}`,
+      author: `${email}`,
     }
 
     if (event.people !== undefined) {
@@ -117,8 +115,10 @@ export const useCreateEvent = onFinish => {
     await api
       .post('rgi/events/', data)
       .then(response => {
-        if (!shouldBackendWork && response.data.result === 2) {
-          alert("Couldn't create the reservation")
+        if (response.data.result === 2) {
+          alert('2 events cannot use the same auditorium at the same time.')
+        } else if (response.data.result !== 0) {
+          alert('Whoops. Something is broken. Please try again.')
         }
       })
       .catch(console.log)
