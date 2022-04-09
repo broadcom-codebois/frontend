@@ -16,7 +16,7 @@
     "firebase": "^7.5.0",
     "firebase-auth": "^0.1.2",
     "js-cookies": "^1.0.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-range": "^4.0.2",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
